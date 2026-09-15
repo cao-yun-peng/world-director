@@ -18,11 +18,15 @@ class ObjectUnavailable(ValueError):
     pass
 
 
-def accessible_objects(actor_id: str) -> list[dict]:
-    if actor_id not in KNOWN_ACTORS or actor_id not in ACTOR_LOCATIONS:
+def accessible_objects(actor_id: str, *, world=None) -> list[dict]:
+    from app.world import object_location
+
+    locations = ACTOR_LOCATIONS if world is None else world.actor_locations
+    objects = OBJECTS if world is None else world.objects.values()
+    if actor_id not in KNOWN_ACTORS or actor_id not in locations:
         raise ValueError("未登记角色或角色没有当前位置。")
-    return [obj for obj in OBJECTS
-            if obj["location_id"] == ACTOR_LOCATIONS[actor_id]
+    return [obj for obj in objects
+            if (obj["location_id"] if world is None else object_location(world, obj["id"])) == locations[actor_id]
             and (obj.get("visibility") == "public"
                  or (obj.get("visibility") == "private"
                      and isinstance(obj.get("known_by"), list)
@@ -30,14 +34,15 @@ def accessible_objects(actor_id: str) -> list[dict]:
                      and actor_id in obj["known_by"]))]
 
 
-def get_visible_scene(*, actor_id: str) -> dict:
-    objects = accessible_objects(actor_id)
-    return {"location_id": ACTOR_LOCATIONS[actor_id],
+def get_visible_scene(*, actor_id: str, world=None) -> dict:
+    objects = accessible_objects(actor_id, world=world)
+    locations = ACTOR_LOCATIONS if world is None else world.actor_locations
+    return {"location_id": locations[actor_id],
             "objects": [{"id": obj["id"], "name": obj["name"]} for obj in objects]}
 
 
-def inspect_object(object_id: str, *, actor_id: str) -> dict:
-    for obj in accessible_objects(actor_id):
+def inspect_object(object_id: str, *, actor_id: str, world=None) -> dict:
+    for obj in accessible_objects(actor_id, world=world):
         if obj["id"] == object_id:
             return {key: obj[key] for key in ("id", "name", "description")}
     raise ObjectUnavailable("当前无法查看该对象。")
@@ -85,7 +90,7 @@ def validate_batch(calls: list[dict]) -> None:
         ids.add(call["id"])
 
 
-def dispatch(call: dict, *, expected_actor_id: str) -> dict:
+def dispatch(call: dict, *, expected_actor_id: str, world=None) -> dict:
     validate_call(call)
     call_id = call["id"]
 
@@ -109,7 +114,8 @@ def dispatch(call: dict, *, expected_actor_id: str) -> dict:
                                      or not arguments["object_id"].strip()):
         return failure("INVALID_ARGUMENTS", "object_id 必须是非空字符串。")
     try:
-        data = handlers[name](**arguments, actor_id=expected_actor_id)
+        context = {} if world is None else {"world": world}
+        data = handlers[name](**arguments, actor_id=expected_actor_id, **context)
     except ObjectUnavailable:
         return failure("OBJECT_UNAVAILABLE", "当前无法查看该对象。")
     except Exception:

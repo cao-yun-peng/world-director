@@ -1,0 +1,26 @@
+=== 注入浅复制：预期旧快照断言失败 ===
+test_old_nested_location_is_unchanged (__main__.SnapshotContract.test_old_nested_location_is_unchanged) ... FAIL
+
+======================================================================
+FAIL: test_old_nested_location_is_unchanged (__main__.SnapshotContract.test_old_nested_location_is_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\project\self-agent\world-director\exercises\a03_shallow_copy.py", line 18, in test_old_nested_location_is_unchanged
+    self.assertEqual(original.actor_locations["lin_yan"], "duty_room")
+AssertionError: 'storage_room' != 'duty_room'
+- storage_room
++ duty_room
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
+
+=== 恢复深复制：预期通过 ===
+test_old_nested_location_is_unchanged (__main__.SnapshotContract.test_old_nested_location_is_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK

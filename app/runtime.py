@@ -40,7 +40,12 @@ class AgentTurnError(ValueError):
 
 
 def run_agent_turn(session: dict, user_text: str, model: ToolModelAdapter, *,
-                   expected_actor_id: str, max_model_requests: int = 3) -> tuple[dict, str, dict]:
+                   expected_actor_id: str, max_model_requests: int = 3,
+                   engine=None, turn_id: str | None = None) -> tuple[dict, str, dict]:
+    if engine is not None:
+        from app.world_runtime import run_world_turn
+        return run_world_turn(session, user_text, model, expected_actor_id=expected_actor_id,
+                              engine=engine, turn_id=turn_id, max_model_requests=max_model_requests)
     # 身份与输入校验在建立轨迹之前，失败时调用方不应写文件。
     base = build_messages(session, user_text, expected_actor_id=expected_actor_id)
     scene = get_visible_scene(actor_id=expected_actor_id)
@@ -98,6 +103,8 @@ def run_agent_turn(session: dict, user_text: str, model: ToolModelAdapter, *,
         proposal = parse_action(proposal_text)
     except ValueError:
         fail("INVALID_ACTION")
+    if proposal.kind in ("move", "give"):
+        fail("INVALID_ACTION")  # A02 无世界账本；写操作只在 A03 引擎中接纳。
     trace["intent"] = proposal.kind
     reply = proposal.reply
     if proposal.kind == "inspect":

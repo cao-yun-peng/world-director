@@ -1,0 +1,1138 @@
+{
+  "mode": "offline-scripted",
+  "steps": [
+    {
+      "step": "1 观察台灯",
+      "turn_id": "T001",
+      "before": {
+        "revision": 0,
+        "event_count": 0,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:lin_yan",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 1,
+        "event_count": 1,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:lin_yan",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "new_events": [
+        {
+          "event_id": "a03-demo:E0001",
+          "session_id": "a03-demo",
+          "turn_id": "T001",
+          "actor_id": "lin_yan",
+          "kind": "DiscoveryEvent",
+          "preconditions": {
+            "actor_location": "duty_room",
+            "object_id": "lamp_01",
+            "accessible": true,
+            "owner": "location:duty_room"
+          },
+          "changes": {
+            "knowledge_added": {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          },
+          "before_revision": 0,
+          "after_revision": 1,
+          "cause_event_id": null,
+          "observer_id": "lin_yan",
+          "object_id": "lamp_01",
+          "facts": [
+            "一盏台灯，灯座底部刻着 L-17。"
+          ],
+          "source_id": "objects.json#lamp_01.description"
+        }
+      ],
+      "reply": "一盏台灯，灯座底部刻着 L-17。\n我看到了这些细节。",
+      "model_requests": 3,
+      "termination_reason": "completed",
+      "replayed": false,
+      "history_messages": 2
+    },
+    {
+      "step": "2 转移信封",
+      "turn_id": "T002",
+      "before": {
+        "revision": 1,
+        "event_count": 1,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:lin_yan",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 2,
+        "event_count": 2,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "new_events": [
+        {
+          "event_id": "a03-demo:E0002",
+          "session_id": "a03-demo",
+          "turn_id": "T002",
+          "actor_id": "lin_yan",
+          "kind": "TransferEvent",
+          "preconditions": {
+            "actor_location": "duty_room",
+            "object_id": "envelope_01",
+            "owner": "actor:lin_yan",
+            "recipient_id": "other_npc",
+            "recipient_location": "duty_room"
+          },
+          "changes": {
+            "owner": {
+              "object_id": "envelope_01",
+              "before": "actor:lin_yan",
+              "after": "actor:other_npc"
+            }
+          },
+          "before_revision": 1,
+          "after_revision": 2,
+          "cause_event_id": null
+        }
+      ],
+      "reply": "已将信封交给 other_npc。\n信封交给你。",
+      "model_requests": 2,
+      "termination_reason": "completed",
+      "replayed": false,
+      "history_messages": 4
+    },
+    {
+      "step": "3 原回合重发",
+      "turn_id": "T002",
+      "before": {
+        "revision": 2,
+        "event_count": 2,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 2,
+        "event_count": 2,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "new_events": [],
+      "reply": "已将信封交给 other_npc。\n信封交给你。",
+      "model_requests": 0,
+      "termination_reason": "completed",
+      "replayed": true,
+      "history_messages": 4
+    },
+    {
+      "step": "4 新回合再次给物",
+      "turn_id": "T003",
+      "before": {
+        "revision": 2,
+        "event_count": 2,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 2,
+        "event_count": 2,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "new_events": [],
+      "reply": "你未持有该物品。",
+      "model_requests": 1,
+      "termination_reason": "rejected",
+      "replayed": false,
+      "history_messages": 6
+    },
+    {
+      "step": "5 移动到储物间",
+      "turn_id": "T004",
+      "before": {
+        "revision": 2,
+        "event_count": 2,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 3,
+        "event_count": 3,
+        "actor_locations": {
+          "lin_yan": "storage_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "storage_room",
+          "objects": [
+            {
+              "id": "cabinet_01",
+              "name": "木柜"
+            }
+          ]
+        }
+      },
+      "new_events": [
+        {
+          "event_id": "a03-demo:E0003",
+          "session_id": "a03-demo",
+          "turn_id": "T004",
+          "actor_id": "lin_yan",
+          "kind": "MovementEvent",
+          "preconditions": {
+            "actor_location": "duty_room",
+            "destination": "storage_room",
+            "adjacent": true
+          },
+          "changes": {
+            "actor_location": {
+              "actor_id": "lin_yan",
+              "before": "duty_room",
+              "after": "storage_room"
+            }
+          },
+          "before_revision": 2,
+          "after_revision": 3,
+          "cause_event_id": null
+        }
+      ],
+      "reply": "已移动到 storage_room。\n到了。",
+      "model_requests": 2,
+      "termination_reason": "completed",
+      "replayed": false,
+      "history_messages": 8
+    },
+    {
+      "step": "6 观察木柜",
+      "turn_id": "T005",
+      "before": {
+        "revision": 3,
+        "event_count": 3,
+        "actor_locations": {
+          "lin_yan": "storage_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "storage_room",
+          "objects": [
+            {
+              "id": "cabinet_01",
+              "name": "木柜"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 4,
+        "event_count": 4,
+        "actor_locations": {
+          "lin_yan": "storage_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            },
+            {
+              "observer_id": "lin_yan",
+              "object_id": "cabinet_01",
+              "facts": [
+                "柜门贴有编号 C-08。"
+              ],
+              "source_id": "objects.json#cabinet_01.description",
+              "event_id": "a03-demo:E0004"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "storage_room",
+          "objects": [
+            {
+              "id": "cabinet_01",
+              "name": "木柜"
+            }
+          ]
+        }
+      },
+      "new_events": [
+        {
+          "event_id": "a03-demo:E0004",
+          "session_id": "a03-demo",
+          "turn_id": "T005",
+          "actor_id": "lin_yan",
+          "kind": "DiscoveryEvent",
+          "preconditions": {
+            "actor_location": "storage_room",
+            "object_id": "cabinet_01",
+            "accessible": true,
+            "owner": "location:storage_room"
+          },
+          "changes": {
+            "knowledge_added": {
+              "observer_id": "lin_yan",
+              "object_id": "cabinet_01",
+              "facts": [
+                "柜门贴有编号 C-08。"
+              ],
+              "source_id": "objects.json#cabinet_01.description",
+              "event_id": "a03-demo:E0004"
+            }
+          },
+          "before_revision": 3,
+          "after_revision": 4,
+          "cause_event_id": null,
+          "observer_id": "lin_yan",
+          "object_id": "cabinet_01",
+          "facts": [
+            "柜门贴有编号 C-08。"
+          ],
+          "source_id": "objects.json#cabinet_01.description"
+        }
+      ],
+      "reply": "柜门贴有编号 C-08。\n我看到了这些细节。",
+      "model_requests": 3,
+      "termination_reason": "completed",
+      "replayed": false,
+      "history_messages": 10
+    },
+    {
+      "step": "7 已移动但叙述失败",
+      "turn_id": "T006",
+      "before": {
+        "revision": 4,
+        "event_count": 4,
+        "actor_locations": {
+          "lin_yan": "storage_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            },
+            {
+              "observer_id": "lin_yan",
+              "object_id": "cabinet_01",
+              "facts": [
+                "柜门贴有编号 C-08。"
+              ],
+              "source_id": "objects.json#cabinet_01.description",
+              "event_id": "a03-demo:E0004"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "storage_room",
+          "objects": [
+            {
+              "id": "cabinet_01",
+              "name": "木柜"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 5,
+        "event_count": 5,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            },
+            {
+              "observer_id": "lin_yan",
+              "object_id": "cabinet_01",
+              "facts": [
+                "柜门贴有编号 C-08。"
+              ],
+              "source_id": "objects.json#cabinet_01.description",
+              "event_id": "a03-demo:E0004"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "new_events": [
+        {
+          "event_id": "a03-demo:E0005",
+          "session_id": "a03-demo",
+          "turn_id": "T006",
+          "actor_id": "lin_yan",
+          "kind": "MovementEvent",
+          "preconditions": {
+            "actor_location": "storage_room",
+            "destination": "duty_room",
+            "adjacent": true
+          },
+          "changes": {
+            "actor_location": {
+              "actor_id": "lin_yan",
+              "before": "storage_room",
+              "after": "duty_room"
+            }
+          },
+          "before_revision": 4,
+          "after_revision": 5,
+          "cause_event_id": null
+        }
+      ],
+      "reply": "已移动到 duty_room。",
+      "model_requests": 2,
+      "termination_reason": "narration_fallback",
+      "replayed": false,
+      "history_messages": 12
+    },
+    {
+      "step": "7b 重发失败叙述回合",
+      "turn_id": "T006",
+      "before": {
+        "revision": 5,
+        "event_count": 5,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            },
+            {
+              "observer_id": "lin_yan",
+              "object_id": "cabinet_01",
+              "facts": [
+                "柜门贴有编号 C-08。"
+              ],
+              "source_id": "objects.json#cabinet_01.description",
+              "event_id": "a03-demo:E0004"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "after": {
+        "revision": 5,
+        "event_count": 5,
+        "actor_locations": {
+          "lin_yan": "duty_room",
+          "other_npc": "duty_room"
+        },
+        "owners": {
+          "lamp_01": "location:duty_room",
+          "envelope_01": "actor:other_npc",
+          "box_01": "location:duty_room",
+          "cabinet_01": "location:storage_room"
+        },
+        "knowledge": {
+          "lin_yan": [
+            {
+              "observer_id": "lin_yan",
+              "object_id": "lamp_01",
+              "facts": [
+                "一盏台灯，灯座底部刻着 L-17。"
+              ],
+              "source_id": "objects.json#lamp_01.description",
+              "event_id": "a03-demo:E0001"
+            },
+            {
+              "observer_id": "lin_yan",
+              "object_id": "cabinet_01",
+              "facts": [
+                "柜门贴有编号 C-08。"
+              ],
+              "source_id": "objects.json#cabinet_01.description",
+              "event_id": "a03-demo:E0004"
+            }
+          ],
+          "other_npc": []
+        },
+        "visible_scene": {
+          "location_id": "duty_room",
+          "objects": [
+            {
+              "id": "lamp_01",
+              "name": "台灯"
+            },
+            {
+              "id": "envelope_01",
+              "name": "信封"
+            }
+          ]
+        }
+      },
+      "new_events": [],
+      "reply": "已移动到 duty_room。",
+      "model_requests": 0,
+      "termination_reason": "narration_fallback",
+      "replayed": true,
+      "history_messages": 12
+    }
+  ],
+  "receiver_discovery": {
+    "turn_id": "R001",
+    "before": {
+      "revision": 5,
+      "event_count": 5,
+      "actor_locations": {
+        "lin_yan": "duty_room",
+        "other_npc": "duty_room"
+      },
+      "owners": {
+        "lamp_01": "location:duty_room",
+        "envelope_01": "actor:other_npc",
+        "box_01": "location:duty_room",
+        "cabinet_01": "location:storage_room"
+      },
+      "knowledge": {
+        "lin_yan": [
+          {
+            "observer_id": "lin_yan",
+            "object_id": "lamp_01",
+            "facts": [
+              "一盏台灯，灯座底部刻着 L-17。"
+            ],
+            "source_id": "objects.json#lamp_01.description",
+            "event_id": "a03-demo:E0001"
+          },
+          {
+            "observer_id": "lin_yan",
+            "object_id": "cabinet_01",
+            "facts": [
+              "柜门贴有编号 C-08。"
+            ],
+            "source_id": "objects.json#cabinet_01.description",
+            "event_id": "a03-demo:E0004"
+          }
+        ],
+        "other_npc": []
+      },
+      "visible_scene": {
+        "location_id": "duty_room",
+        "objects": [
+          {
+            "id": "lamp_01",
+            "name": "台灯"
+          },
+          {
+            "id": "envelope_01",
+            "name": "信封"
+          }
+        ]
+      }
+    },
+    "after": {
+      "revision": 6,
+      "event_count": 6,
+      "actor_locations": {
+        "lin_yan": "duty_room",
+        "other_npc": "duty_room"
+      },
+      "owners": {
+        "lamp_01": "location:duty_room",
+        "envelope_01": "actor:other_npc",
+        "box_01": "location:duty_room",
+        "cabinet_01": "location:storage_room"
+      },
+      "knowledge": {
+        "lin_yan": [
+          {
+            "observer_id": "lin_yan",
+            "object_id": "lamp_01",
+            "facts": [
+              "一盏台灯，灯座底部刻着 L-17。"
+            ],
+            "source_id": "objects.json#lamp_01.description",
+            "event_id": "a03-demo:E0001"
+          },
+          {
+            "observer_id": "lin_yan",
+            "object_id": "cabinet_01",
+            "facts": [
+              "柜门贴有编号 C-08。"
+            ],
+            "source_id": "objects.json#cabinet_01.description",
+            "event_id": "a03-demo:E0004"
+          }
+        ],
+        "other_npc": [
+          {
+            "observer_id": "other_npc",
+            "object_id": "envelope_01",
+            "facts": [
+              "一只封口完整的信封，外面写着“交给林先生”。"
+            ],
+            "source_id": "objects.json#envelope_01.description",
+            "event_id": "a03-demo:E0006"
+          }
+        ]
+      },
+      "visible_scene": {
+        "location_id": "duty_room",
+        "objects": [
+          {
+            "id": "lamp_01",
+            "name": "台灯"
+          },
+          {
+            "id": "envelope_01",
+            "name": "信封"
+          }
+        ]
+      }
+    },
+    "event": {
+      "event_id": "a03-demo:E0006",
+      "session_id": "a03-demo",
+      "turn_id": "R001",
+      "actor_id": "other_npc",
+      "kind": "DiscoveryEvent",
+      "preconditions": {
+        "actor_location": "duty_room",
+        "object_id": "envelope_01",
+        "accessible": true,
+        "owner": "actor:other_npc"
+      },
+      "changes": {
+        "knowledge_added": {
+          "observer_id": "other_npc",
+          "object_id": "envelope_01",
+          "facts": [
+            "一只封口完整的信封，外面写着“交给林先生”。"
+          ],
+          "source_id": "objects.json#envelope_01.description",
+          "event_id": "a03-demo:E0006"
+        }
+      },
+      "before_revision": 5,
+      "after_revision": 6,
+      "cause_event_id": "a03-demo:E0002",
+      "observer_id": "other_npc",
+      "object_id": "envelope_01",
+      "facts": [
+        "一只封口完整的信封，外面写着“交给林先生”。"
+      ],
+      "source_id": "objects.json#envelope_01.description"
+    },
+    "result": {
+      "request_digest": "dc83da8d49693e5de4b4d72972d7921593d17715e695183adc5e552debef08aa",
+      "proposal": {
+        "kind": "inspect",
+        "target_text": "envelope_01",
+        "reply": null,
+        "destination_id": null,
+        "object_id": null,
+        "recipient_id": null
+      },
+      "receipt": {
+        "ok": true,
+        "code": "DISCOVERED",
+        "message": "一只封口完整的信封，外面写着“交给林先生”。",
+        "data": {
+          "id": "envelope_01",
+          "name": "信封",
+          "description": "一只封口完整的信封，外面写着“交给林先生”。"
+        }
+      },
+      "results": [
+        {
+          "ok": true,
+          "code": "DISCOVERED",
+          "message": "一只封口完整的信封，外面写着“交给林先生”。",
+          "data": {
+            "id": "envelope_01",
+            "name": "信封",
+            "description": "一只封口完整的信封，外面写着“交给林先生”。"
+          }
+        }
+      ],
+      "event_ids": [
+        "a03-demo:E0006"
+      ],
+      "before_revision": 5,
+      "after_revision": 6,
+      "reply": "一只封口完整的信封，外面写着“交给林先生”。",
+      "narration_status": "deterministic",
+      "session": null,
+      "trace": null
+    }
+  },
+  "history": [
+    {
+      "role": "user",
+      "content": "观察台灯"
+    },
+    {
+      "role": "assistant",
+      "content": "一盏台灯，灯座底部刻着 L-17。\n我看到了这些细节。"
+    },
+    {
+      "role": "user",
+      "content": "把信封给 other_npc"
+    },
+    {
+      "role": "assistant",
+      "content": "已将信封交给 other_npc。\n信封交给你。"
+    },
+    {
+      "role": "user",
+      "content": "把信封给 other_npc"
+    },
+    {
+      "role": "assistant",
+      "content": "你未持有该物品。"
+    },
+    {
+      "role": "user",
+      "content": "去储物间"
+    },
+    {
+      "role": "assistant",
+      "content": "已移动到 storage_room。\n到了。"
+    },
+    {
+      "role": "user",
+      "content": "观察木柜"
+    },
+    {
+      "role": "assistant",
+      "content": "柜门贴有编号 C-08。\n我看到了这些细节。"
+    },
+    {
+      "role": "user",
+      "content": "回值班室"
+    },
+    {
+      "role": "assistant",
+      "content": "已移动到 duty_room。"
+    }
+  ],
+  "assertions": "passed"
+}

@@ -1,14 +1,17 @@
-"""会话入口：默认 A01 对话，可选 A02 原生只读工具。"""
+"""会话入口：A01 对话、A02 只读工具、A03 内存世界。"""
 
 import argparse
 import json
 import os
 from pathlib import Path
+from uuid import uuid4
 
 from dotenv import load_dotenv
 from openai import APIError
 
 from app.character import GOALS
+from app.engine import TurnConflict, WorldEngine
+from app.world import create_world
 from app.model import FakeModelAdapter, ModelAdapter, RealModelAdapter
 from app.runtime import AgentTurnError, run_agent_turn
 from app.scene_data import FACTS
@@ -21,6 +24,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ENV_PATH = PROJECT_ROOT / ".env"
 RUN_PATH = PROJECT_ROOT / "runs" / "a01.jsonl"
 A02_RUN_PATH = PROJECT_ROOT / "runs" / "a02.jsonl"
+A03_RUN_PATH = PROJECT_ROOT / "runs" / "a03.jsonl"
 
 
 def append_record(path: Path, record: dict) -> None:
@@ -30,13 +34,14 @@ def append_record(path: Path, record: dict) -> None:
 
 
 def write_agent_trace(session: dict, trace: dict, model_name: str) -> None:
-    record = {"day": "A02", "session_id": session["session_id"],
+    is_world = trace.get("runtime_prompt_version") == "a03-v1"
+    record = {"day": "A03" if is_world else "A02", "session_id": session["session_id"],
               "turn_index": len(session["history"]) // 2 + 1,
               "actor_id": ACTOR_ID, "goal_id": session["goal_id"],
               "prompt_version": session["prompt_version"], "mode": "real", "model": model_name,
               **trace}
     try:
-        append_record(A02_RUN_PATH, record)
+        append_record(A03_RUN_PATH if is_world else A02_RUN_PATH, record)
     except OSError:
         print("工具轨迹写入失败；请检查 runs 目录权限。")
 
@@ -44,12 +49,14 @@ def write_agent_trace(session: dict, trace: dict, model_name: str) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="林砚的会话：/save 路径 保存，/exit 退出")
     parser.add_argument("--load", type=Path, help="加载JSON会话")
-    parser.add_argument("--engine", choices=("dialogue", "tools"), default="dialogue")
+    parser.add_argument("--engine", choices=("dialogue", "tools", "world"), default="dialogue")
     parser.add_argument("--max-model-requests", type=int, default=12,
                         help="工具模式本进程的模型请求上限（默认 12，失败请求也计数）")
     args = parser.parse_args(argv)
     if args.max_model_requests < 1:
         parser.error("--max-model-requests 必须大于 0")
+    if args.engine == "world" and args.load:
+        parser.error("A03 世界仅在内存中；A01/A02 会话 JSON 不能恢复世界。")
     remaining_requests = args.max_model_requests
     load_dotenv(ENV_PATH, override=False, encoding="utf-8-sig")
     try:
@@ -60,7 +67,9 @@ def main(argv: list[str] | None = None) -> int:
     except (ValueError, OSError) as error:
         print(f"无法打开会话：{error}")
         return 1
-    stage = "A02" if args.engine == "tools" else "A01"
+    stage = {"tools": "A02", "world": "A03", "dialogue": "A01"}[args.engine]
+    engine = WorldEngine(create_world(session["session_id"])) if args.engine == "world" else None
+    last_turn = None
     print(f"AI互动世界导演 · {stage}\n会话：{session['session_id']}\n目标：{session['goal_id']}")
     api_key = os.getenv("LLM_API_KEY", "").strip()
     model: ModelAdapter
@@ -73,22 +82,25 @@ def main(argv: list[str] | None = None) -> int:
         if not model_name or not base_url:
             print("请配置 LLM_MODEL 和 LLM_BASE_URL 后重试。")
             return 1
-        if args.engine == "tools" and model_name == "qwen-plus-character":
+        if args.engine in ("tools", "world") and model_name == "qwen-plus-character":
             print('工具模式需要支持 Function Calling 的模型；请设置 $env:LLM_MODEL = "qwen-plus"。')
             return 1
         model = RealModelAdapter(api_key, model_name, base_url)
         mode = "real"
         print(f"[real mode] 模型：{model_name}")
     else:
-        if args.engine == "tools":
-            print("工具模式需要 LLM_API_KEY；离线协议验证请运行 tests/test_a02.py。")
+        if args.engine in ("tools", "world"):
+            print("此模式需要 LLM_API_KEY；离线验证可运行 unittest，A03 演示用 python -m scripts.a03_demo。")
             return 1
         model = FakeModelAdapter()
         model_name = "FakeLLM"
         mode = "fake"
         print("[offline mode] 未设置 LLM_API_KEY，使用离线演示。")
 
-    print("输入 /save 路径 保存；/exit 退出（不会自动保存）。")
+    if engine is not None:
+        print("A03 世界仅在内存中，退出即丢失；/retry 重发上一回合，/exit 退出。")
+    else:
+        print("输入 /save 路径 保存；/exit 退出（不会自动保存）。")
     while True:
         try:
             user_input = input("你：").strip()
@@ -102,6 +114,9 @@ def main(argv: list[str] | None = None) -> int:
             continue
         command, _, argument = user_input.partition(" ")
         if command == "/save":
+            if engine is not None:
+                print("A03 尚未实现世界存档；不能用仅含对话的 JSON 冒充世界恢复点。")
+                continue
             if not argument.strip():
                 print("用法：/save saves/a01.json")
                 continue
@@ -111,17 +126,31 @@ def main(argv: list[str] | None = None) -> int:
             except (ValueError, OSError) as error:
                 print(f"保存失败：{error}")
             continue
+        turn_id = None
+        if engine is not None and user_input == "/retry":
+            if last_turn is None:
+                print("暂无可重发回合。")
+                continue
+            turn_id, user_input = last_turn
         if user_input.startswith("/"):
             print("未知命令，可用 /save 路径 或 /exit。")
             continue
         try:
-            if args.engine == "tools":
+            if args.engine in ("tools", "world"):
+                world_options = {}
+                if engine is not None:
+                    turn_id = turn_id or str(uuid4())
+                    last_turn = (turn_id, user_input)
+                    world_options = {"engine": engine, "turn_id": turn_id}
                 updated, reply, trace = run_agent_turn(
                     session, user_input, model, expected_actor_id=ACTOR_ID,
-                    max_model_requests=remaining_requests,
+                    max_model_requests=remaining_requests, **world_options,
                 )
             else:
                 updated, reply = run_turn(session, user_input, model, expected_actor_id=ACTOR_ID)
+        except TurnConflict as error:
+            print(str(error))
+            continue
         except AgentTurnError as error:
             write_agent_trace(session, error.trace, model_name)
             print(str(error))
@@ -132,12 +161,14 @@ def main(argv: list[str] | None = None) -> int:
         except ValueError as error:
             print(str(error))
             return 1
-        if args.engine == "tools":
+        if args.engine in ("tools", "world"):
             remaining_requests -= trace["model_requests"]
             write_agent_trace(session, trace, model_name)
             session = updated
             print(f"\n林砚：{reply}")
-            print(f"[tools] {trace['intent']}；本轮请求 {trace['model_requests']}；剩余 {remaining_requests}")
+            print(f"[{args.engine}] {trace['intent']}；本轮请求 {trace['model_requests']}；剩余 {remaining_requests}")
+            if engine is not None:
+                print(f"turn_id={turn_id}；世界版本={engine.world.revision}；事件数={len(engine.world.events)}")
             continue
         session = updated
         print(f"\n林砚：{reply}")

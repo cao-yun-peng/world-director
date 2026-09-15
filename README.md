@@ -1,4 +1,25 @@
-# AI 互动世界导演 · A02
+# AI 互动世界导演 · A03
+
+新增世界账本、移动与给物裁定、个人发现、事件因果、回合去重及叙述失败回退。
+默认仍运行 A01 对话；A03 使用独立内存世界。
+
+```powershell
+.\.venv\Scripts\python.exe -m scripts.a03_demo
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+# 使用本机已配置且支持 Function Calling 的模型：
+.\.venv\Scripts\python.exe -m app.main --engine world
+```
+
+- [A03 分步教学与练习（D015—D021）](docs/a03_practice.md)
+- [A03 结果、边界与验收证据](docs/a03_results.md)
+- [A03 连续故事的实际状态与事件](docs/a03_demo.json)
+- [Generative Agents 源码阅读笔记](docs/a03_source_notes.md)
+
+世界模式中 /retry 重发上一回合；/exit 退出。**本课没有世界存档**，
+世界模式不支持 /save 或 --load；对话 JSON 不能恢复物品归属、事件和去重记录。
+保证范围为单进程、顺序调用；自动测试不等于真实模型的自由叙述忠实性评估。
+
+## A02 原生只读工具
 
 新增意图理解与原生只读工具调用：talk / inspect / clarify。默认仍运行 A01 对话模式。
 
@@ -167,6 +188,6 @@ python -m exercises.count_calls
 
 - **为什么保留 ModelAdapter？** 把角色对话和供应商 API 分开。更换供应商或用替身测试时，上层仍调用同一个方法。
 - **为什么假回复不能标记 real？** 会伪造接通证据，掩盖配置或网络问题，也会让后续评测失去可信度。
-- **角色说地下室有信，是否就是真实世界事实？** 不是。现在只有角色生成的语言，没有权威世界账本，不能把一句回复当作事实变更。
+- **角色说地下室有信，是否就是真实世界事实？** 不是。A01 只有角色生成的语言；A03 已增加权威世界账本，但依然只有程序裁定能改变事实，不能把一句回复当作事实变更。
 
 API Key 是访问凭证，写入代码可能经 Git 历史或分享泄露。环境变量让凭证与代码分开，日志也不保存凭证或 SDK 请求。
