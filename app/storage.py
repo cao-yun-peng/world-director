@@ -8,8 +8,8 @@ from pathlib import Path
 from app.session import validate_session
 
 
-def save_session(session: dict, path: Path) -> None:
-    validate_session(session, expected_actor_id=session.get("actor_id"))
+def save_session(session: dict, path: Path, *, expected_actor_id: str) -> None:
+    validate_session(session, expected_actor_id=expected_actor_id)
     text = json.dumps(session, ensure_ascii=False, indent=2)
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = None

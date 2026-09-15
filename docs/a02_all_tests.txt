@@ -1,0 +1,64 @@
+test_invalid_fields_types_and_combinations (test_a02.ActionTests.test_invalid_fields_types_and_combinations) ... ok
+test_three_valid_actions (test_a02.ActionTests.test_three_valid_actions) ... ok
+test_budget_failure_logs_error_and_preserves_save (test_a02.CLITests.test_budget_failure_logs_error_and_preserves_save) ... ok
+test_configuration_errors_do_not_fabricate_offline_tools (test_a02.CLITests.test_configuration_errors_do_not_fabricate_offline_tools) ... ok
+test_tools_cli_loads_saves_and_logs_success (test_a02.CLITests.test_tools_cli_loads_saves_and_logs_success) ... ok
+test_wrong_archive_actor_does_not_write_trace (test_a02.CLITests.test_wrong_archive_actor_does_not_write_trace) ... ok
+test_bad_response_envelopes_stop (test_a02.RuntimeTests.test_bad_response_envelopes_stop) ... ok
+test_identity_mismatch_calls_zero_and_changes_no_file (test_a02.RuntimeTests.test_identity_mismatch_calls_zero_and_changes_no_file) ... ok
+test_invalid_batches_reject_before_any_execution (test_a02.RuntimeTests.test_invalid_batches_reject_before_any_execution) ... ok
+test_lamp_detail_enters_only_after_actual_tool_execution (test_a02.RuntimeTests.test_lamp_detail_enters_only_after_actual_tool_execution) ... ok
+test_model_failures_are_bounded_and_do_not_commit (test_a02.RuntimeTests.test_model_failures_are_bounded_and_do_not_commit) ... ok
+test_old_archive_roundtrip_and_history_independence (test_a02.RuntimeTests.test_old_archive_roundtrip_and_history_independence) ... ok
+test_player_identity_claim_does_not_change_trusted_actor (test_a02.RuntimeTests.test_player_identity_claim_does_not_change_trusted_actor) ... ok
+test_scene_request_uses_scene_tool (test_a02.RuntimeTests.test_scene_request_uses_scene_tool) ... ok
+test_talk_and_clarify_only_request_once (test_a02.RuntimeTests.test_talk_and_clarify_only_request_once) ... ok
+test_two_same_named_calls_keep_ids_and_independent_snapshots (test_a02.RuntimeTests.test_two_same_named_calls_keep_ids_and_independent_snapshots) ... ok
+test_unavailable_result_reaches_model_and_trace_without_hidden_text (test_a02.RuntimeTests.test_unavailable_result_reaches_model_and_trace_without_hidden_text) ... ok
+test_actual_sdk_serializes_tools_and_feedback_ids (test_a02.SDKTests.test_actual_sdk_serializes_tools_and_feedback_ids) ... ok
+test_recording_model_takes_nested_snapshots (test_a02.SmokeScriptTests.test_recording_model_takes_nested_snapshots) ... ok
+test_smoke_driver_runs_canned_fresh_sessions_without_network (test_a02.SmokeScriptTests.test_smoke_driver_runs_canned_fresh_sessions_without_network) ... ok
+test_smoke_rejects_clarify_without_explicit_action_boundary (test_a02.SmokeScriptTests.test_smoke_rejects_clarify_without_explicit_action_boundary) ... ok
+test_dispatch_errors_do_not_execute (test_a02.ToolTests.test_dispatch_errors_do_not_execute) ... ok
+test_permission_metadata_fails_closed (test_a02.ToolTests.test_permission_metadata_fails_closed) ... ok
+test_scene_dispatch_and_internal_error_redaction (test_a02.ToolTests.test_scene_dispatch_and_internal_error_redaction) ... ok
+test_scene_is_filtered_and_tools_do_not_mutate_world (test_a02.ToolTests.test_scene_is_filtered_and_tools_do_not_mutate_world) ... ok
+test_unavailable_errors_are_identical (test_a02.ToolTests.test_unavailable_errors_are_identical) ... ok
+test_adapter_disables_retries_and_rejects_empty_text (test_character.CharacterTests.test_adapter_disables_retries_and_rejects_empty_text) ... ok
+test_new_goal_needs_no_adapter_change (test_character.CharacterTests.test_new_goal_needs_no_adapter_change) ... ok
+test_only_goal_changes_and_cards_are_not_modified (test_character.CharacterTests.test_only_goal_changes_and_cards_are_not_modified) ... ok
+test_chat_request_and_text_extraction_with_mock_transport (test_d001.AdapterTests.test_chat_request_and_text_extraction_with_mock_transport)
+检查真实 SDK 的请求格式，但不访问模型服务。 ... ok
+test_counts_and_empty_input (test_d001.CountCallsTests.test_counts_and_empty_input) ... ok
+test_api_failure_does_not_fall_back_or_write_success (test_d001.DialogueTests.test_api_failure_does_not_fall_back_or_write_success) ... ok
+test_blank_input_does_not_write_record (test_d001.DialogueTests.test_blank_input_does_not_write_record) ... ok
+test_both_goals_keep_player_input_separate (test_d001.DialogueTests.test_both_goals_keep_player_input_separate) ... ok
+test_dotenv_config_reaches_adapter (test_d001.DialogueTests.test_dotenv_config_reaches_adapter) ... ok
+test_environment_takes_priority_over_dotenv (test_d001.DialogueTests.test_environment_takes_priority_over_dotenv) ... ok
+test_no_key_is_offline_and_records_append (test_d001.DialogueTests.test_no_key_is_offline_and_records_append) ... ok
+test_unknown_goal_stops_before_model_or_input (test_d001.DialogueTests.test_unknown_goal_stops_before_model_or_input) ... ok
+test_cli_uses_recording_fake_and_filtered_messages (test_d004.RecordingFakeModelTests.test_cli_uses_recording_fake_and_filtered_messages) ... ok
+test_records_independent_snapshot (test_d004.RecordingFakeModelTests.test_records_independent_snapshot) ... ok
+test_cli_commands_resume_goal_and_turn_index (test_session.SessionTests.test_cli_commands_resume_goal_and_turn_index) ... ok
+test_save_failure_preserves_existing_file (test_session.SessionTests.test_save_failure_preserves_existing_file) ... ok
+test_t01_three_turns_in_order (test_session.SessionTests.test_t01_three_turns_in_order) ... ok
+test_t02_snapshot_and_old_session_are_independent (test_session.SessionTests.test_t02_snapshot_and_old_session_are_independent) ... ok
+test_t03_permissions_first_later_and_restored (test_session.SessionTests.test_t03_permissions_first_later_and_restored) ... ok
+test_t04_new_sessions_are_independent (test_session.SessionTests.test_t04_new_sessions_are_independent) ... ok
+test_t05_failures_do_not_commit (test_session.SessionTests.test_t05_failures_do_not_commit) ... ok
+test_t06_three_save_load_two (test_session.SessionTests.test_t06_three_save_load_two) ... ok
+test_t07_invalid_archives_rejected_unchanged (test_session.SessionTests.test_t07_invalid_archives_rejected_unchanged) ... ok
+test_trusted_identity_is_required_without_fallback (test_session.SessionTests.test_trusted_identity_is_required_without_fallback) ... ok
+test_trusted_identity_mismatch_rejects_before_model_and_save (test_session.SessionTests.test_trusted_identity_mismatch_rejects_before_model_and_save) ... ok
+test_cli_messages_and_logs_exclude_hidden_data_despite_identity_claim (test_view.ViewIntegrationTests.test_cli_messages_and_logs_exclude_hidden_data_despite_identity_claim) ... ok
+test_missing_or_invalid_permissions_are_not_public (test_view.ViewTests.test_missing_or_invalid_permissions_are_not_public) ... ok
+test_prompt_uses_only_supplied_view_without_mutation (test_view.ViewTests.test_prompt_uses_only_supplied_view_without_mutation) ... ok
+test_registered_actors_get_their_own_facts (test_view.ViewTests.test_registered_actors_get_their_own_facts) ... ok
+test_rules_work_with_different_ids (test_view.ViewTests.test_rules_work_with_different_ids) ... ok
+test_unknown_actor_is_rejected_even_for_empty_input (test_view.ViewTests.test_unknown_actor_is_rejected_even_for_empty_input) ... ok
+test_view_does_not_mutate_or_share_fact_dictionaries (test_view.ViewTests.test_view_does_not_mutate_or_share_fact_dictionaries) ... ok
+
+----------------------------------------------------------------------
+Ran 58 tests in 2.032s
+
+OK

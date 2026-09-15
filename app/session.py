@@ -47,8 +47,8 @@ def create_session(*, actor_id: str, goal_id: str) -> dict:
     return session
 
 
-def build_messages(session: dict, user_text: str) -> list[dict[str, str]]:
-    validate_session(session, expected_actor_id=session.get("actor_id"))
+def build_messages(session: dict, user_text: str, *, expected_actor_id: str) -> list[dict[str, str]]:
+    validate_session(session, expected_actor_id=expected_actor_id)
     if not isinstance(user_text, str) or not user_text.strip():
         raise ValueError("请输入非空文字。")
     card = {**ACTOR_CARDS[session["actor_id"]], "goal": GOALS[session["goal_id"]]}
@@ -60,8 +60,8 @@ def build_messages(session: dict, user_text: str) -> list[dict[str, str]]:
     return messages
 
 
-def run_turn(session: dict, user_text: str, model: ModelAdapter) -> tuple[dict, str]:
-    messages = build_messages(session, user_text)
+def run_turn(session: dict, user_text: str, model: ModelAdapter, *, expected_actor_id: str) -> tuple[dict, str]:
+    messages = build_messages(session, user_text, expected_actor_id=expected_actor_id)
     reply = model.generate(messages)
     if not isinstance(reply, str) or not reply.strip():
         raise ValueError("模型没有返回有效文本。")

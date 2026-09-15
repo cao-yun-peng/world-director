@@ -1,0 +1,47 @@
+{
+  "_note": "A02虚构教学后台数据；整体不得作为模型输入。只读，不修改A01 FACTS。",
+  "actor_locations": {
+    "lin_yan": "duty_room",
+    "other_npc": "duty_room"
+  },
+  "objects": [
+    {
+      "id": "lamp_01",
+      "name": "台灯",
+      "location_id": "duty_room",
+      "visibility": "public",
+      "known_by": [],
+      "description": "一盏台灯，灯座底部刻着 L-17。",
+      "internal_note": "仅后台可见：A02-INTERNAL-LAMP"
+    },
+    {
+      "id": "envelope_01",
+      "name": "信封",
+      "location_id": "duty_room",
+      "visibility": "public",
+      "known_by": [],
+      "description": "一只封口完整的信封，外面写着“交给林先生”。",
+      "internal_note": "仅后台可见：不能根据观察直接认定已经打开信封"
+    },
+    {
+      "id": "box_01",
+      "name": "封存盒",
+      "location_id": "duty_room",
+      "visibility": "private",
+      "known_by": [
+        "other_npc"
+      ],
+      "description": "盒底刻着教学标记 A02-SECRET-7291。",
+      "internal_note": "只供权限失败测试"
+    },
+    {
+      "id": "cabinet_01",
+      "name": "木柜",
+      "location_id": "storage_room",
+      "visibility": "public",
+      "known_by": [],
+      "description": "柜门贴有编号 C-08。",
+      "internal_note": "位于另一房间"
+    }
+  ]
+}

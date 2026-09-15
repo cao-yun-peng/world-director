@@ -1,12 +1,20 @@
-"""模型调用集中在这里；上层只依赖 generate(messages)。"""
+"""模型调用集中在这里；文本模式使用 generate，工具模式使用 complete。"""
 
-from typing import Protocol
+from typing import Any, Protocol
 
 from openai import OpenAI
 
 
 class ModelAdapter(Protocol):
     def generate(self, messages: list[dict[str, str]]) -> str:
+        ...
+
+
+class ToolModelAdapter(Protocol):
+    def complete(self, messages: list[dict[str, Any]], *,
+                 tools: list[dict[str, Any]] | None = None,
+                 tool_choice: str | None = None,
+                 response_format: dict[str, Any] | None = None) -> dict[str, Any]:
         ...
 
 
@@ -27,6 +35,32 @@ class RealModelAdapter:
         if not text or not text.strip():
             raise ValueError("模型没有返回文本回答。")
         return text.strip()
+
+
+    def complete(self, messages: list[dict[str, Any]], *,
+                 tools: list[dict[str, Any]] | None = None,
+                 tool_choice: str | None = None,
+                 response_format: dict[str, Any] | None = None) -> dict[str, Any]:
+        options = {}
+        if tools is not None:
+            options["tools"] = tools
+        if tool_choice is not None:
+            options["tool_choice"] = tool_choice
+        if response_format is not None:
+            options["response_format"] = response_format
+        response = self.client.chat.completions.create(
+            model=self.model, messages=messages, max_tokens=512, stream=False,
+            extra_body={"enable_thinking": False}, **options,
+        )
+        if not response.choices:
+            raise ValueError("模型没有返回消息。")
+        choice = response.choices[0]
+        message = {"role": choice.message.role, "content": choice.message.content}
+        if choice.message.tool_calls:
+            message["tool_calls"] = [call.model_dump(include={"id", "type", "function"})
+                                     for call in choice.message.tool_calls]
+        return {"message": message, "finish_reason": choice.finish_reason,
+                "usage": response.usage.model_dump() if response.usage else None}
 
 
 class FakeModelAdapter:

@@ -1,4 +1,18 @@
-# AI 互动世界导演 · A01
+# AI 互动世界导演 · A02
+
+新增意图理解与原生只读工具调用：talk / inspect / clarify。默认仍运行 A01 对话模式。
+
+```powershell
+$env:LLM_MODEL = 'qwen-plus'
+.\.venv\Scripts\python.exe -m app.main --engine tools
+```
+
+- [A02 实现总结与验收证据](docs/a02_results.md)
+- [A02 操作和代码阅读说明](docs/a02_operation.md)
+- [A02 专项测试输出](docs/a02_tests.txt)
+- [全部回归输出](docs/a02_all_tests.txt)
+
+## A01 基础功能
 
 当前版本支持多轮会话、JSON保存及跨进程恢复。Python 3.11+。
 
@@ -40,7 +54,7 @@ python -m venv .venv
 
 今天只实现一种协议：OpenAI 兼容的 Chat Completions。
 默认模型为 `qwen-plus-character`，专门用于角色对话；官方说明其优化了人设遵循、话题推进和共情能力，适合今天的文字角色互动。
-它目前不支持 Function Calling，后续工具调用阶段再通过适配层选择支持工具的模型。
+它不支持 Function Calling；A02 工具模式请显式切换为 qwen-plus，详见上方操作说明。
 选型依据：[模型说明](https://help.aliyun.com/zh/model-studio/qwen-plus-character)。D002 的实际对照见 `docs/d002_results.md`。
 
 默认 base_url 为北京地域兼容地址 `https://dashscope.aliyuncs.com/compatible-mode/v1`。
@@ -122,7 +136,7 @@ A01演示共5次真实调用，固定 clarify，`max_tokens=256`、`max_retries=
 5. `app/model.py`：沿用 D002 的 `ModelAdapter` 与真实/离线实现。
 
 后续换模型服务时实现同一个接口即可；角色调用不需要了解 SDK。
-当前使用会话历史，不增加长期记忆、工具调用或权威世界状态更新。视图控制输入信息，不保证模型不会生成无依据的内容。
+A01 使用会话历史；A02 已增加原生只读工具，不增加长期记忆或权威世界状态更新。视图控制输入信息，不保证模型不会生成无依据的内容。
 
 ## D003 验收材料
 
