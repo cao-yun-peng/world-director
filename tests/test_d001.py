@@ -21,7 +21,7 @@ class DialogueTests(unittest.TestCase):
     def setUp(self):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
-        self.log = Path(directory.name) / "runs" / "d002.jsonl"
+        self.log = Path(directory.name) / "runs" / "d003.jsonl"
         self.env_file = Path(directory.name) / ".env"
         self.enterContext(patch.object(cli, "ENV_PATH", self.env_file))
         self.enterContext(patch.object(cli, "RUN_PATH", self.log))
@@ -38,11 +38,13 @@ class DialogueTests(unittest.TestCase):
         for record in records:
             self.assertEqual(record["mode"], "fake")
             self.assertIn("离线演示", record["output"])
-            self.assertEqual(set(record), {"day", "mode", "model", "input", "output", "goal_id", "goal", "prompt_version"})
-            self.assertEqual(record["day"], "D002")
+            self.assertEqual(set(record), {"day", "mode", "model", "input", "output", "goal_id", "goal", "prompt_version", "actor_id", "visible_fact_ids"})
+            self.assertEqual(record["day"], "D003")
             self.assertEqual(record["goal_id"], "clarify")
             self.assertEqual(record["goal"], GOALS["clarify"])
             self.assertEqual(record["prompt_version"], PROMPT_VERSION)
+            self.assertEqual(record["actor_id"], "lin_yan")
+            self.assertEqual(record["visible_fact_ids"], ["F_PUBLIC", "F_LIN"])
         self.assertIn("[offline mode]", self.output.getvalue())
 
     def test_api_failure_does_not_fall_back_or_write_success(self):
@@ -125,7 +127,7 @@ class AdapterTests(unittest.TestCase):
     def test_chat_request_and_text_extraction_with_mock_transport(self):
         """检查真实 SDK 的请求格式，但不访问模型服务。"""
         messages = [
-            {"role": "system", "content": build_prompt({**BASE_CARD, "goal": GOALS["clarify"]})},
+            {"role": "system", "content": build_prompt({**BASE_CARD, "goal": GOALS["clarify"]}, [])},
             {"role": "user", "content": "这里是什么地方？"},
         ]
 

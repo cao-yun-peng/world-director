@@ -12,7 +12,7 @@ class CharacterTests(unittest.TestCase):
         original = BASE_CARD.copy()
         cards = [{**BASE_CARD, "goal": goal} for goal in GOALS.values()]
         before = [card.copy() for card in cards]
-        prompts = [build_prompt(card) for card in cards]
+        prompts = [build_prompt(card, []) for card in cards]
         self.assertEqual(cards, before)
         self.assertEqual(BASE_CARD, original)
         self.assertIsNot(cards[0], cards[1])
@@ -25,7 +25,7 @@ class CharacterTests(unittest.TestCase):
 
     def test_new_goal_needs_no_adapter_change(self):
         card = {**BASE_CARD, "goal": "希望玩家自愿帮忙。"}
-        self.assertIn(card["goal"], build_prompt(card))
+        self.assertIn(card["goal"], build_prompt(card, []))
 
     def test_adapter_disables_retries_and_rejects_empty_text(self):
         with patch("app.model.OpenAI") as client:

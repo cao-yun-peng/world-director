@@ -1,4 +1,4 @@
-"""D002：一次玩家输入 → 一次角色回复 → 一条运行记录。"""
+"""D003：一次玩家输入 → 一次角色回复 → 一条运行记录。"""
 
 import json
 import os
@@ -9,16 +9,20 @@ from openai import APIError
 
 from app.character import BASE_CARD, GOALS, PROMPT_VERSION, build_prompt
 from app.model import FakeModelAdapter, ModelAdapter, RealModelAdapter
+from app.scene_data import FACTS
+from app.view import build_view
+
+ACTOR_ID = "lin_yan"
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ENV_PATH = PROJECT_ROOT / ".env"
-RUN_PATH = PROJECT_ROOT / "runs" / "d002.jsonl"
+RUN_PATH = PROJECT_ROOT / "runs" / "d003.jsonl"
 
 
 def main() -> int:
     # 加载项目配置；终端里已有的环境变量优先。
     load_dotenv(ENV_PATH, override=False, encoding="utf-8-sig")
-    print("AI互动世界导演 · D002")
+    print("AI互动世界导演 · D003")
     goal_id = os.getenv("CHARACTER_GOAL", "clarify").strip()
     if goal_id not in GOALS:
         print(f"未知目标：{goal_id}。可选值：{', '.join(GOALS)}")
@@ -52,8 +56,9 @@ def main() -> int:
         print("请输入一句话后重新运行。")
         return 1
 
+    visible_facts = build_view(FACTS, ACTOR_ID)
     messages = [
-        {"role": "system", "content": build_prompt(card)},
+        {"role": "system", "content": build_prompt(card, visible_facts)},
         {"role": "user", "content": user_input},
     ]
     try:
@@ -68,7 +73,9 @@ def main() -> int:
 
     print(f"\n{card['name']}：{reply}")
     record = {
-        "day": "D002",
+        "day": "D003",
+        "actor_id": ACTOR_ID,
+        "visible_fact_ids": [fact["id"] for fact in visible_facts],
         "goal_id": goal_id,
         "goal": card["goal"],
         "prompt_version": PROMPT_VERSION,

@@ -1,6 +1,6 @@
-# AI 互动世界导演 · D002
+# AI 互动世界导演 · D003
 
-第二天：让同一个林砚带着不同目标，回答玩家的一句话。Python 3.11+。
+第三天：由 Python 先筛选林砚可见的事实，再进行一次角色对话。Python 3.11+。
 
 ## 运行
 
@@ -75,24 +75,43 @@ Remove-Item Env:CHARACTER_GOAL
 每次新建角色卡，只替换目标；背景、性格和共同约束相同，玩家原话单独放在 user 消息。
 目标表示角色想要的结果，不代表玩家已经行动。
 
-每次成功的一问一答追加到 `runs/d002.jsonl`，D001 原始记录保留。
-日志包含 `day`、`mode`、`model`、`input`、`output`，以及 `goal_id`、`goal`、`prompt_version`（`d002-v1`）。
-本轮对照只做 4 次真实调用，`max_tokens=256`、`max_retries=0`，不共享历史。
+### 角色可见视图
+
+`app/main.py` 的 `ACTOR_ID = "lin_yan"` 固定当前身份；玩家原话和环境变量不能切换这个身份。
+`build_view(FACTS, ACTOR_ID)` 先筛选，再将结果传给 `build_prompt(card, visible_facts)`：
+
+- 已登记角色可见 public 事实；private 事实必须有包含该角色的有效字符串列表。
+- 缺失或未知可见性、无效私有名单不放行；未登记角色抛出 ValueError。
+- 返回新建的 `id/text` 字典，不带后台备注、权限字段，也不与后台字典共享。
+- `other_npc` 仅为权限测试身份，没有运行第二个角色。
+
+每次成功的一问一答追加到 `runs/d003.jsonl`，D001/D002 原始记录保留。
+日志保留 `day`、`mode`、`model`、`input`、`output`、`goal_id`、`goal`、`prompt_version`（`d003-v1`），增加 `actor_id` 和 `visible_fact_ids`。不记录全量后台资料。
+本轮只做 2 次真实体验，固定 clarify，`max_tokens=256`、`max_retries=0`，不共享历史。
 CLI 每运行一次仍会产生一次调用；这不是一个持久化预算系统。
 真实回复标记 `real`，离线回复标记 `fake`；失败或空输入不写成功记录。
 运行记录留在本地并被 Git 忽略，分享前检查对话内容是否包含敏感信息。
 
 ## 阅读顺序
 
-1. `app/character.py`：基础角色卡、目标映射和纯函数 `build_prompt()`。
-2. `app/model.py`：`ModelAdapter` 用 `Protocol` 约定 `generate(messages) -> str`；真实模型和离线替身分别实现它。
-3. `app/main.py`：读取配置、选择模型、构造独立的 system/user 消息、调用、记录。
-4. `exercises/count_calls.py`：独立的字典练习，不接入对话流程。
+1. `app/scene_data.py`：教学后台数据与已登记角色 ID，里面的校验词均为虚构测试材料。
+2. `app/view.py`：根据权限生成只含 `id/text` 的角色视图。
+3. `app/character.py`：保留身份、风格和目标，追加“已知事实”区域。
+4. `app/main.py`：固定身份 → 构造视图 → system/user 消息 → 调用与日志。
+5. `app/model.py`：沿用 D002 的 `ModelAdapter` 与真实/离线实现。
 
 后续换模型服务时实现同一个接口即可；角色调用不需要了解 SDK。
-今天没有多轮循环、记忆、工具调用或世界状态。
+今天没有多轮循环、记忆、工具调用或权威世界状态更新。视图控制输入信息，不保证模型不会生成无依据的内容。
 
-## 验证与基础训练
+## D003 验收材料
+
+- [完整实验与 CLI 消息捕获](docs/d003_results.md)
+- [完整测试输出](docs/d003_tests.txt)
+- [两数之和手算与独立解释核对](docs/d003_practice.md)
+
+测试保持 `.env` 隔离，不读取真实密钥。D003 验证了两个主体的权限、异常权限拒绝、字段裁剪、返回字典独立性，以及玩家自称其他角色时的完整模型输入隔离。
+
+## 测试与往日基础训练
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
