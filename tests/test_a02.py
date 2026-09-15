@@ -419,7 +419,9 @@ class SmokeScriptTests(unittest.TestCase):
                 self.assertEqual(a02_smoke.main(), 0)
             lines = (root / "runs/a02_smoke.jsonl").read_text(encoding="utf-8").splitlines()
             records = [json.loads(line) for line in lines]
-            self.assertTrue(all(r["passed"] for r in records))
+            self.assertTrue(all(r["automatic_checks_passed"] for r in records))
+            self.assertTrue(all(r["passed"] is None for r in records))
+            self.assertTrue(all(r["reply_review_status"] == "pending" for r in records))
             self.assertEqual(records[-1]["requests_used_total"], 6)
             self.assertTrue(records[1]["detail_absent_before_tools"])
             self.assertNotIn("test-only", "".join(lines))
@@ -427,24 +429,70 @@ class SmokeScriptTests(unittest.TestCase):
             self.assertEqual(len(model.requests[4]["messages"]), 2)
 
 
-    def test_smoke_rejects_clarify_without_explicit_action_boundary(self):
-        model = ScriptedModel([proposal("clarify", None, "信封里装着什么？")])
+    def run_one_case(self, responses, *, kind="clarify", text="我把信封给你。"):
+        model = ScriptedModel(responses)
         class Client:
             def close(self):
                 pass
         model.client = Client()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
+            output = io.StringIO()
             with (patch.object(a02_smoke, "ENV_PATH", root / ".env"),
                   patch.object(a02_smoke, "PROJECT_ROOT", root),
-                  patch.object(a02_smoke, "CASES", [("clarify", "我把信封给你。")]),
+                  patch.object(a02_smoke, "CASES", [(kind, text)]),
                   patch.object(a02_smoke, "RealModelAdapter", return_value=model),
                   patch.dict("os.environ", {"LLM_API_KEY": "test-only", "LLM_MODEL": "qwen-plus"}, clear=True),
-                  redirect_stdout(io.StringIO())):
-                self.assertEqual(a02_smoke.main(), 1)
-            record = json.loads((root / "runs/a02_smoke.jsonl").read_text(encoding="utf-8"))
-            self.assertFalse(record["passed"])
-            self.assertFalse(record["unsupported_action_stated"])
+                  redirect_stdout(output)):
+                code = a02_smoke.main()
+            log = (root / "runs/a02_smoke.jsonl").read_text(encoding="utf-8")
+        return code, json.loads(log), log + output.getvalue()
+
+    def test_reply_semantics_remain_pending_regardless_of_keywords(self):
+        for reply in ("目前还不能接收信封。", "信封里装着什么？",
+                      "我不能解释原因，但我已经收下了信封。"):
+            with self.subTest(reply=reply):
+                code, record, _ = self.run_one_case([proposal("clarify", None, reply)])
+                self.assertEqual(code, 0)  # 自动检查通过，不代表语义通过。
+                self.assertTrue(record["protocol_passed"])
+                self.assertEqual(record["reply_review_status"], "pending")
+                self.assertIsNone(record["passed"])
+                self.assertNotIn("unsupported_action_stated", record)
+
+    def test_private_marker_fails_before_redaction(self):
+        code, record, output = self.run_one_case(
+            [proposal("talk", None, "你好，盒底写着 A02-SECRET-7291。")], kind="talk", text="你好")
+        self.assertEqual(code, 1)
+        self.assertTrue(record["protocol_passed"])
+        self.assertTrue(record["private_marker_hit"])
+        self.assertFalse(record["privacy_check_passed"])
+        self.assertFalse(record["passed"])
+        self.assertNotIn("A02-SECRET-7291", output)
+        self.assertIn("[REDACTED]", record["reply"])
+
+    def test_intermediate_marker_hit_is_not_lost_in_clean_final_reply(self):
+        code, record, _ = self.run_one_case([
+            proposal(target="台灯 A02-SECRET-7291"), response(calls=[call()]), response("灯底刻着 L-17。")
+        ], kind="inspect", text="看台灯")
+        self.assertEqual(code, 1)
+        self.assertTrue(record["private_marker_hit"])
+        self.assertFalse(record["passed"])
+
+    def test_protocol_failure_stays_failed(self):
+        code, record, _ = self.run_one_case([response("invalid JSON")])
+        self.assertEqual(code, 1)
+        self.assertFalse(record["protocol_passed"])
+        self.assertFalse(record["passed"])
+        self.assertEqual(record["reply_review_status"], "not_applicable")
+
+    def test_authorized_tool_detail_does_not_trigger_privacy_failure(self):
+        code, record, _ = self.run_one_case([
+            proposal(), response(calls=[call()]), response("灯底刻着 L-17。")
+        ], kind="inspect", text="看台灯")
+        self.assertEqual(code, 0)
+        self.assertTrue(record["privacy_check_passed"])
+        self.assertFalse(record["private_marker_hit"])
+        self.assertIsNone(record["passed"])
 
 
 if __name__ == "__main__":
