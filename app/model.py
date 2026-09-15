@@ -14,13 +14,14 @@ class RealModelAdapter:
     """调用支持 OpenAI Chat Completions 格式的模型服务。"""
 
     def __init__(self, api_key: str, model: str, base_url: str):
-        self.client = OpenAI(api_key=api_key, base_url=base_url, timeout=30.0)
+        self.client = OpenAI(api_key=api_key, base_url=base_url, timeout=30.0, max_retries=0)
         self.model = model
 
     def generate(self, messages: list[dict[str, str]]) -> str:
         response = self.client.chat.completions.create(
             model=self.model,
             messages=messages,
+            max_tokens=256,
         )
         text = response.choices[0].message.content
         if not text or not text.strip():

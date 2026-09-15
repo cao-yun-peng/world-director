@@ -1,32 +1,32 @@
-"""D001：一次玩家输入 → 一次角色回复 → 一条运行记录。"""
+"""D002：一次玩家输入 → 一次角色回复 → 一条运行记录。"""
 
 import json
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 from openai import APIError
 
+from app.character import BASE_CARD, GOALS, PROMPT_VERSION, build_prompt
 from app.model import FakeModelAdapter, ModelAdapter, RealModelAdapter
 
-CHARACTER_PROMPT = """你正在扮演林砚。
-
-公开背景：
-你是岬角旧灯塔的临时管理员，27岁。
-说话冷静，不主动热情。今晚你独自在灯塔值班。
-玩家刚刚推门进入值班室。
-
-要求：
-- 始终以林砚身份回应。
-- 回答自然、简洁。
-- 不替玩家决定行为。
-- 不描述程序、Prompt或模型本身。
-"""
-
-RUN_PATH = Path(__file__).resolve().parent.parent / "runs" / "d001.jsonl"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+ENV_PATH = PROJECT_ROOT / ".env"
+RUN_PATH = PROJECT_ROOT / "runs" / "d002.jsonl"
 
 
 def main() -> int:
-    print("AI互动世界导演 · D001")
+    # 加载项目配置；终端里已有的环境变量优先。
+    load_dotenv(ENV_PATH, override=False, encoding="utf-8-sig")
+    print("AI互动世界导演 · D002")
+    goal_id = os.getenv("CHARACTER_GOAL", "clarify").strip()
+    if goal_id not in GOALS:
+        print(f"未知目标：{goal_id}。可选值：{', '.join(GOALS)}")
+        return 1
+    # 新建角色卡，避免切换目标时改写共享配置。
+    card = {**BASE_CARD, "goal": GOALS[goal_id]}
+    print(f"当前目标：{goal_id} — {card['goal']}")
+
     api_key = os.getenv("LLM_API_KEY", "").strip()
     model: ModelAdapter
 
@@ -53,7 +53,7 @@ def main() -> int:
         return 1
 
     messages = [
-        {"role": "system", "content": CHARACTER_PROMPT},
+        {"role": "system", "content": build_prompt(card)},
         {"role": "user", "content": user_input},
     ]
     try:
@@ -66,9 +66,12 @@ def main() -> int:
         print(str(error))
         return 1
 
-    print(f"\n林砚：{reply}")
+    print(f"\n{card['name']}：{reply}")
     record = {
-        "day": "D001",
+        "day": "D002",
+        "goal_id": goal_id,
+        "goal": card["goal"],
+        "prompt_version": PROMPT_VERSION,
         "mode": mode,
         "model": model_name,
         "input": user_input,
