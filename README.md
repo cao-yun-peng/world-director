@@ -1,6 +1,27 @@
-# AI 互动世界导演 · D003
+# AI 互动世界导演 · A01
 
-第三天：由 Python 先筛选林砚可见的事实，再进行一次角色对话。Python 3.11+。
+当前版本支持多轮会话、JSON保存及跨进程恢复。Python 3.11+。
+
+## 新建、保存、恢复
+
+```powershell
+.\.venv\Scripts\python.exe -m app.main
+# 交互中：/save saves/my_session.json，/exit
+.\.venv\Scripts\python.exe -m app.main --load saves/my_session.json
+```
+
+退出不自动保存；加载沿用存档目标。详情见[验收报告](docs/a01_results.md)和[通俗实践指南](docs/a01_practice.md)。
+
+## D004：让测试看见模型输入
+
+新增 `tests/test_d004.py`，用记录型假模型测试输入快照和完整 CLI。该测试现已适配多轮CLI，无需真实 API。
+
+- [动手实践与学习指南](docs/d004_practice.md)：复写、预测、制造错误、恢复、检查CLI输入。
+- [实验结果](docs/d004_results.md)：首次通过 → 浅复制断言失败 → 恢复通过 → 完整21项回归。
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_d004.py" -v
+```
 
 ## 运行
 
@@ -85,10 +106,10 @@ Remove-Item Env:CHARACTER_GOAL
 - 返回新建的 `id/text` 字典，不带后台备注、权限字段，也不与后台字典共享。
 - `other_npc` 仅为权限测试身份，没有运行第二个角色。
 
-每次成功的一问一答追加到 `runs/d003.jsonl`，D001/D002 原始记录保留。
-日志保留 `day`、`mode`、`model`、`input`、`output`、`goal_id`、`goal`、`prompt_version`（`d003-v1`），增加 `actor_id` 和 `visible_fact_ids`。不记录全量后台资料。
-本轮只做 2 次真实体验，固定 clarify，`max_tokens=256`、`max_retries=0`，不共享历史。
-CLI 每运行一次仍会产生一次调用；这不是一个持久化预算系统。
+每轮成功回复追加到 `runs/a01.jsonl`，旧日志保留；存档位于本地 `saves/`。
+日志保留 `day`、`mode`、`model`、`input`、`output`、`goal_id`、`goal`、`prompt_version`（`a01-v1`），包含 `actor_id`、`visible_fact_ids`、`session_id`、`turn_index`。不记录全量后台资料。
+A01演示共5次真实调用，固定 clarify，`max_tokens=256`、`max_retries=0`，同一会话逐轮携带成功历史。
+每条普通输入产生一次调用，/save与/exit不调用模型；不提供持久化预算系统。
 真实回复标记 `real`，离线回复标记 `fake`；失败或空输入不写成功记录。
 运行记录留在本地并被 Git 忽略，分享前检查对话内容是否包含敏感信息。
 
@@ -101,7 +122,7 @@ CLI 每运行一次仍会产生一次调用；这不是一个持久化预算系�
 5. `app/model.py`：沿用 D002 的 `ModelAdapter` 与真实/离线实现。
 
 后续换模型服务时实现同一个接口即可；角色调用不需要了解 SDK。
-今天没有多轮循环、记忆、工具调用或权威世界状态更新。视图控制输入信息，不保证模型不会生成无依据的内容。
+当前使用会话历史，不增加长期记忆、工具调用或权威世界状态更新。视图控制输入信息，不保证模型不会生成无依据的内容。
 
 ## D003 验收材料
 

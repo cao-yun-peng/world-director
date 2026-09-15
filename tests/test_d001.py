@@ -30,16 +30,16 @@ class DialogueTests(unittest.TestCase):
         self.enterContext(redirect_stdout(self.output))
 
     def test_no_key_is_offline_and_records_append(self):
-        with patch("builtins.input", return_value="这里是什么地方？"):
-            self.assertEqual(cli.main(), 0)
-            self.assertEqual(cli.main(), 0)
+        with patch("builtins.input", side_effect=["这里是什么地方？", "/exit", "这里是什么地方？", "/exit"]):
+            self.assertEqual(cli.main([]), 0)
+            self.assertEqual(cli.main([]), 0)
         records = [json.loads(line) for line in self.log.read_text(encoding="utf-8").splitlines()]
         self.assertEqual(len(records), 2)
         for record in records:
             self.assertEqual(record["mode"], "fake")
             self.assertIn("离线演示", record["output"])
-            self.assertEqual(set(record), {"day", "mode", "model", "input", "output", "goal_id", "goal", "prompt_version", "actor_id", "visible_fact_ids"})
-            self.assertEqual(record["day"], "D003")
+            self.assertEqual(set(record), {"day", "mode", "model", "input", "output", "goal_id", "goal", "prompt_version", "actor_id", "visible_fact_ids", "session_id", "turn_index"})
+            self.assertEqual(record["day"], "A01")
             self.assertEqual(record["goal_id"], "clarify")
             self.assertEqual(record["goal"], GOALS["clarify"])
             self.assertEqual(record["prompt_version"], PROMPT_VERSION)
@@ -50,19 +50,19 @@ class DialogueTests(unittest.TestCase):
     def test_api_failure_does_not_fall_back_or_write_success(self):
         with (
             patch.dict("os.environ", {"LLM_API_KEY": "test-only"}),
-            patch("builtins.input", return_value="你好"),
+            patch("builtins.input", side_effect=["你好", "/exit"]),
             patch.object(RealModelAdapter, "generate", side_effect=APIConnectionError(
                 request=httpx.Request("POST", "https://example.invalid")
             )),
         ):
-            self.assertEqual(cli.main(), 1)
+            self.assertEqual(cli.main([]), 1)
         self.assertFalse(self.log.exists())
         self.assertNotIn("test-only", self.output.getvalue())
         self.assertNotIn("离线演示", self.output.getvalue())
 
     def test_blank_input_does_not_write_record(self):
-        with patch("builtins.input", return_value="   "):
-            self.assertEqual(cli.main(), 1)
+        with patch("builtins.input", side_effect=["   ", "/exit"]):
+            self.assertEqual(cli.main([]), 0)
         self.assertFalse(self.log.exists())
 
 
@@ -72,11 +72,11 @@ class DialogueTests(unittest.TestCase):
             "LLM_BASE_URL=https://example.invalid/v1\n", encoding="utf-8-sig"
         )
         with (
-            patch("builtins.input", return_value="你好"),
+            patch("builtins.input", side_effect=["你好", "/exit"]),
             patch.object(cli, "RealModelAdapter") as adapter,
         ):
             adapter.return_value.generate.return_value = "测试回复"
-            self.assertEqual(cli.main(), 0)
+            self.assertEqual(cli.main([]), 0)
             adapter.assert_called_once_with("test-only", "test-model", "https://example.invalid/v1")
         self.assertNotIn("test-only", self.output.getvalue())
         self.assertNotIn("test-only", self.log.read_text(encoding="utf-8"))
@@ -85,9 +85,9 @@ class DialogueTests(unittest.TestCase):
         self.env_file.write_text("LLM_API_KEY=test-only\n", encoding="utf-8")
         with (
             patch.dict("os.environ", {"LLM_API_KEY": ""}),
-            patch("builtins.input", return_value="你好"),
+            patch("builtins.input", side_effect=["你好", "/exit"]),
         ):
-            self.assertEqual(cli.main(), 0)
+            self.assertEqual(cli.main([]), 0)
         record = json.loads(self.log.read_text(encoding="utf-8"))
         self.assertEqual(record["mode"], "fake")
 
@@ -98,7 +98,7 @@ class DialogueTests(unittest.TestCase):
             patch.object(cli, "RealModelAdapter") as adapter,
             patch("builtins.input") as user_input,
         ):
-            self.assertEqual(cli.main(), 1)
+            self.assertEqual(cli.main([]), 1)
             adapter.assert_not_called()
             user_input.assert_not_called()
         self.assertIn("未知目标", self.output.getvalue())
@@ -109,9 +109,9 @@ class DialogueTests(unittest.TestCase):
         for goal_id in GOALS:
             with self.subTest(goal_id=goal_id), (
                 patch.dict("os.environ", {"CHARACTER_GOAL": goal_id, "LLM_API_KEY": "test-only"})
-            ), patch("builtins.input", return_value=player_text), patch.object(cli, "RealModelAdapter") as adapter:
+            ), patch("builtins.input", side_effect=[player_text, "/exit"]), patch.object(cli, "RealModelAdapter") as adapter:
                 adapter.return_value.generate.return_value = "测试回复"
-                self.assertEqual(cli.main(), 0)
+                self.assertEqual(cli.main([]), 0)
                 messages = adapter.return_value.generate.call_args.args[0]
                 self.assertEqual(len(messages), 2)
                 self.assertEqual(messages[0]["role"], "system")

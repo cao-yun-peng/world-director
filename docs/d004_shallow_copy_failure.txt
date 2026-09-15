@@ -1,0 +1,18 @@
+test_cli_uses_recording_fake_and_filtered_messages (test_d004.RecordingFakeModelTests.test_cli_uses_recording_fake_and_filtered_messages) ... ok
+test_records_independent_snapshot (test_d004.RecordingFakeModelTests.test_records_independent_snapshot) ... FAIL
+
+======================================================================
+FAIL: test_records_independent_snapshot (test_d004.RecordingFakeModelTests.test_records_independent_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\project\self-agent\world-director\tests\test_d004.py", line 40, in test_records_independent_snapshot
+    self.assertEqual(model.calls[0][0]["content"], "你好")
+AssertionError: '后来修改的内容' != '你好'
+- 后来修改的内容
++ 你好
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.013s
+
+FAILED (failures=1)

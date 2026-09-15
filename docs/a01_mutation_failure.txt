@@ -1,0 +1,33 @@
+test_cli_commands_resume_goal_and_turn_index (test_session.SessionTests.test_cli_commands_resume_goal_and_turn_index) ... ok
+test_save_failure_preserves_existing_file (test_session.SessionTests.test_save_failure_preserves_existing_file) ... ok
+test_t01_three_turns_in_order (test_session.SessionTests.test_t01_three_turns_in_order) ... ok
+test_t02_snapshot_and_old_session_are_independent (test_session.SessionTests.test_t02_snapshot_and_old_session_are_independent) ... FAIL
+test_t03_permissions_first_later_and_restored (test_session.SessionTests.test_t03_permissions_first_later_and_restored) ... ok
+test_t04_new_sessions_are_independent (test_session.SessionTests.test_t04_new_sessions_are_independent) ... ok
+test_t05_failures_do_not_commit (test_session.SessionTests.test_t05_failures_do_not_commit) ... ok
+test_t06_three_save_load_two (test_session.SessionTests.test_t06_three_save_load_two) ... ok
+test_t07_invalid_archives_rejected_unchanged (test_session.SessionTests.test_t07_invalid_archives_rejected_unchanged) ... ok
+
+======================================================================
+FAIL: test_t02_snapshot_and_old_session_are_independent (test_session.SessionTests.test_t02_snapshot_and_old_session_are_independent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\project\self-agent\world-director\tests\test_session.py", line 53, in test_t02_snapshot_and_old_session_are_independent
+    self.assertEqual(model.calls[0], [{"role": "user", "content": "原文"}])
+AssertionError: Lists differ: [{'role': 'user', 'content': '被修改'}] != [{'role': 'user', 'content': '原文'}]
+
+First differing element 0:
+{'role': 'user', 'content': '被修改'}
+{'role': 'user', 'content': '原文'}
+
+- [{'content': '被修改', 'role': 'user'}]
+?               ^^^
+
++ [{'content': '原文', 'role': 'user'}]
+?               ^^
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.223s
+
+FAILED (failures=1)

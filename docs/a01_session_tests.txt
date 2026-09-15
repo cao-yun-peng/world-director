@@ -1,0 +1,14 @@
+test_cli_commands_resume_goal_and_turn_index (test_session.SessionTests.test_cli_commands_resume_goal_and_turn_index) ... ok
+test_save_failure_preserves_existing_file (test_session.SessionTests.test_save_failure_preserves_existing_file) ... ok
+test_t01_three_turns_in_order (test_session.SessionTests.test_t01_three_turns_in_order) ... ok
+test_t02_snapshot_and_old_session_are_independent (test_session.SessionTests.test_t02_snapshot_and_old_session_are_independent) ... ok
+test_t03_permissions_first_later_and_restored (test_session.SessionTests.test_t03_permissions_first_later_and_restored) ... ok
+test_t04_new_sessions_are_independent (test_session.SessionTests.test_t04_new_sessions_are_independent) ... ok
+test_t05_failures_do_not_commit (test_session.SessionTests.test_t05_failures_do_not_commit) ... ok
+test_t06_three_save_load_two (test_session.SessionTests.test_t06_three_save_load_two) ... ok
+test_t07_invalid_archives_rejected_unchanged (test_session.SessionTests.test_t07_invalid_archives_rejected_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.219s
+
+OK

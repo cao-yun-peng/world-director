@@ -1,0 +1,27 @@
+test_adapter_disables_retries_and_rejects_empty_text (test_character.CharacterTests.test_adapter_disables_retries_and_rejects_empty_text) ... ok
+test_new_goal_needs_no_adapter_change (test_character.CharacterTests.test_new_goal_needs_no_adapter_change) ... ok
+test_only_goal_changes_and_cards_are_not_modified (test_character.CharacterTests.test_only_goal_changes_and_cards_are_not_modified) ... ok
+test_chat_request_and_text_extraction_with_mock_transport (test_d001.AdapterTests.test_chat_request_and_text_extraction_with_mock_transport)
+检查真实 SDK 的请求格式，但不访问模型服务。 ... ok
+test_counts_and_empty_input (test_d001.CountCallsTests.test_counts_and_empty_input) ... ok
+test_api_failure_does_not_fall_back_or_write_success (test_d001.DialogueTests.test_api_failure_does_not_fall_back_or_write_success) ... ok
+test_blank_input_does_not_write_record (test_d001.DialogueTests.test_blank_input_does_not_write_record) ... ok
+test_both_goals_keep_player_input_separate (test_d001.DialogueTests.test_both_goals_keep_player_input_separate) ... ok
+test_dotenv_config_reaches_adapter (test_d001.DialogueTests.test_dotenv_config_reaches_adapter) ... ok
+test_environment_takes_priority_over_dotenv (test_d001.DialogueTests.test_environment_takes_priority_over_dotenv) ... ok
+test_no_key_is_offline_and_records_append (test_d001.DialogueTests.test_no_key_is_offline_and_records_append) ... ok
+test_unknown_goal_stops_before_model_or_input (test_d001.DialogueTests.test_unknown_goal_stops_before_model_or_input) ... ok
+test_cli_uses_recording_fake_and_filtered_messages (test_d004.RecordingFakeModelTests.test_cli_uses_recording_fake_and_filtered_messages) ... ok
+test_records_independent_snapshot (test_d004.RecordingFakeModelTests.test_records_independent_snapshot) ... ok
+test_cli_messages_and_logs_exclude_hidden_data_despite_identity_claim (test_view.ViewIntegrationTests.test_cli_messages_and_logs_exclude_hidden_data_despite_identity_claim) ... ok
+test_missing_or_invalid_permissions_are_not_public (test_view.ViewTests.test_missing_or_invalid_permissions_are_not_public) ... ok
+test_prompt_uses_only_supplied_view_without_mutation (test_view.ViewTests.test_prompt_uses_only_supplied_view_without_mutation) ... ok
+test_registered_actors_get_their_own_facts (test_view.ViewTests.test_registered_actors_get_their_own_facts) ... ok
+test_rules_work_with_different_ids (test_view.ViewTests.test_rules_work_with_different_ids) ... ok
+test_unknown_actor_is_rejected_even_for_empty_input (test_view.ViewTests.test_unknown_actor_is_rejected_even_for_empty_input) ... ok
+test_view_does_not_mutate_or_share_fact_dictionaries (test_view.ViewTests.test_view_does_not_mutate_or_share_fact_dictionaries) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 2.568s
+
+OK

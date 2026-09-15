@@ -97,12 +97,12 @@ class ViewIntegrationTests(unittest.TestCase):
                         patch.object(cli, "ENV_PATH", Path(directory) / ".env"),
                         patch.object(cli, "RUN_PATH", log_path),
                         patch.dict("os.environ", {"LLM_API_KEY": "test-only", "CHARACTER_GOAL": goal_id, "ACTOR_ID": "other_npc"}, clear=True),
-                        patch("builtins.input", return_value=player_text),
+                        patch("builtins.input", side_effect=[player_text, "/exit"]),
                         patch.object(cli, "RealModelAdapter") as adapter,
                         redirect_stdout(output),
                     ):
                         adapter.return_value.generate.return_value = "【mock测试】回复"
-                        self.assertEqual(cli.main(), 0)
+                        self.assertEqual(cli.main([]), 0)
                         adapter.return_value.generate.assert_called_once()
                         messages = adapter.return_value.generate.call_args.args[0]
                     self.assertEqual(messages[1], {"role": "user", "content": player_text})
@@ -120,7 +120,7 @@ class ViewIntegrationTests(unittest.TestCase):
                     record = json.loads(log_text)
                     self.assertEqual(record["actor_id"], "lin_yan")
                     self.assertEqual(record["visible_fact_ids"], ["F_PUBLIC", "F_LIN"])
-                    self.assertEqual(record["prompt_version"], "d003-v1")
+                    self.assertEqual(record["prompt_version"], "a01-v1")
                     self.assertEqual(cli.ACTOR_ID, "lin_yan")
 
 
