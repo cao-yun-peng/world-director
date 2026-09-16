@@ -34,7 +34,7 @@ def append_record(path: Path, record: dict) -> None:
 
 
 def write_agent_trace(session: dict, trace: dict, model_name: str) -> None:
-    is_world = trace.get("runtime_prompt_version") == "a03-v1"
+    is_world = trace.get("runtime_prompt_version", "").startswith("a03-")
     record = {"day": "A03" if is_world else "A02", "session_id": session["session_id"],
               "turn_index": len(session["history"]) // 2 + 1,
               "actor_id": ACTOR_ID, "goal_id": session["goal_id"],
@@ -49,10 +49,16 @@ def write_agent_trace(session: dict, trace: dict, model_name: str) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="林砚的会话：/save 路径 保存，/exit 退出")
     parser.add_argument("--load", type=Path, help="加载JSON会话")
-    parser.add_argument("--engine", choices=("dialogue", "tools", "world"), default="dialogue")
+    parser.add_argument("--engine", choices=("dialogue", "tools", "world", "loop"), default="dialogue")
     parser.add_argument("--max-model-requests", type=int, default=12,
                         help="工具模式本进程的模型请求上限（默认 12，失败请求也计数）")
+    parser.add_argument("--max-steps", type=int, default=4, help="A04 每轮逻辑决策上限")
+    parser.add_argument("--turn-timeout", type=float, default=30, help="A04 整轮共享秒数")
+    parser.add_argument("--max-parallel-tools", type=int, default=2, help="A04 查询执行名额")
     args = parser.parse_args(argv)
+    if args.engine == "loop":
+        from app.loop_cli import main as loop_main
+        return loop_main(args)
     if args.max_model_requests < 1:
         parser.error("--max-model-requests 必须大于 0")
     if args.engine == "world" and args.load:
@@ -153,6 +159,13 @@ def main(argv: list[str] | None = None) -> int:
             continue
         except AgentTurnError as error:
             write_agent_trace(session, error.trace, model_name)
+            if engine is not None:
+                remaining_requests -= error.trace["model_requests"]
+                print(f"本轮未执行（{error.code}），世界与历史保持原样。")
+                if error.trace.get("action_errors"):
+                    print("行动格式错误：" + error.trace["action_errors"][-1]["message"])
+                print(f"可用 /retry 重试或重新输入；剩余模型请求 {remaining_requests}。")
+                continue
             print(str(error))
             return 1
         except APIError:

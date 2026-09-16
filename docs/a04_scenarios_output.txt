@@ -1,0 +1,9 @@
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a04_faults
+Exit code: 0
+
+normal: completed requests=3 revision=0->1
+bad_arguments: rejected requests=2 revision=0->0
+unauthorized: rejected requests=2 revision=0->0
+timeout: TURN_TIMEOUT requests=1 revision=0->0
+loop: STEP_LIMIT requests=4 revision=0->0
+duplicate: completed requests=2 revision=0->1

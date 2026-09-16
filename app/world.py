@@ -2,8 +2,9 @@
 
 import json
 from copy import deepcopy
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields
 from pathlib import Path
+from types import MappingProxyType
 
 from app.actions import ActionProposal, normalize_action
 
@@ -18,6 +19,31 @@ class WorldState:
     knowledge: dict[str, list[dict]]
     revision: int = 0
     events: list[dict] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class WorldSnapshot:
+    """A04 查询持有的递归只读视图，与可提交的 WorldState 分离。"""
+
+    session_id: str
+    locations: MappingProxyType
+    actor_locations: MappingProxyType
+    objects: MappingProxyType
+    owners: MappingProxyType
+    knowledge: MappingProxyType
+    revision: int
+    events: tuple
+
+
+def freeze_world(state: WorldState) -> WorldSnapshot:
+    def freeze(value):
+        if isinstance(value, dict):
+            return MappingProxyType({key: freeze(item) for key, item in value.items()})
+        if isinstance(value, list):
+            return tuple(freeze(item) for item in value)
+        return value
+
+    return WorldSnapshot(**{item.name: freeze(getattr(state, item.name)) for item in fields(state)})
 
 
 def create_world(session_id: str) -> WorldState:

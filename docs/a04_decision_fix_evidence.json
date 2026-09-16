@@ -1,0 +1,27 @@
+{
+  "task": "A04-DECISION-FIX",
+  "recorded_at": "2026-09-16T02:39:38.114470+00:00",
+  "python": "3.12.10",
+  "git_head": "f2d653b774946147f19e5abdd29363fd1fc05765",
+  "working_tree_changes": true,
+  "new_real_model_requests": 0,
+  "checks": {
+    "new_tests": 9,
+    "all_tests": 146,
+    "git_diff_check_exit": 0
+  },
+  "sha256": {
+    "app/async_runtime.py": "4e413b017bd1458355d7ca36bb3cba4100a2c8df822a2d3e837491860bf5313d",
+    "app/trace.py": "797626a9192fc4050c13c176b03b7065dd7cee7332426aebf990c7c6703100b3",
+    "app/loop_cli.py": "6bcf60359dbc91ab491c3143b76e0d036b56ef5fea45dbbb092ac85319dc926a",
+    "app/model.py": "cd64d361f5e9bf4677802ae7938e493ca4fe17d7aa25003e9c5be65e15fef11f",
+    "app/execution.py": "22c2deb2d2c4e57e03c57e7d972d83bf24c1d850eab2f5bbbec00c1d5546f796",
+    "tests/test_a04.py": "35da9601cf40da74901ef92f4781cb1dfa81a37c19d4106d5141a55bc2d8cd64",
+    "tests/test_a04_decision_format.py": "229860f90e081af4a4b268cc12890a168c7c739a9a5f34571f5c12c70d20fce6",
+    "docs/a04_decision_fix.md": "17b35dafd2318016f504161031e6f77431a6c5bc297ccfbcca1c9de7f74b5fbe",
+    "docs/a04_decision_fix_tests.txt": "a708b6c358b5e982dcd1bacda6644ba5c5e08e34b24a8d42655abcb6445b0eb5",
+    "docs/a04_decision_fix_all_tests.txt": "43bc070e3d05b510abf610a906c0bc22e3ae56fc8a93d8c2500952c6d5225de2",
+    "docs/a04_results.md": "43ebc23f4b358ec1ef232f3708489e3382fd2cf79ebd135af67150fb01967d7f",
+    "docs/a04_practice.md": "feac1c4878d99b9e40c21ee03a52c59af7dcea7446537690d92093d0d0fc7f70"
+  }
+}

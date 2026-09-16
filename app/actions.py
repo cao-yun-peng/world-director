@@ -54,3 +54,22 @@ def normalize_action(proposal: ActionProposal) -> ActionProposal:
     if any(value is not None for key, value in data.items() if key not in fields):
         raise ValueError("行动包含不适用字段。")
     return parse_action(json.dumps({key: data[key] for key in fields}, ensure_ascii=False))
+
+
+def action_error_details(text: str) -> dict:
+    """只记录协议结构，不记录模型正文、目标值或未知字段名称。"""
+    try:
+        data = json.loads(text)
+    except (ValueError, TypeError):
+        return {"shape": "invalid_json"}
+    if not isinstance(data, dict):
+        return {"shape": "not_object"}
+    kind = data.get("kind")
+    if kind not in ("talk", "clarify", "inspect", "move", "give"):
+        return {"shape": "unknown_kind"}
+    required = ({"kind", "destination_id"} if kind == "move" else
+                {"kind", "object_id", "recipient_id"} if kind == "give" else
+                {"kind", "target_text", "reply"})
+    return {"shape": "action", "kind": kind, "missing_fields": sorted(required - set(data)),
+            "unexpected_field_count": len(set(data) - required),
+            "field_types": {key: type(data[key]).__name__ for key in sorted(required & set(data))}}

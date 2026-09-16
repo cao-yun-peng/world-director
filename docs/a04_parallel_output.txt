@@ -1,0 +1,25 @@
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m exercises.a04_parallel
+Exit code: 0
+
+{
+  "mode": "fake",
+  "max_parallel_tools": 2,
+  "max_active": 2,
+  "active_after": 0,
+  "call_ids": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "all_ok": true,
+  "snapshot_revision": 0,
+  "descriptions": [
+    "一盏台灯，灯座底部刻着 L-17。",
+    "一盏台灯，灯座底部刻着 L-17。",
+    "一盏台灯，灯座底部刻着 L-17。",
+    "一盏台灯，灯座底部刻着 L-17。",
+    "一盏台灯，灯座底部刻着 L-17。"
+  ]
+}

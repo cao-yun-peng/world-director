@@ -1,5 +1,6 @@
 """单进程、顺序执行的提交点：世界与回合记录一起替换。"""
 
+import asyncio
 import hashlib
 import json
 from copy import deepcopy
@@ -22,6 +23,7 @@ def request_digest(entry: str, value) -> str:
 class WorldEngine:
     def __init__(self, world: WorldState):
         self._bundle = {"world": deepcopy(world), "turns": {}}
+        self.turn_lock = asyncio.Lock()
 
     @property
     def world(self) -> WorldState:
@@ -55,11 +57,14 @@ class WorldEngine:
 
     def commit_turn(self, proposal: ActionProposal, operations: list[ActionProposal], *,
                     actor_id: str, turn_id: str, digest: str,
-                    cause_event_id: str | None = None, feedback: list[dict] | None = None) -> dict:
+                    cause_event_id: str | None = None, feedback: list[dict] | None = None,
+                    before_accept=None, expected_revision: int | None = None) -> dict:
         """operations/feedback 来自可信运行时，绝不直接消费模型提供的成功标志。"""
         previous = self.lookup(actor_id=actor_id, turn_id=turn_id, digest=digest)
         if previous is not None:
             return previous
+        if expected_revision is not None and self._bundle["world"].revision != expected_revision:
+            raise TurnConflict("查询快照已过期。")
         candidate = self.world
         receipts, events = [], []
         for operation in operations:
@@ -67,8 +72,10 @@ class WorldEngine:
                 candidate, operation, actor_id=actor_id, turn_id=turn_id, cause_event_id=cause_event_id)
             receipts.append(receipt)
             events.extend(emitted)
+            if not receipt["ok"]:
+                break
         if feedback is None:
-            receipt = receipts[0]
+            receipt = receipts[-1]
         else:
             messages = []
             for item in feedback:
@@ -82,6 +89,9 @@ class WorldEngine:
                     messages.append(f"当前位置 {scene['location_id']}；可见：{names}。")
             ok = all(item["ok"] for item in feedback) and all(item["ok"] for item in receipts)
             receipt = result(ok, "OBSERVED" if ok else "OBSERVATION_ERRORS", "\n".join(messages))
+        if not receipt["ok"]:
+            # 包括先发现、后行动被拒绝：不留下半份世界更新。
+            candidate, events = self.world, []
         record = {
             "request_digest": digest, "proposal": asdict(proposal),
             "receipt": receipt, "results": receipts, "event_ids": [e["event_id"] for e in events],
@@ -91,6 +101,8 @@ class WorldEngine:
         }
         turns = deepcopy(self._bundle["turns"])
         turns[(candidate.session_id, actor_id, turn_id)] = deepcopy(record)
+        if before_accept is not None:
+            before_accept()
         # 本日仅顺序调用。这是完整候选包的单次接纳，不是并发/持久化事务。
         self._bundle = {"world": candidate, "turns": turns}
         return deepcopy(record)

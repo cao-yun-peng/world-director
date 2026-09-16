@@ -29,7 +29,7 @@ def accessible_objects(actor_id: str, *, world=None) -> list[dict]:
             if (obj["location_id"] if world is None else object_location(world, obj["id"])) == locations[actor_id]
             and (obj.get("visibility") == "public"
                  or (obj.get("visibility") == "private"
-                     and isinstance(obj.get("known_by"), list)
+                     and isinstance(obj.get("known_by"), (list, tuple))
                      and all(isinstance(actor, str) for actor in obj["known_by"])
                      and actor_id in obj["known_by"]))]
 

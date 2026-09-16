@@ -1,0 +1,46 @@
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p test_a04*.py -v
+Exit code: 0
+
+test_native_async_wire_retry_classification_and_close (test_a04.AdapterTests.test_native_async_wire_retry_classification_and_close) ... Executing <Task pending name='Task-2' coro=<AdapterTests.test_native_async_wire_retry_classification_and_close() running at E:\project\self-agent\world-director\tests\test_a04.py:473> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\futures.py:389, Task.task_wakeup()] created at C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py:448> cb=[_run_until_complete_cb() at C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py:181] created at C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py:100> took 0.781 seconds
+ok
+test_only_explicit_transient_status_codes_retry (test_a04.AdapterTests.test_only_explicit_transient_status_codes_retry) ... ok
+test_cancel_batch_cleans_children_and_next_batch_runs (test_a04.ExecutorTests.test_cancel_batch_cleans_children_and_next_batch_runs) ... ok
+test_five_tasks_limit_cancel_waiter_and_running_then_reuse (test_a04.ExecutorTests.test_five_tasks_limit_cancel_waiter_and_running_then_reuse) ... ok
+test_one_query_failure_does_not_cancel_other_business_result (test_a04.ExecutorTests.test_one_query_failure_does_not_cancel_other_business_result) ... ok
+test_out_of_order_completion_keeps_call_pairing_and_snapshot (test_a04.ExecutorTests.test_out_of_order_completion_keeps_call_pairing_and_snapshot) ... ok
+test_snapshot_recursively_readonly_and_private_permissions_preserved (test_a04.ExecutorTests.test_snapshot_recursively_readonly_and_private_permissions_preserved) ... ok
+test_transient_query_retry_releases_slot_during_backoff (test_a04.ExecutorTests.test_transient_query_retry_releases_slot_during_backoff) ... ok
+test_attempt_timeout_can_retry_but_total_deadline_is_fixed (test_a04.RuntimeTests.test_attempt_timeout_can_retry_but_total_deadline_is_fixed) ... ok
+test_bad_arguments_and_access_denials_are_not_retried (test_a04.RuntimeTests.test_bad_arguments_and_access_denials_are_not_retried) ... ok
+test_cancel_before_and_after_commit (test_a04.RuntimeTests.test_cancel_before_and_after_commit) ... ok
+test_corrected_call_is_new_step_not_transport_retry (test_a04.RuntimeTests.test_corrected_call_is_new_step_not_transport_retry) ... ok
+test_direct_id_and_native_message_pairing (test_a04.RuntimeTests.test_direct_id_and_native_message_pairing) ... ok
+test_directory_dependency_follows_changed_object_id (test_a04.RuntimeTests.test_directory_dependency_follows_changed_object_id) ... ok
+test_entire_batch_rejected_before_any_tool_runs (test_a04.RuntimeTests.test_entire_batch_rejected_before_any_tool_runs) ... ok
+test_exact_deadline_does_not_send_or_accept_world (test_a04.RuntimeTests.test_exact_deadline_does_not_send_or_accept_world) ... ok
+test_fresh_session_has_no_previous_observations (test_a04.RuntimeTests.test_fresh_session_has_no_previous_observations) ... ok
+test_invalid_decisions_do_not_commit (test_a04.RuntimeTests.test_invalid_decisions_do_not_commit) ... ok
+test_narration_budget_timeout_protocol_and_error_use_receipt (test_a04.RuntimeTests.test_narration_budget_timeout_protocol_and_error_use_receipt) ... ok
+test_narration_retry_and_replay_never_repeat_action (test_a04.RuntimeTests.test_narration_retry_and_replay_never_repeat_action) ... ok
+test_observation_and_action_commit_together (test_a04.RuntimeTests.test_observation_and_action_commit_together) ... ok
+test_rejected_action_discards_prior_discovery (test_a04.RuntimeTests.test_rejected_action_discards_prior_discovery) ... ok
+test_request_limit_no_summary_call (test_a04.RuntimeTests.test_request_limit_no_summary_call) ... ok
+test_retry_after_respects_total_budget (test_a04.RuntimeTests.test_retry_after_respects_total_budget) ... ok
+test_retry_counts_real_sends_within_same_step (test_a04.RuntimeTests.test_retry_counts_real_sends_within_same_step) ... ok
+test_retry_exhaustion_and_permanent_failure (test_a04.RuntimeTests.test_retry_exhaustion_and_permanent_failure) ... ok
+test_same_engine_serializes_duplicate_turns (test_a04.RuntimeTests.test_same_engine_serializes_duplicate_turns) ... ok
+test_session_identity_and_trace_privacy (test_a04.RuntimeTests.test_session_identity_and_trace_privacy) ... ok
+test_slow_query_rolls_back_and_reclaims_tasks (test_a04.RuntimeTests.test_slow_query_rolls_back_and_reclaims_tasks) ... ok
+test_step_limit_drops_all_pending_discoveries (test_a04.RuntimeTests.test_step_limit_drops_all_pending_discoveries) ... ok
+test_trace_failure_does_not_reexecute_action (test_a04.RuntimeTests.test_trace_failure_does_not_reexecute_action) ... ok
+test_unknown_write_tool_never_enters_query_pool (test_a04.RuntimeTests.test_unknown_write_tool_never_enters_query_pool) ... ok
+test_waiting_for_turn_lock_uses_total_deadline (test_a04.RuntimeTests.test_waiting_for_turn_lock_uses_total_deadline) ... ok
+test_budget_replay_and_client_close (test_a04_cli.CliTests.test_budget_replay_and_client_close) ... ok
+test_cancel_after_commit_prints_receipt_and_closes_client (test_a04_cli.CliTests.test_cancel_after_commit_prints_receipt_and_closes_client) ... ok
+test_main_routes_loop_and_invalid_limits_do_not_load_model (test_a04_cli.EntryTests.test_main_routes_loop_and_invalid_limits_do_not_load_model) ... ok
+test_real_smoke_requires_explicit_flag (test_a04_cli.EntryTests.test_real_smoke_requires_explicit_flag) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 6.728s
+
+OK

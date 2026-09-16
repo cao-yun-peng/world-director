@@ -1,0 +1,17 @@
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p test_a04_decision_format.py -v
+Exit code: 0
+
+test_cli_explains_format_problem_without_generic_retry_advice (test_a04_decision_format.DecisionFormatTests.test_cli_explains_format_problem_without_generic_retry_advice) ... ok
+test_correction_can_choose_native_query_without_implicit_write (test_a04_decision_format.DecisionFormatTests.test_correction_can_choose_native_query_without_implicit_write) ... ok
+test_correction_cannot_exceed_step_or_request_budget (test_a04_decision_format.DecisionFormatTests.test_correction_cannot_exceed_step_or_request_budget) ... ok
+test_correction_wait_uses_original_deadline (test_a04_decision_format.DecisionFormatTests.test_correction_wait_uses_original_deadline) ... ok
+test_failed_repair_discards_successful_pending_observation (test_a04_decision_format.DecisionFormatTests.test_failed_repair_discards_successful_pending_observation) ... ok
+test_identity_unknown_fields_and_invalid_values_are_not_repaired (test_a04_decision_format.DecisionFormatTests.test_identity_unknown_fields_and_invalid_values_are_not_repaired) ... ok
+test_missing_null_field_can_be_corrected (test_a04_decision_format.DecisionFormatTests.test_missing_null_field_can_be_corrected) ... ok
+test_plain_response_after_greeting_gets_one_new_decision (test_a04_decision_format.DecisionFormatTests.test_plain_response_after_greeting_gets_one_new_decision) ... ok
+test_second_bad_decision_stops_with_safe_diagnostics (test_a04_decision_format.DecisionFormatTests.test_second_bad_decision_stops_with_safe_diagnostics) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.054s
+
+OK

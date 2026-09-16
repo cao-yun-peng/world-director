@@ -413,6 +413,58 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(self.engine.world, before)
 
 
+    def test_missing_reply_gets_one_correction_within_three_requests(self):
+        incomplete = proposed(kind="inspect", target_text="当前场景")
+        (_, reply, trace), model = self.run_turn([
+            incomplete, proposed(kind="inspect", target_text="当前场景", reply=None),
+            response(calls=[tool(name="get_visible_scene", arguments="{}")]),
+        ], text="看看当前场景")
+        self.assertEqual(len(model.requests), 3)
+        self.assertEqual(trace["action_errors"][0]["missing_fields"], ["reply"])
+        self.assertIn("reply", model.requests[1]["messages"][0]["content"])
+        self.assertEqual(trace["termination_reason"], "narration_fallback")
+        self.assertEqual(trace["narration_error"], "BUDGET_EXCEEDED")
+        self.assertIn("台灯", reply)
+        self.assertEqual(self.engine.world.revision, 0)
+
+    def test_repeated_invalid_proposal_stops_after_one_correction(self):
+        model = RecordingModel([proposed(kind="inspect", target_text="private-test-marker")] * 2)
+        before = self.engine.world
+        with self.assertRaises(AgentTurnError) as caught:
+            run_agent_turn(self.session, "看看当前场景", model, expected_actor_id="lin_yan",
+                           engine=self.engine, turn_id="T001")
+        self.assertEqual(caught.exception.code, "INVALID_ACTION")
+        self.assertEqual(len(model.requests), 2)
+        self.assertEqual(len(caught.exception.trace["action_errors"]), 2)
+        self.assertNotIn("private-test-marker", str(caught.exception.trace))
+        self.assertNotIn("private-test-marker", str(model.requests[1]))
+        self.assertEqual(self.engine.world, before)
+        self.assertEqual(self.engine.turns, {})
+
+    def test_identity_or_unknown_fields_never_get_corrected_away(self):
+        model = RecordingModel([
+            proposed(kind="inspect", target_text="box_01", actor_id="other_npc"),
+            inspect_proposal(),
+        ])
+        with self.assertRaises(AgentTurnError) as caught:
+            run_agent_turn(self.session, "看看当前场景", model, expected_actor_id="lin_yan",
+                           engine=self.engine, turn_id="T001")
+        self.assertEqual(len(model.requests), 1)
+        self.assertEqual(caught.exception.code, "INVALID_ACTION")
+        self.assertEqual(caught.exception.trace["action_errors"][0]["unexpected_field_count"], 1)
+        self.assertNotIn("other_npc", str(caught.exception.trace))
+        self.assertEqual(self.engine.turns, {})
+
+    def test_correction_cannot_exceed_remaining_budget(self):
+        model = RecordingModel([proposed(kind="inspect", target_text="当前场景")])
+        with self.assertRaises(AgentTurnError) as caught:
+            run_agent_turn(self.session, "看看当前场景", model, expected_actor_id="lin_yan",
+                           engine=self.engine, turn_id="T001", max_model_requests=1)
+        self.assertEqual(caught.exception.code, "INVALID_ACTION")
+        self.assertEqual(len(model.requests), 1)
+        self.assertEqual(self.engine.turns, {})
+
+
 class CLITests(unittest.TestCase):
     def test_world_cli_replay_fallback_and_save_boundary(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -433,6 +485,32 @@ class CLITests(unittest.TestCase):
             self.assertTrue(all(item["day"] == "A03" for item in records))
             self.assertIn("世界版本=1", output.getvalue())
             self.assertIn("尚未实现世界存档", output.getvalue())
+
+
+    def test_format_failure_keeps_world_session_and_charges_failed_requests(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            incomplete = proposed(kind="inspect", target_text="当前场景")
+            model = RecordingModel([give(), response("给你。"), incomplete, incomplete,
+                                    inspect_proposal(),
+                                    response(calls=[tool(name="get_visible_scene", arguments="{}")]),
+                                    response("有台灯和信封。")])
+            output = io.StringIO()
+            with (patch.object(cli, "ENV_PATH", path / ".env"),
+                  patch.object(cli, "A03_RUN_PATH", path / "trace.jsonl"),
+                  patch.dict("os.environ", {"LLM_API_KEY": "test", "LLM_MODEL": "test"}, clear=True),
+                  patch.object(cli, "RealModelAdapter", return_value=model),
+                  patch("builtins.input", side_effect=["给信封", "看看当前场景", "/retry", "/exit"]),
+                  redirect_stdout(output)):
+                self.assertEqual(cli.main(["--engine", "world", "--max-model-requests", "8"]), 0)
+            records = [json.loads(line) for line in (path / "trace.jsonl").read_text(encoding="utf-8").splitlines()]
+            self.assertEqual([r["model_requests"] for r in records], [2, 2, 3])
+            self.assertEqual(records[1]["termination_reason"], "INVALID_ACTION")
+            self.assertEqual(records[1]["turn_id"], records[2]["turn_id"])
+            self.assertEqual(records[2]["after_revision"], 1)
+            self.assertIn("剩余模型请求 4", output.getvalue())
+            self.assertIn("剩余 1", output.getvalue())
+            self.assertEqual(model.requests[-1]["messages"][1]["content"], "给信封")
 
     def test_world_rejects_conversation_only_load(self):
         with redirect_stdout(io.StringIO()), patch("sys.stderr", io.StringIO()):

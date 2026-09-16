@@ -1,3 +1,27 @@
+# AI 互动世界导演 · A04
+
+A04 已加入有界异步循环、统一 deadline、只读查询并发、分类重试、完整提交与 JSONL 轨迹。
+
+```powershell
+# 不读取密钥的离线运行与教学：
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a04_demo
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a04_faults
+.\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p "test_a04*.py" -v
+# 已配置真实模型后，显式启用 A04 互动：
+.\.venv\Scripts\python.exe -X utf8 -m app.main --engine loop --max-model-requests 48
+```
+
+- [A04 分步教学与独立练习](docs/a04_practice.md)
+- [A04 验收记录与实际限制](docs/a04_results.md)
+- [A04 九次离线互动](docs/a04_demo.json)
+- [A04 六类场景证据](docs/a04_scenarios.json)
+- [A04 源码与官方文档对照](docs/a04_source_notes.md)
+
+A01—A03 入口保留用于课程对照；默认仍为 A01。A04 世界只在内存中，退出即丢失。
+真实模型演示与学习者独立解释需要单独验收；Fake 通过不等于阶段 A 已通过。
+
+---
+
 # AI 互动世界导演 · A03
 
 新增世界账本、移动与给物裁定、个人发现、事件因果、回合去重及叙述失败回退。

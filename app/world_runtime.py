@@ -3,7 +3,7 @@
 import json
 from copy import deepcopy
 
-from app.actions import ActionProposal, parse_action
+from app.actions import ActionProposal, action_error_details, parse_action
 from app.character import GOALS, build_prompt
 from app.engine import WorldEngine, request_digest
 from app.model import ToolModelAdapter
@@ -19,6 +19,16 @@ ACTION_INSTRUCTIONS = """
 - give：且只含 kind、object_id、recipient_id（使用授权目录与在场角色 ID）。
 没有明确唯一指代时用 clarify。拿取、打开尚未支持。
 给物或移动只能提出提议，不能用 talk 宣布已经完成。玩家自称拥有物品不是归属证据。
+kind 必须是 talk、clarify、inspect、move、give 中的一个字符串。
+输出格式示例（一次只输出一个对象，不要代码块，不要省略 null 字段）：
+{"kind":"inspect","target_text":"当前场景","reply":null}
+{"kind":"inspect","target_text":"台灯","reply":null}
+{"kind":"talk","target_text":null,"reply":"你有什么事？"}
+{"kind":"clarify","target_text":null,"reply":"你指哪个物品？"}
+{"kind":"move","destination_id":"storage_room"}
+{"kind":"give","object_id":"envelope_01","recipient_id":"other_npc"}
+玩家要求“看看当前场景”时使用第一个示例，不能把 get_visible_scene 当作 kind。
+示例只说明格式；目标必须根据当前授权场景和玩家请求选择。
 """
 TOOL_INSTRUCTIONS = """
 按待观察对象调用 inspect_object 或 get_visible_scene；必须使用原生工具协议。
@@ -31,7 +41,8 @@ NARRATION_INSTRUCTIONS = """
 """
 
 
-def visible_messages(session: dict, text: str, *, actor_id: str, world: WorldState) -> list[dict]:
+def visible_messages(session: dict, text: str, *, actor_id: str, world: WorldState,
+                     include_objects: bool = True) -> list[dict]:
     validate_session(session, expected_actor_id=actor_id)
     if session["session_id"] != world.session_id:
         raise ValueError("会话与世界不匹配。")
@@ -46,6 +57,8 @@ def visible_messages(session: dict, text: str, *, actor_id: str, world: WorldSta
                        if location == scene["location_id"]]
     scene["inventory"] = [obj["id"] for obj in scene["objects"]
                           if world.owners[obj["id"]] == "actor:" + actor_id]
+    if not include_objects:
+        del scene["objects"], scene["inventory"]
     facts = [{"id": f"discovery-{index}", "text": fact}
              for index, item in enumerate(world.knowledge[actor_id]) for fact in item["facts"]]
     system = build_prompt(card, facts) + "\n本轮授权场景（目录无细节）：\n" + json.dumps(scene, ensure_ascii=False)
@@ -69,7 +82,7 @@ def run_world_turn(session: dict, user_text: str, model: ToolModelAdapter, *,
         trace.update(model_requests=0, replayed=True, turn_id=turn_id)
         return deepcopy(updated), previous["reply"], trace
 
-    trace = {"runtime_prompt_version": "a03-v1", "turn_id": turn_id, "intent": None,
+    trace = {"runtime_prompt_version": "a03-v2", "turn_id": turn_id, "intent": None,
              "turn_index": len(session["history"]) // 2 + 1,
              "model_requests": 0, "completions": [], "tools": [], "replayed": False,
              "termination_reason": None}
@@ -115,11 +128,23 @@ def run_world_turn(session: dict, user_text: str, model: ToolModelAdapter, *,
 
     intent_messages = deepcopy(base)
     intent_messages[0]["content"] += ACTION_INSTRUCTIONS
-    proposal_text = text_only(request(intent_messages, response_format={"type": "json_object"}))
-    try:
-        proposal = parse_action(proposal_text)
-    except ValueError:
-        fail("INVALID_ACTION")
+    for attempt in range(2):
+        proposal_text = text_only(request(intent_messages, response_format={"type": "json_object"}))
+        try:
+            proposal = parse_action(proposal_text)
+            break
+        except ValueError as error:
+            details = action_error_details(proposal_text)
+            trace.setdefault("action_errors", []).append({"message": str(error), **details})
+            # 只对已知行动的遗漏字段纠正一次。额外字段（尤其身份）仍直接拒绝。
+            can_repair = (attempt == 0 and details.get("missing_fields")
+                          and details.get("unexpected_field_count") == 0
+                          and trace["model_requests"] < min(max_model_requests, 3))
+            if not can_repair:
+                fail("INVALID_ACTION")
+            intent_messages[0]["content"] += (
+                "\n上次行动缺少必填字段：" + "、".join(details["missing_fields"])
+                + "。请根据原始请求重新输出完整 JSON，必须显式填写 null 字段。")
     trace["intent"] = proposal.kind
     operations, feedback = [proposal], None
     wire = None
