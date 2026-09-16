@@ -21,7 +21,7 @@ from app.runtime import AgentTurnError
 from app.session import create_session
 from app.trace import RunTrace, call_reference
 from app.world import create_world, freeze_world
-from scripts.a04_demo import ScriptedModel, call, decision, inspect_from_directory, response
+from scripts.a04_demo import ScriptedModel, call, terminal, inspect_from_directory, response
 
 
 class RuntimeTests(unittest.IsolatedAsyncioTestCase):
@@ -29,7 +29,7 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
         self.session = create_session(actor_id="lin_yan", goal_id="clarify")
         self.engine = WorldEngine(create_world(self.session["session_id"]))
         self.limits = RunLimits(retry_delay_s=0)
-        self.give = decision("give", object_id="envelope_01", recipient_id="other_npc")
+        self.give = terminal("give", object_id="envelope_01", recipient_id="other_npc")
 
     async def run_turn(self, responses, *, text="教学请求", turn_id="T1", **options):
         self.model = ScriptedModel(responses)
@@ -43,9 +43,9 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.session["history"], [])
 
     async def test_direct_id_and_native_message_pairing(self):
-        result = await self.run_turn([response(calls=[call()]), decision(), response("看到了编号。")],
+        result = await self.run_turn([response(calls=[call()]), terminal(reply="看到了编号。")],
                                      text="查看 lamp_01。")
-        self.assertEqual(result.trace["model_requests"], 3)
+        self.assertEqual(result.trace["model_requests"], 2)
         wire = self.model.requests[1]["messages"]
         self.assertEqual(wire[-2]["tool_calls"][0]["id"], wire[-1]["tool_call_id"])
         self.assertEqual(json.loads(wire[-1]["content"])["data"]["id"], "lamp_01")
@@ -62,7 +62,7 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
         world.objects = {"changed_id": world.objects["changed_id"], **world.objects}
         self.engine = WorldEngine(world)
         await self.run_turn([response(calls=[call("get_visible_scene")]), inspect_from_directory,
-                             decision(), response("已查看。")])
+                             terminal(reply="已查看。")])
         self.assertNotIn("changed_id", json.dumps(self.model.requests[0]))
         query = self.model.requests[2]["messages"][-2]["tool_calls"][0]
         self.assertEqual(json.loads(query["function"]["arguments"])["object_id"], "changed_id")
@@ -80,14 +80,14 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
     async def test_request_limit_no_summary_call(self):
         before = self.engine.world
         with self.assertRaises(AgentTurnError) as caught:
-            await self.run_turn([response(calls=[call()]), decision()],
+            await self.run_turn([response(calls=[call()]), terminal(reply="已查看。")],
                                 limits=replace(self.limits, max_model_requests=1))
         self.assertEqual(caught.exception.code, "MODEL_REQUEST_LIMIT")
         self.assertEqual(len(self.model.requests), 1)
         self.assert_untouched(before)
 
     async def test_retry_counts_real_sends_within_same_step(self):
-        result = await self.run_turn([TransientFailure(), decision("talk", target_text=None, reply="你好")])
+        result = await self.run_turn([TransientFailure(), terminal(reply="你好")])
         records = [r for r in result.trace["records"] if r["kind"] == "model"]
         self.assertEqual([(r["step_id"], r["attempt"]) for r in records], [(1, 1), (1, 2)])
         self.assertEqual(records[0]["span_id"], records[1]["span_id"])
@@ -113,7 +113,8 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
     async def test_attempt_timeout_can_retry_but_total_deadline_is_fixed(self):
         async def stuck(messages):
             await asyncio.Event().wait()
-        limits = replace(self.limits, turn_timeout_s=0.15, model_attempt_timeout_s=0.1)
+        # 留足调度余量；仍要求第一次超时后重试，第二次被原总 deadline 截止。
+        limits = replace(self.limits, turn_timeout_s=1.5, model_attempt_timeout_s=1.0)
         before = self.engine.world
         with self.assertRaises(AgentTurnError) as caught:
             await self.run_turn([stuck, stuck], limits=limits)
@@ -156,10 +157,10 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
             with self.subTest(code=code):
                 waiter = AsyncMock()
                 before = self.engine.world
-                result = await self.run_turn([response(calls=[call(arguments=arguments)]), decision()],
+                result = await self.run_turn([response(calls=[call(arguments=arguments)]), terminal(reply="目前未能查看，请明确物品。")],
                                              turn_id=f"bad-{index}", executor=ReadonlyExecutor(wait_for_read=waiter))
                 waiter.assert_not_awaited()
-                self.assertEqual(result.trace["termination_reason"], "rejected")
+                self.assertEqual(result.trace["termination_reason"], "completed")
                 self.assertEqual(self.engine.world, before)
                 records = [r for r in result.trace["records"] if r["kind"] == "tool"]
                 self.assertEqual([(r["attempt"], r["error_code"]) for r in records], [(1, code)])
@@ -167,8 +168,8 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_corrected_call_is_new_step_not_transport_retry(self):
         result = await self.run_turn([response(calls=[call(arguments="{}")]), response(calls=[call(call_id="fixed")]),
-                                     decision(), response("查到了。")])
-        self.assertEqual(result.trace["model_requests"], 4)
+                                     terminal(reply="查到了。")])
+        self.assertEqual(result.trace["model_requests"], 3)
         self.assertEqual(self.engine.world.revision, 1)
         records = [r for r in result.trace["records"] if r["kind"] == "tool"]
         self.assertEqual([r["step_id"] for r in records], [1, 2])
@@ -176,27 +177,31 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_unknown_write_tool_never_enters_query_pool(self):
         waiter = AsyncMock()
-        result = await self.run_turn([response(calls=[call("give")]), decision()],
+        result = await self.run_turn([response(calls=[call("open")]), terminal(reply="尚不支持打开物品。")],
                                      executor=ReadonlyExecutor(wait_for_read=waiter))
         waiter.assert_not_awaited()
-        self.assertEqual(result.receipt["ok"], False)
+        self.assertEqual(result.receipt["ok"], True)
         self.assertEqual(self.engine.world.revision, 0)
 
-    async def test_invalid_decisions_do_not_commit(self):
-        for item in (response("bad json"), response('[1]'), decision("finish", actor_id="other_npc"),
-                     decision("inspect", target_text="lamp_01", reply=None),
-                     response("partial", reason="length"), response(calls=[call()], reason="stop")):
-            with self.subTest(item=item):
+    async def test_plain_content_and_incomplete_protocol_do_not_commit(self):
+        for item, code in (
+            (response("bad json"), "TOOL_CALL_REQUIRED"),
+            (response('{"kind":"finish"}'), "TOOL_CALL_REQUIRED"),
+            (response("partial", reason="length"), "MODEL_OUTPUT_TRUNCATED"),
+            (response(calls=[call()], reason="stop"), "MODEL_PROTOCOL_ERROR"),
+        ):
+            with self.subTest(code=code):
                 before = self.engine.world
                 with self.assertRaises(AgentTurnError) as caught:
-                    await self.run_turn([item, item])
-                self.assertIn(caught.exception.code, ("INVALID_DECISION", "MODEL_OUTPUT_TRUNCATED", "MODEL_PROTOCOL_ERROR"))
+                    await self.run_turn([item])
+                self.assertEqual(caught.exception.code, code)
+                self.assertEqual(len(self.model.requests), 1)
                 self.assert_untouched(before)
 
     async def test_rejected_action_discards_prior_discovery(self):
         before = self.engine.world
         result = await self.run_turn([response(calls=[call()]),
-                                     decision("give", object_id="lamp_01", recipient_id="other_npc")])
+                                     terminal("give", object_id="lamp_01", recipient_id="other_npc")])
         self.assertEqual(result.receipt["code"], "NOT_OWNER")
         self.assertEqual(self.engine.world, before)
         self.assertEqual(next(iter(self.engine.turns.values()))["event_ids"], [])
@@ -323,7 +328,7 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
             await run_agent_turn(other, "你好", ScriptedModel([]), expected_actor_id="lin_yan",
                                  engine=self.engine, turn_id="T")
         self.assert_untouched(before)
-        result = await self.run_turn([response(calls=[call(call_id="secret-key-box_01")]), decision(), response("好")])
+        result = await self.run_turn([response(calls=[call(call_id="secret-key-box_01")]), terminal(reply="好")])
         text = json.dumps(result.trace, ensure_ascii=False)
         for marker in ("secret-key", "box_01", "internal_note", "A02-SECRET", "L-17", "杉木-7291"):
             self.assertNotIn(marker, text)
@@ -332,10 +337,10 @@ class RuntimeTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual({r["run_id"] for r in rows}, {result.trace["run_id"]})
 
     async def test_fresh_session_has_no_previous_observations(self):
-        await self.run_turn([response(calls=[call()]), decision(), response("L-17")])
+        await self.run_turn([response(calls=[call()]), terminal(reply="L-17")])
         self.session = create_session(actor_id="lin_yan", goal_id="clarify")
         self.engine = WorldEngine(create_world(self.session["session_id"]))
-        await self.run_turn([decision("clarify", target_text=None, reply="哪件物品？")])
+        await self.run_turn([terminal(reply="哪件物品？")])
         self.assertNotIn("L-17", json.dumps(self.model.requests))
         self.assertEqual(self.engine.world.knowledge["lin_yan"], [])
 

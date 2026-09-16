@@ -1,7 +1,7 @@
 # A04｜Agent 循环、异步、重试与运行轨迹：代码与教学
 
 这节课的成果是一个能继续查询、能及时停止、能解释失败的单角色 CLI。
-先运行离线范例，再沿着一个请求读代码。参考实现由 AI 编写，独立练习仍需你完成。
+当前协议为 a04-v6.1，采用 [End with tool](a04_end_with_tool.md)。先运行离线范例，再沿着一个请求读代码。参考实现由 AI 编写，独立练习仍需你完成。
 
 ## 1. 先运行，再看全貌
 
@@ -19,7 +19,7 @@
 .\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -v
 ```
 
-看 `a04_demo.json` 中 T4 的两行：第二次请求应该有新的 run_id，model_requests 为 0，版本与事件数不增加。
+看 `a04_end_tool/a04_demo.json` 中 T4 的两行：第二次请求应该有新的 run_id，model_requests 为 0，版本与事件数不增加。
 
 ```mermaid
 flowchart TD
@@ -29,12 +29,13 @@ flowchart TD
     C -->|否| D[冻结世界快照]
     D --> E[检查步数 / 请求数 / 剩余时间]
     E --> F[模型决策]
-    F -->|原生工具调用| G[整批校验 / 并发只读查询]
+    F -->|查询工具| G[整批校验 / 并发只读查询]
     G --> H[按 call_id 反馈 / 暂存发现]
     H --> E
-    F -->|finish / talk / clarify / move / give| I[纯裁定与完整候选包]
+    F -->|end_turn / move / give 独占批次| I[纯裁定与完整候选包]
     I --> J[截止前一次接纳 / 缓存确定性回执]
-    J --> K[预算内叙述 / 失败使用回执]
+    J -->|end_turn| M[直接返回 reply]
+    J -->|move / give 成功| K[预算内叙述 / 失败使用回执]
     E -->|耗尽或取消| L[丢弃候选 / 保留调试轨迹]
 ```
 
@@ -70,26 +71,27 @@ flowchart TD
 
 ```python
 for step_id in range(1, limits.max_steps + 1):
-    message = await request_model(messages)
-    if message_has_tool_calls(message):
-        results = await execute_readonly_batch(...)
-        append_native_call_and_results(messages, message, results)
-    else:
-        return parse_decision(message)
+    message = await request_model(messages, tool_choice="required")
+    calls = validate_tool_calls(message)
+    if is_terminal_batch(calls):
+        proposal = parse_terminal_arguments(calls[0])
+        return proposal, discoveries
+    results = await execute_readonly_batch(calls)
+    append_native_call_and_results(messages, message, results)
 ```
 
-这是解释用伪代码；实际实现包括预算、协议验证和发现去重。
-循环没有按玩家句子匹配剧情。ScriptedModel 只用于可重复验证。
+这是解释用伪代码；实际实现还会将坏参数作为工具结果反馈，使用相同循环继续。
+模型只通过原生工具调用表达决策，普通正文不能结束回合；没有调用时报告 TOOL_CALL_REQUIRED。
 
-模型的两种输出：
-
-| 输出 | 程序如何处理 |
+| 工具 | 程序如何处理 |
 |---|---|
-| 原生 `tool_calls` | 校验整批 ID/协议，再执行只读查询，返回相同 `tool_call_id` |
-| 结构化终态 | `finish` 结束观察；`talk/clarify` 结束谈话；`move/give` 提交一个行动提议 |
+| get_visible_scene / inspect_object | 查询快照，按原 call_id 返回结果，暂存成功发现 |
+| end_turn(reply) | 转成内部 talk 提议，与候选发现一起提交，直接展示回复 |
+| move(destination_id) / give(object_id, recipient_id) | 与候选发现一起裁定，成功或业务拒绝后结束决策循环 |
 
-`finish` 只写 `{"kind":"finish"}`。A04 不接受旧式 `inspect` 终态触发隐藏查询。
-原生工具调用是协议消息；终态 JSON 是业务决策，二者不要混淆。
+终结调用必须独占批次；混合批次在执行任何工具前拒绝。模型不能提交 actor_id。
+A04 不再发送 response_format，也不解析 content 中的 kind；工具 arguments 仍需参数校验。
+定义和解析见 app/turn_tools.py，旧课程的 ActionProposal 和世界裁定继续复用。
 
 ### 手算请求数
 
@@ -97,9 +99,9 @@ for step_id in range(1, limits.max_steps + 1):
 
 | 路径 | 逻辑决策 step | 实际模型请求 |
 |---|---:|---:|
-| 问候 → talk | 1 | 1 |
-| 已知 ID → 细节 → finish → 叙述 | 2 | 3 |
-| 目录 → 依目录查细节 → finish → 叙述 | 3 | 4 |
+| 问候 → end_turn | 1 | 1 |
+| 已知 ID → 细节 → end_turn | 2 | 2 |
+| 目录 → 依目录查细节 → end_turn | 3 | 3 |
 | give → 裁定成功 → 叙述 | 1 | 2 |
 | 原 turn_id 重发 | 0 | 0 |
 
@@ -108,7 +110,7 @@ for step_id in range(1, limits.max_steps + 1):
 
 ### 自己动手
 
-在临时练习文件中用 `ScriptedModel` 组合“查目录 → 查对象 → finish”，
+在临时练习文件中用 `ScriptedModel` 组合“查目录 → 查对象 → end_turn(reply)”，
 打印第二次模型请求的最后两条消息，解释为什么工具名相同也不会覆盖结果。
 
 ## 4. D023：一轮只有一个截止时间
@@ -135,7 +137,7 @@ for step_id in range(1, limits.max_steps + 1):
 正式事件每条增加一个 revision；一次完整提交可以包含多条事件，所以“版本增加 2”不表示提交了两次。
 
 正常结束时只接纳成功读取的发现，同一轮同一对象去重；先失败、模型修正后成功属于新 step。
-全是失败的查询以确定性拒绝结束。调试中的失败仍保留。
+查询失败后可用 end_turn 据实澄清，此时 completed 表示回复已提交；失败查询仍在 trace 中，且不会产生发现事件。写动作被裁定拒绝则为 rejected。
 
 停止原因如 `STEP_LIMIT`、`MODEL_REQUEST_LIMIT`、`TURN_TIMEOUT` 不再额外调用模型总结。
 
@@ -192,10 +194,10 @@ for step_id in range(1, limits.max_steps + 1):
 SDK 的 `max_retries=0`。每次外层实际发送加一；服务端可能已经计算，重试可能产生额外用量。
 重试沿用同一个逻辑 span，attempt 从 1 变成 2；下一次决策才增加 step。
 
-2026-09-16 补充：决策接口现在显式要求 JSON。若模型返回普通文字或遗漏必填字段，
-程序最多给一次格式纠正反馈，然后进入下一个 step；这是带反馈的新决策，也扣请求预算，
-与传输层重复发送同一次请求不同。额外身份字段、未知行动和非法字段值仍直接拒绝。
-详细故障示例见 [INVALID_DECISION 修复说明](a04_decision_fix.md)。
+a04-v6 已删除正文 JSON 的专用格式修复。终结工具参数错误与查询参数错误一样，
+通过原生 tool 消息反馈；模型下一次选择会消耗 step 和请求预算，不额外增加重试层。
+连续坏参数耗尽步数时停止，先前暂存发现也不提交。业务裁定拒绝则已形成可重放回执。
+旧版 INVALID_DECISION 的记录保留作历史证据，当前协议见 [End with tool](a04_end_with_tool.md)。
 
 退避前先释放 Semaphore，不能让睡觉的任务占着执行名额。
 
@@ -204,7 +206,7 @@ SDK 的 `max_retries=0`。每次外层实际发送加一；服务端可能已经
 
 ## 7. D027：用轨迹回答“到底发生了什么”
 
-读 `app/trace.py` 和 `docs/a04_fault_trace.jsonl`。
+读 `app/trace.py` 和 `docs/a04_end_tool/a04_fault_trace.jsonl`。
 
 | 标识 | 表示什么 |
 |---|---|
@@ -214,27 +216,28 @@ SDK 的 `max_retries=0`。每次外层实际发送加一；服务端可能已经
 | step_id | 本 run 内的逻辑模型决策 |
 | span_id / attempt | 同一个外部调用及其第几次尝试 |
 
-轨迹只写允许的元数据，不保存提示全文、原始参数、SDK 异常或完整世界。
+主 trace 只写允许的元数据。自 `a04-v4` 起，模型实际输入和原始输出另存本地 JSONL，由 `io_ref` 关联；包括完整 messages、工具定义和请求参数，不保存鉴权配置、原始 HTTP 错误响应体或完整后台世界。详见 [模型输入输出记录](a04_model_io.md)。
 `call_id` 在日志中是原生 ID 的 SHA-256 前 24 位；`call_reference` 可用来关联，
 模型协议里的 `tool_call_id` 始终保留原值。这样可避免模型把秘密塞进 ID 后被日志原样保存。
 usage 缺失为 null，不冒充零 token；工具轨迹成功也不代表知识已提交。
 
 定位顺序：
 
-1. 在 `a04_scenarios.json` 找到 loop 对应的 run_id。
-2. 用该 ID 筛选 `a04_fault_trace.jsonl`。
+1. 在 `a04_end_tool/a04_scenarios.json` 找到 loop 对应的 run_id。
+2. 用该 ID 筛选 `a04_end_tool/a04_fault_trace.jsonl`。
 3. 找到 4 次模型决策及查询；末行应为 `STEP_LIMIT`。
 4. 没有 commit，committed_revision 为 null；场景证据中前后世界版本相同。
 
 写 trace 失败只标记 `trace_write_failed` 并由 CLI 提示，不能触发业务重跑。
-本地 JSONL 不提供多进程事务，也不足以完整离线回放模型输入。
+本地 JSONL 不提供世界持久化事务。模型输入输出可由 io_ref 查看，世界提交仍以 WorldEngine 为准。
 
 ## 8. D028：真实试玩入口与独立作业
 
 真实模型互动会产生 API 用量。已配置 `.env` 后可运行：
 
 ```powershell
-$env:LLM_MODEL = 'qwen-plus'
+# 使用 .env 中的 LLM_MODEL；若当前终端残留旧变量，先清除：
+Remove-Item Env:LLM_MODEL -ErrorAction SilentlyContinue
 .\.venv\Scripts\python.exe -X utf8 -m app.main --engine loop --max-model-requests 48
 
 # 有预算的固定九次真实演示，最多 48 次实际模型请求。
@@ -263,7 +266,7 @@ AI 提供的观测台和测试不算你已通过独立能力验收。
 ## 9. 推荐阅读顺序
 
 1. `scripts/a04_demo.py`：先看一次请求的响应脚本。
-2. `app/async_runtime.py`：看查询循环和提交分界。
+2. `app/turn_tools.py`、`app/async_runtime.py`：看终结工具、查询循环和提交分界。
 3. `app/execution.py`：再补预算、超时和重试。
 4. `app/query_executor.py`：看并发与任务回收。
 5. `app/engine.py`、`app/world.py`：确认所有权和正式事件由程序产生。

@@ -12,6 +12,7 @@ class ActionProposal:
     destination_id: str | None = None
     object_id: str | None = None
     recipient_id: str | None = None
+    cause_event_id: str | None = None
 
 
 def parse_action(text: str) -> ActionProposal:
@@ -22,6 +23,14 @@ def parse_action(text: str) -> ActionProposal:
     if not isinstance(data, dict):
         raise ValueError("行动提议必须是对象。")
     kind = data.get("kind")
+    if kind == "statement":
+        if (set(data) != {"kind", "reply", "recipient_id", "cause_event_id"}
+                or any(not isinstance(data[key], str) or not data[key].strip()
+                       for key in ("reply", "recipient_id"))
+                or (data["cause_event_id"] is not None and
+                    (not isinstance(data["cause_event_id"], str) or not data["cause_event_id"].strip()))):
+            raise ValueError("私语字段不合法。")
+        return ActionProposal(**data)
     if kind in ("move", "give"):
         fields = {"destination_id"} if kind == "move" else {"object_id", "recipient_id"}
         if set(data) != fields | {"kind"} or any(
@@ -49,6 +58,7 @@ def normalize_action(proposal: ActionProposal) -> ActionProposal:
     fields = {
         "move": {"kind", "destination_id"},
         "give": {"kind", "object_id", "recipient_id"},
+        "statement": {"kind", "reply", "recipient_id", "cause_event_id"},
     }.get(proposal.kind, {"kind", "target_text", "reply"})
     data = asdict(proposal)
     if any(value is not None for key, value in data.items() if key not in fields):

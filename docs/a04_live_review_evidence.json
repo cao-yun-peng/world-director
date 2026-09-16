@@ -1,0 +1,321 @@
+{
+  "task_id": "A04-LIVE-REVIEW",
+  "revision": 10,
+  "runtime_version": "a04-v6.1",
+  "recorded_at": "2026-09-16T12:07:57.451904+00:00",
+  "source_session": "acf5402a-1d24-44d2-b5ee-362b63abdf90",
+  "method": "Read real trace and raw IO; replay saved normalized responses with ScriptedModel in an independent in-memory world. No new real model calls.",
+  "real_model_requests_this_review": 0,
+  "live_sample": {
+    "turns": 10,
+    "model_requests": 21,
+    "completed": 10,
+    "terminal_tools": 10,
+    "readonly_tool_errors": 1,
+    "transport_retries": 0,
+    "final_revision": 4
+  },
+  "offline_replay": {
+    "exit_code": 0,
+    "request_counts_statuses_revisions_match": true
+  },
+  "rows": [
+    {
+      "turn": 1,
+      "run_id": "068d409f-0234-4934-8299-79cdbfa13c78",
+      "turn_id": "d2439619-b674-4575-be2a-c546229cf3ca",
+      "model_requests": 2,
+      "status": "completed",
+      "before_revision": 0,
+      "after_revision": 0,
+      "actor_location": "duty_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "get_visible_scene",
+          "arguments": {}
+        },
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": []
+    },
+    {
+      "turn": 2,
+      "run_id": "82b8f33e-51a2-4a05-9492-98f1b2bd9610",
+      "turn_id": "5278f919-81a2-433f-90af-72e326646e52",
+      "model_requests": 1,
+      "status": "completed",
+      "before_revision": 0,
+      "after_revision": 0,
+      "actor_location": "duty_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": []
+    },
+    {
+      "turn": 3,
+      "run_id": "9be31427-59a7-4fc8-9086-bb19543d02a9",
+      "turn_id": "99fcb4a2-aa77-4fa4-8718-8fb2f64fed85",
+      "model_requests": 2,
+      "status": "completed",
+      "before_revision": 0,
+      "after_revision": 0,
+      "actor_location": "duty_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "get_visible_scene",
+          "arguments": {}
+        },
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": []
+    },
+    {
+      "turn": 4,
+      "run_id": "9be0b942-48d3-4e38-81d1-e8e2631bbc2f",
+      "turn_id": "4478d340-448f-4e0e-b022-89023fec479c",
+      "model_requests": 3,
+      "status": "completed",
+      "before_revision": 0,
+      "after_revision": 1,
+      "actor_location": "duty_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "get_visible_scene",
+          "arguments": {}
+        },
+        {
+          "name": "inspect_object",
+          "arguments": {
+            "object_id": "lamp_01"
+          }
+        },
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": [
+        {
+          "kind": "DiscoveryEvent",
+          "object_id": "lamp_01"
+        }
+      ]
+    },
+    {
+      "turn": 5,
+      "run_id": "d6e06bec-99ca-4cec-9596-5e69b4924eac",
+      "turn_id": "700f86d8-9cff-4f1a-b8f6-dc803dda999b",
+      "model_requests": 1,
+      "status": "completed",
+      "before_revision": 1,
+      "after_revision": 1,
+      "actor_location": "duty_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": []
+    },
+    {
+      "turn": 6,
+      "run_id": "eac91090-256f-4e46-8bcd-2264d3175316",
+      "turn_id": "3a25bd6d-6913-4401-b369-5b4545642d30",
+      "model_requests": 2,
+      "status": "completed",
+      "before_revision": 1,
+      "after_revision": 2,
+      "actor_location": "storage_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "move",
+          "arguments": {
+            "destination_id": "storage_room"
+          }
+        }
+      ],
+      "new_events": [
+        {
+          "kind": "MovementEvent",
+          "object_id": null
+        }
+      ]
+    },
+    {
+      "turn": 7,
+      "run_id": "ac2d2c4f-c1a7-4c7b-8e8a-a2b23a788036",
+      "turn_id": "49dfc39a-89dd-4c97-99bd-cbbf7cde8756",
+      "model_requests": 2,
+      "status": "completed",
+      "before_revision": 2,
+      "after_revision": 2,
+      "actor_location": "storage_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "get_visible_scene",
+          "arguments": {}
+        },
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": []
+    },
+    {
+      "turn": 8,
+      "run_id": "a16e98fe-4d4d-4803-8731-9e84117a981d",
+      "turn_id": "1b219c6c-5f26-4446-9b1d-0d56c64c9d67",
+      "model_requests": 1,
+      "status": "completed",
+      "before_revision": 2,
+      "after_revision": 2,
+      "actor_location": "storage_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": []
+    },
+    {
+      "turn": 9,
+      "run_id": "c9aeae73-32b4-46d4-aadb-52adc6bbe5ef",
+      "turn_id": "8e05c217-9134-4bd8-9192-662f32871e2e",
+      "model_requests": 3,
+      "status": "completed",
+      "before_revision": 2,
+      "after_revision": 3,
+      "actor_location": "storage_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "get_visible_scene",
+          "arguments": {}
+        },
+        {
+          "name": "inspect_object",
+          "arguments": {
+            "object_id": "envelope_01"
+          }
+        },
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": [
+        {
+          "kind": "DiscoveryEvent",
+          "object_id": "envelope_01"
+        }
+      ]
+    },
+    {
+      "turn": 10,
+      "run_id": "ff08d7e1-d409-4342-b3cc-a9393c0a8c79",
+      "turn_id": "84d8e62a-ac5c-436b-99f8-4370abc11183",
+      "model_requests": 4,
+      "status": "completed",
+      "before_revision": 3,
+      "after_revision": 4,
+      "actor_location": "storage_room",
+      "envelope_owner": "actor:lin_yan",
+      "tools": [
+        {
+          "name": "inspect_object",
+          "arguments": {
+            "object_id": "discovery-1"
+          }
+        },
+        {
+          "name": "get_visible_scene",
+          "arguments": {}
+        },
+        {
+          "name": "inspect_object",
+          "arguments": {
+            "object_id": "envelope_01"
+          }
+        },
+        {
+          "name": "end_turn",
+          "arguments": {
+            "reply": "[omitted; see original IO]"
+          }
+        }
+      ],
+      "new_events": [
+        {
+          "kind": "DiscoveryEvent",
+          "object_id": "envelope_01"
+        }
+      ]
+    }
+  ],
+  "source_io_sha256": {
+    "runs/a04_io/068d409f-0234-4934-8299-79cdbfa13c78/2eba47c3-5e9b-41d4-9b6e-1da7677c754d-attempt-1.jsonl": "90ea1999c98d7b06f058b55f3617eff465b7e086c150b0d0378dd35445703ccc",
+    "runs/a04_io/068d409f-0234-4934-8299-79cdbfa13c78/4d9d3db9-b5c2-4711-8d86-cbb2529ef461-attempt-1.jsonl": "5d7512a4077ddc647601a8b92f36b78e580acbaaca30abc6139c3c2e64375225",
+    "runs/a04_io/82b8f33e-51a2-4a05-9492-98f1b2bd9610/b639b630-7a37-4a9d-9aae-0dcd8fca6317-attempt-1.jsonl": "df5c78681652bff91c8ba1620af127bf89d0f363bf0e8687b6d993dbfe6d21e0",
+    "runs/a04_io/9be31427-59a7-4fc8-9086-bb19543d02a9/fd7a7a6b-abef-4636-aa5e-04738aadaf95-attempt-1.jsonl": "96873d3bfcc9a07cc722fc387195e8c744250022b267ee45c832dcb6e532effd",
+    "runs/a04_io/9be31427-59a7-4fc8-9086-bb19543d02a9/58f0c24c-159c-4fc3-8248-543b78eb9206-attempt-1.jsonl": "5880312eeda6bf27f09f38818e92d87289d16422e4d8fc5882d713eb34ec5c7c",
+    "runs/a04_io/9be0b942-48d3-4e38-81d1-e8e2631bbc2f/7b3ef2dc-3aa8-4939-9904-60cc6c9ac1f9-attempt-1.jsonl": "436c6fed3693f3b374f8306fea9da5e26f4695013a2e3d3ad9a48a6d92ec36f4",
+    "runs/a04_io/9be0b942-48d3-4e38-81d1-e8e2631bbc2f/24ca1a8e-8a6b-45ac-80c8-7f75ff13a416-attempt-1.jsonl": "057414b856b3e9057b1c05f4b54b8ae68ee027b62a8fd40841160a3dc870628a",
+    "runs/a04_io/9be0b942-48d3-4e38-81d1-e8e2631bbc2f/1deea4c0-b5e0-45ff-9a8d-1bd5fbb059b9-attempt-1.jsonl": "6a7595a97bddb8825172667494f511ddca5787e6ecd50557adbc777cd5e321a5",
+    "runs/a04_io/d6e06bec-99ca-4cec-9596-5e69b4924eac/36cf806c-8066-49af-8269-4b926f01e8d5-attempt-1.jsonl": "d46cbdfd1f8a55cdfd85b8e0de6f30d152e60f9e54690c384d2ed50462301c71",
+    "runs/a04_io/eac91090-256f-4e46-8bcd-2264d3175316/f12c6441-0217-43b0-b73c-c6f0ed7ec965-attempt-1.jsonl": "a61375e693a2d30e740ef83aefbcd8eaca1f1328c76a3aa28e9e30dd977f25e1",
+    "runs/a04_io/eac91090-256f-4e46-8bcd-2264d3175316/3c87385b-4584-424d-b8a6-4db455b81806-attempt-1.jsonl": "1a8e4d6363f08607ec959044c9eec361c3838f1f2762f4486a5bcbf5492ad049",
+    "runs/a04_io/ac2d2c4f-c1a7-4c7b-8e8a-a2b23a788036/5e9df120-923e-4473-b949-e2bdaeb04ca7-attempt-1.jsonl": "4c6601164188895a571add715a0b070cc22a2deca804a95291dbf00ba4392adc",
+    "runs/a04_io/ac2d2c4f-c1a7-4c7b-8e8a-a2b23a788036/a03d5750-7dfb-48e4-a6c8-0d33783b061d-attempt-1.jsonl": "d892213bb8891b6a07d458e2018d86bab292f114a4bd90a090140fbd22d0e879",
+    "runs/a04_io/a16e98fe-4d4d-4803-8731-9e84117a981d/4b0015fe-6da1-463e-bcd1-9726002c1249-attempt-1.jsonl": "ead54973474e92358f399ed750c8b3632cb42a71657ccdf653fff0f399de897e",
+    "runs/a04_io/c9aeae73-32b4-46d4-aadb-52adc6bbe5ef/a96613b3-bf6b-4c1d-8055-81a2e88f33ec-attempt-1.jsonl": "4f067e873f0371ed79bd37695e35fcd75bf79bc808d6318176934190a8c5556d",
+    "runs/a04_io/c9aeae73-32b4-46d4-aadb-52adc6bbe5ef/3d215246-68f2-4e3f-8a02-c4ae85361587-attempt-1.jsonl": "08d61c836b4c0515d4300414b901337d7c2e2c0219cbe3db8fe84001bc74e7db",
+    "runs/a04_io/c9aeae73-32b4-46d4-aadb-52adc6bbe5ef/1d5726b4-ed9c-4b97-9010-df18064434ae-attempt-1.jsonl": "004c6445185268b01586b4b08b215519443e9bd696d68c0dbbc2e6a231fd3332",
+    "runs/a04_io/ff08d7e1-d409-4342-b3cc-a9393c0a8c79/c4d28c43-016e-4701-b294-ba701e5a245c-attempt-1.jsonl": "e9bffbe29fd393099565ebbb9e1f121c6ce182b70a930eefb9b9255249078e90",
+    "runs/a04_io/ff08d7e1-d409-4342-b3cc-a9393c0a8c79/17d457ec-8270-4511-845c-f39c232e0ee1-attempt-1.jsonl": "01f982e4d85c5e663cb308323654e9bb4558ddd9c72246995dca84245d732631",
+    "runs/a04_io/ff08d7e1-d409-4342-b3cc-a9393c0a8c79/f03104c1-b4a8-4225-947c-4dbf75acc524-attempt-1.jsonl": "9007280dbd3c587eb55c4987d071bff47d0644b9dce40a5dd4b74161f68f3749",
+    "runs/a04_io/ff08d7e1-d409-4342-b3cc-a9393c0a8c79/42429266-889b-44c4-94b2-6178154989c3-attempt-1.jsonl": "88b33192657e9952fcdb6d460c8fdbae0ffd30ff1c44b00fdfc87db8252ad39a"
+  },
+  "limitations": [
+    "One real session only; not a stability benchmark.",
+    "Player actor and following movement are not modeled.",
+    "An observation can append duplicate knowledge across turns.",
+    "Natural-language replies can introduce unsupported background facts."
+  ]
+}

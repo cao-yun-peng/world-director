@@ -1,0 +1,205 @@
+{
+  "recorded_at": "2026-09-16T06:56:57.897199+00:00",
+  "scope": "diagnosis_only",
+  "approved_request_limit": 6,
+  "actual_model_requests": 6,
+  "tools_executed": 0,
+  "world_commits": 0,
+  "source_run_ids": [
+    "04284b47-7ce3-4706-a6e2-2f7c57bf75d6",
+    "247a684d-0d3c-4453-adee-ea5a6d933d52"
+  ],
+  "original_requests_identical": true,
+  "sdk_wire_check": "offline_mock_passed",
+  "ablation_rows": [
+    {
+      "profile": "baseline",
+      "run_id": "b45be86e-04b4-4890-b7b1-0fe916e0e5e9",
+      "provider_request_id": "c4e88ba1-350d-9b42-beb3-b7875547b827",
+      "outcome": "INVALID_DECISION",
+      "details": {
+        "shape": "not_object"
+      },
+      "model_requests": 1,
+      "io_ref": "a04_ablation_io/b45be86e-04b4-4890-b7b1-0fe916e0e5e9/03a5bfd4-16a1-43b5-8cdb-c10c69e8ecb2-attempt-1.jsonl"
+    },
+    {
+      "profile": "without_json_mode",
+      "run_id": "b9dd4354-0627-4a0e-a067-80b0d040541a",
+      "provider_request_id": "ad579ac0-57e9-9dc2-a804-6da908e3bf13",
+      "outcome": "tool_calls_not_executed",
+      "tool_names": [
+        "get_visible_scene"
+      ],
+      "model_requests": 1,
+      "io_ref": "a04_ablation_io/b9dd4354-0627-4a0e-a067-80b0d040541a/8cbb8015-f973-4446-963c-c77c1fb1d0cd-attempt-1.jsonl"
+    },
+    {
+      "profile": "without_tools",
+      "run_id": "24751c02-0e59-49f5-a922-fabc554a0370",
+      "provider_request_id": "38c96fa4-f0a0-92f4-bf5d-4b2049e76a99",
+      "outcome": "INVALID_DECISION",
+      "details": {
+        "shape": "unknown_kind"
+      },
+      "model_requests": 1,
+      "io_ref": "a04_ablation_io/24751c02-0e59-49f5-a922-fabc554a0370/edd92171-7e3b-4a86-aa04-78ad11340572-attempt-1.jsonl"
+    },
+    {
+      "profile": "different_seed",
+      "run_id": "7459443c-2acb-47f4-bdc3-59e038f58487",
+      "provider_request_id": "a7a91ea5-86ef-94fb-9d1e-24c8713a3cbf",
+      "outcome": "INVALID_DECISION",
+      "details": {
+        "shape": "not_object"
+      },
+      "model_requests": 1,
+      "io_ref": "a04_ablation_io/7459443c-2acb-47f4-bdc3-59e038f58487/0ebc6f48-4f63-402b-ac5d-2d91a5caea5a-attempt-1.jsonl"
+    },
+    {
+      "profile": "without_history",
+      "run_id": "4be5bd2c-6b6d-4d4c-9e4a-ac99f145a8d5",
+      "provider_request_id": "c800d44a-ce8f-9963-9678-28a5f91de7a4",
+      "outcome": "INVALID_DECISION",
+      "details": {
+        "shape": "not_object"
+      },
+      "model_requests": 1,
+      "io_ref": "a04_ablation_io/4be5bd2c-6b6d-4d4c-9e4a-ac99f145a8d5/83074d89-d543-4497-959f-a47501b795f7-attempt-1.jsonl"
+    },
+    {
+      "profile": "forced_scene_without_json",
+      "run_id": "e32890d0-b1cc-4e07-bd9d-8039e0601d5f",
+      "outcome": "MODEL_PROTOCOL_ERROR",
+      "model_requests": 1,
+      "io_ref": "a04_ablation_io/e32890d0-b1cc-4e07-bd9d-8039e0601d5f/a351a92c-c1ac-4b2a-b921-e761a111154e-attempt-1.jsonl"
+    }
+  ],
+  "raw_io_location": "local_gitignored_runs",
+  "sha256": {
+    "docs/a04_json_mode_diagnosis.md": "ff0528e11b8b08b85e1dfc96d7eadf5f2d1b0ed14f1c14fdd064d9c34af4def4",
+    "runs/a04_ablation_summary.jsonl": "7935aa25a27f544f9dbd12ed14fff70e299d32e1bc6c7b87aaf03afca6c5fdbe",
+    "runs/a04_ablation.jsonl": "2536ae9173de330582dc40934d189c8da84259eda0bbc19756d271aa8b85c5fa",
+    "runs/a04_ablation_io/b45be86e-04b4-4890-b7b1-0fe916e0e5e9/03a5bfd4-16a1-43b5-8cdb-c10c69e8ecb2-attempt-1.jsonl": "e9e25be581845bdd27672ac8c9f64e981bdf2621e4637a3859f1cefd5c865009",
+    "runs/a04_ablation_io/b9dd4354-0627-4a0e-a067-80b0d040541a/8cbb8015-f973-4446-963c-c77c1fb1d0cd-attempt-1.jsonl": "aac306180e2749aef51beb3a8e7a78c09aa4a270a86bf9f59eb9128705c13c75",
+    "runs/a04_ablation_io/24751c02-0e59-49f5-a922-fabc554a0370/edd92171-7e3b-4a86-aa04-78ad11340572-attempt-1.jsonl": "c56bd0c3706fab18acf7006e5e8bea8c4f6f78931fed7e0877bb02bacffe5f39",
+    "runs/a04_ablation_io/7459443c-2acb-47f4-bdc3-59e038f58487/0ebc6f48-4f63-402b-ac5d-2d91a5caea5a-attempt-1.jsonl": "2d0cd4b6aca08bcea0fea85c51b0897a0d6e1d86b0f9c912cb36cc20ba8300fc",
+    "runs/a04_ablation_io/4be5bd2c-6b6d-4d4c-9e4a-ac99f145a8d5/83074d89-d543-4497-959f-a47501b795f7-attempt-1.jsonl": "5989ca05d8849440db5b114684228365366b7097c56cab9423501564fa32528b",
+    "runs/a04_ablation_io/e32890d0-b1cc-4e07-bd9d-8039e0601d5f/a351a92c-c1ac-4b2a-b921-e761a111154e-attempt-1.jsonl": "0906710a7b92c4f47e2daa5b51914d0ff4f55f18059342c60f9a672823a3bf71"
+  },
+  "qwen3_7_plus_followup": {
+    "date": "2026-09-16",
+    "session_id": "38d7a3b9-05af-44ef-9000-a11ad64caf73",
+    "external_model_requests_added": 0,
+    "business_code_changed": false,
+    "method": "OpenAI SDK with httpx.MockTransport; saved response replay through existing runtime",
+    "sdk_request_body_matches_saved_input": 6,
+    "files": [
+      {
+        "run_id": "aca3edac-033c-49aa-a068-337787c054e9",
+        "step_id": 1,
+        "path": "runs/a04_io/aca3edac-033c-49aa-a068-337787c054e9/7b1bf971-8880-4af7-b356-56aab358ae99-attempt-1.jsonl",
+        "sha256": "b742dd8d12b71633d1d28f71339e59f8799f945807af5865c1c5ded4b5b5c978",
+        "input_model": "qwen3.7-plus",
+        "response_model": "qwen3.7-plus",
+        "response_format": {
+          "type": "json_object"
+        },
+        "finish_reason": "tool_calls",
+        "content": "",
+        "tool_names": [
+          "get_visible_scene"
+        ]
+      },
+      {
+        "run_id": "aca3edac-033c-49aa-a068-337787c054e9",
+        "step_id": 2,
+        "path": "runs/a04_io/aca3edac-033c-49aa-a068-337787c054e9/30042cd4-688e-4db5-baff-827420947437-attempt-1.jsonl",
+        "sha256": "0ca1f951d2c28c36317fea6bfeb57fbde53471e40f6fe5afd50b87b8452e8e7c",
+        "input_model": "qwen3.7-plus",
+        "response_model": "qwen3.7-plus",
+        "response_format": {
+          "type": "json_object"
+        },
+        "finish_reason": "stop",
+        "content": "现在房间里有一盏台灯和一个信封。",
+        "tool_names": []
+      },
+      {
+        "run_id": "aca3edac-033c-49aa-a068-337787c054e9",
+        "step_id": 3,
+        "path": "runs/a04_io/aca3edac-033c-49aa-a068-337787c054e9/767eed7c-c45f-4c7c-ac73-6b4b35826cdb-attempt-1.jsonl",
+        "sha256": "134945ab6843bbeca4749de3e1da5f1c8241ad3baedeb19de3846d06de1bdc00",
+        "input_model": "qwen3.7-plus",
+        "response_model": "qwen3.7-plus",
+        "response_format": {
+          "type": "json_object"
+        },
+        "finish_reason": "stop",
+        "content": "{\"kind\":\"talk\",\"target_text\":null,\"reply\":\"这里有一盏台灯和一个信封。\"}",
+        "tool_names": []
+      },
+      {
+        "run_id": "0bfcf075-b6df-4e24-83e9-5df73015f840",
+        "step_id": 1,
+        "path": "runs/a04_io/0bfcf075-b6df-4e24-83e9-5df73015f840/cdd54581-f414-4ae7-b51c-aa7be631e267-attempt-1.jsonl",
+        "sha256": "426ff638e64801d72f332539ccf512765c4174a0f15bff1f3c4e99f891d8b159",
+        "input_model": "qwen3.7-plus",
+        "response_model": "qwen3.7-plus",
+        "response_format": {
+          "type": "json_object"
+        },
+        "finish_reason": "tool_calls",
+        "content": "",
+        "tool_names": [
+          "inspect_object"
+        ]
+      },
+      {
+        "run_id": "0bfcf075-b6df-4e24-83e9-5df73015f840",
+        "step_id": 2,
+        "path": "runs/a04_io/0bfcf075-b6df-4e24-83e9-5df73015f840/c7fb8e1b-1382-419f-8c85-4bcdefbccd2d-attempt-1.jsonl",
+        "sha256": "3d781ecb90fd3d2419ad0b4d07930d37ef5682999ea7b182d7348f620b181c69",
+        "input_model": "qwen3.7-plus",
+        "response_model": "qwen3.7-plus",
+        "response_format": {
+          "type": "json_object"
+        },
+        "finish_reason": "stop",
+        "content": "台灯灯座底部刻着 L-17，下面没有藏东西。",
+        "tool_names": []
+      },
+      {
+        "run_id": "0bfcf075-b6df-4e24-83e9-5df73015f840",
+        "step_id": 3,
+        "path": "runs/a04_io/0bfcf075-b6df-4e24-83e9-5df73015f840/d39fc417-4a76-4315-ad6f-f49cda11eb4d-attempt-1.jsonl",
+        "sha256": "5b19611c1aae34a7e6e2f8da269e318a10cd75a0d0e9d0841cb4a12830a46cf2",
+        "input_model": "qwen3.7-plus",
+        "response_model": "qwen3.7-plus",
+        "response_format": {
+          "type": "json_object"
+        },
+        "finish_reason": "stop",
+        "content": "台灯底座下刻着“L-17”，除此之外没有发现其他东西。",
+        "tool_names": []
+      }
+    ],
+    "replayed_results": [
+      {
+        "source_run_id": "aca3edac-033c-49aa-a068-337787c054e9",
+        "status": "completed",
+        "model_requests": 3,
+        "format_corrections": 1,
+        "world_unchanged": true
+      },
+      {
+        "source_run_id": "0bfcf075-b6df-4e24-83e9-5df73015f840",
+        "status": "INVALID_DECISION",
+        "model_requests": 3,
+        "format_corrections": 1,
+        "world_unchanged": true
+      }
+    ],
+    "limitation": "Offline replay verifies local request construction and failure handling, not future live-model reliability or the provider internal cause."
+  }
+}

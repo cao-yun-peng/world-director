@@ -69,7 +69,7 @@ class WorldTests(unittest.TestCase):
         self.assertEqual(inventory(self.world, "lin_yan"), ["envelope_01"])
         self.assertEqual(set(self.world.objects), set(self.world.owners))
         self.assertTrue(all("location_id" not in obj for obj in self.world.objects.values()))
-        self.assertEqual(self.world.knowledge, {"lin_yan": [], "other_npc": []})
+        self.assertEqual(self.world.knowledge, {"lin_yan": [], "other_npc": [], "archive_keeper": []})
 
     def test_move_preserves_nested_old_snapshot_and_queries_new_location(self):
         original = deepcopy(self.world)

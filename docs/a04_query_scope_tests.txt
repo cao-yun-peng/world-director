@@ -1,0 +1,14 @@
+test_bad_action_arguments_do_not_reach_commit_or_query_executor (test_a04_decision_format.TerminalToolTests.test_bad_action_arguments_do_not_reach_commit_or_query_executor) ... ok
+test_bad_terminal_arguments_feedback_is_paired_and_can_be_corrected (test_a04_decision_format.TerminalToolTests.test_bad_terminal_arguments_feedback_is_paired_and_can_be_corrected) ... ok
+test_business_rejection_is_terminal_and_replayable (test_a04_decision_format.TerminalToolTests.test_business_rejection_is_terminal_and_replayable) ... ok
+test_cli_retry_of_failed_turn_then_replay_keeps_turn_id (test_a04_decision_format.TerminalToolTests.test_cli_retry_of_failed_turn_then_replay_keeps_turn_id) ... ok
+test_end_turn_answers_directly_without_narration_or_body_schema (test_a04_decision_format.TerminalToolTests.test_end_turn_answers_directly_without_narration_or_body_schema) ... ok
+test_invalid_terminal_uses_existing_step_and_request_limits (test_a04_decision_format.TerminalToolTests.test_invalid_terminal_uses_existing_step_and_request_limits) ... ok
+test_mixed_or_multiple_terminal_calls_reject_whole_batch (test_a04_decision_format.TerminalToolTests.test_mixed_or_multiple_terminal_calls_reject_whole_batch) ... ok
+test_plain_text_after_query_does_not_commit_pending_discovery (test_a04_decision_format.TerminalToolTests.test_plain_text_after_query_does_not_commit_pending_discovery) ... ok
+test_successful_queries_commit_only_after_end_turn (test_a04_decision_format.TerminalToolTests.test_successful_queries_commit_only_after_end_turn) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.182s
+
+OK

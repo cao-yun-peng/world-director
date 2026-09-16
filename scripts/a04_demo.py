@@ -19,8 +19,9 @@ def response(content=None, calls=None, *, reason=None):
             "finish_reason": reason or ("tool_calls" if calls else "stop"), "usage": None}
 
 
-def decision(kind="finish", **fields):
-    return response(json.dumps({"kind": kind, **fields}, ensure_ascii=False))
+def terminal(name="end_turn", **arguments):
+    """构造一个原生终结工具调用，不模拟普通正文 JSON。"""
+    return response(calls=[call(name, call_id="terminal", arguments=json.dumps(arguments, ensure_ascii=False))])
 
 
 def call(name="inspect_object", *, object_id="lamp_01", call_id="q1", arguments=None):
@@ -56,22 +57,22 @@ def inspect_from_directory(messages):
     return response(calls=[call(object_id=data["objects"][0]["id"], call_id="details")])
 
 
-async def demo(output_dir: Path = Path("docs")) -> list[dict]:
+async def demo(output_dir: Path = Path("docs/a04_end_tool")) -> list[dict]:
     session = create_session(actor_id="lin_yan", goal_id="clarify")
     engine = WorldEngine(create_world(session["session_id"]))
-    give = decision("give", object_id="envelope_01", recipient_id="other_npc")
+    give = terminal("give", object_id="envelope_01", recipient_id="other_npc")
     scenarios = [
-        ("T1", "你好。", [decision("talk", target_text=None, reply="晚上好。")]),
-        ("T2", "查看 lamp_01 的底座。", [response(calls=[call()]), decision(), response("底座上有编号。")]),
+        ("T1", "你好。", [terminal(reply="晚上好。")]),
+        ("T2", "查看 lamp_01 的底座。", [response(calls=[call()]), terminal(reply="底座上有编号。")]),
         ("T3", "比较台灯与信封外观。", [response(calls=[call(), call(object_id="envelope_01", call_id="q2")]),
-                                        decision(), response("两件物品的外观已查明。")]),
+                                        terminal(reply="两件物品的外观已查明。")]),
         ("T4", "把信封交给 other_npc。", [give, response("给你。")]),
         ("T4", "把信封交给 other_npc。", []),
         ("T6", "再把信封交给 other_npc。", [give]),
-        ("T7", "移动到储物间。", [decision("move", destination_id="storage_room"), response("到了。")]),
+        ("T7", "移动到储物间。", [terminal("move", destination_id="storage_room"), response("到了。")]),
         ("T8", "先查当前目录，再选第一件物品看细节。", [response(calls=[call("get_visible_scene")]),
-                 inspect_from_directory, decision(), response("目录中的物品已查看。")]),
-        ("T9", "查看一个我还没说明的物品。", [decision("clarify", target_text=None, reply="请说明是哪件物品。")]),
+                 inspect_from_directory, terminal(reply="目录中的物品已查看。")]),
+        ("T9", "查看一个我还没说明的物品。", [terminal(reply="请说明是哪件物品。")]),
     ]
     evidence, records = [], []
     for turn_id, text, responses in scenarios:

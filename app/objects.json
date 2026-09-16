@@ -1,9 +1,5 @@
 {
   "_note": "A02虚构教学后台数据；整体不得作为模型输入。只读，不修改A01 FACTS。",
-  "actor_locations": {
-    "lin_yan": "duty_room",
-    "other_npc": "duty_room"
-  },
   "objects": [
     {
       "id": "lamp_01",

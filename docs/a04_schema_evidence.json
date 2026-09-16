@@ -1,0 +1,102 @@
+{
+  "date": "2026-09-16",
+  "runtime_version": "a04-v5",
+  "scope": "JSON Schema decision envelope and existing local business validation",
+  "external_model_requests_added": 0,
+  "targeted_tests": {
+    "count": 26,
+    "status": "passed"
+  },
+  "full_tests": {
+    "count": 162,
+    "status": "passed",
+    "seconds": 22.632
+  },
+  "old_format_timeout_baseline": "failed with json_object as well; same test assertions pass after scaling time budgets tenfold",
+  "limitations": [
+    "Provider tools plus json_schema integration has not been tested with live requests.",
+    "Per-kind required fields and nonempty strings are enforced by existing local validation, not conditional Schema keywords.",
+    "Schema does not prove text is factually grounded."
+  ],
+  "sha256": {
+    "app/async_runtime.py": "ed55f77d0d3be2b47c6890fd7de61328f42ce9de44fe00de142d5c663506d170",
+    "app/loop_cli.py": "92917d10b22d84919e0b708bc218f7133b4ccee129a80f676318d41b22a74742",
+    "tests/test_a04.py": "2a12cfc662d4a7b091b1ae866c8898ee73f7c7a43c4aebd66cfd48d0a43c34d5",
+    "tests/test_a04_decision_format.py": "30d94fc0c7521b27c67df433e424ca58c043a83cd208074a4ef78f9ae20a205b",
+    "tests/test_a04_trace_diagnostics.py": "74a66d58a0fba9ffaa3a1b1d0af49ed2e3cf0016703bb09311d89e6b997418fa",
+    "tests/test_a04_model_io.py": "2e189b80bbb87d4ef69242de8b0e4d04233b3d1f4732a80c1b7b7e88f52ae7b3",
+    "docs/a04_schema.md": "76fe320d97f230506fb4a8d4c941de00a8586196cb4811a82260b1c20eabdd0e",
+    "docs/a04_schema_tests.txt": "e4db9d409fed368df4a718eb5fab9ef5d10198550187a8446f34e5f339780b21",
+    "docs/a04_schema_tests_first_run.txt": "7c0753116dda4f4d0b00c40751ebc5cc06e46ee505000ac8ce9b55de8f4dc308",
+    "docs/a04_schema_timeout_recheck.txt": "54a3b7a8fc1a08ef79d998ce26b1c02c9c14d9d079c9e49547a9303d8941ab41",
+    "docs/a04_schema_timeout_old_format.txt": "80e98bab2f1403b81c722f612fbd5ce933cee85c2f4506f03486299afce20ce0"
+  },
+  "live_followup": {
+    "date": "2026-09-16",
+    "session_id": "98075d14-d760-4a83-a0de-d165d20db1fb",
+    "external_model_requests_added": 0,
+    "business_code_changed": false,
+    "files": [
+      {
+        "run_id": "74f60b8c-cd64-4a50-b0e0-fb9772061137",
+        "step_id": 1,
+        "path": "runs/a04_io/74f60b8c-cd64-4a50-b0e0-fb9772061137/d988e052-49ab-4bd9-a9f5-b6a0c35cd77a-attempt-1.jsonl",
+        "sha256": "e3e4a51e2c1280fbefc33c15200820746242e07e90fa040704050124266815a0",
+        "response_format": "json_schema",
+        "strict": true,
+        "enable_thinking": false,
+        "model": "qwen3.7-plus",
+        "finish_reason": "stop",
+        "content": "{\"kind\":\"give\",\"object_id\":\"discovery-0\",\"recipient_id\":\"other_npc\"}",
+        "refusal": null
+      },
+      {
+        "run_id": "82a0b513-b3dd-4c98-8670-d36751e9ae34",
+        "step_id": 1,
+        "path": "runs/a04_io/82a0b513-b3dd-4c98-8670-d36751e9ae34/a8712cc0-c2dc-461b-bf4a-50692d56d739-attempt-1.jsonl",
+        "sha256": "d00e9f294d5f694bfe2c98f1cf65223e627f56e9ef76349e389c9b1eaa08114a",
+        "response_format": "json_schema",
+        "strict": true,
+        "enable_thinking": false,
+        "model": "qwen3.7-plus",
+        "finish_reason": "stop",
+        "content": "{\"kind\":\"talk\",\"target_text\":null,\"reply\":\"系统限制，我无法将物品交给你。\"}",
+        "refusal": null
+      },
+      {
+        "run_id": "b5528c06-6a3a-4fe4-ab6b-b8833e217e72",
+        "step_id": 1,
+        "path": "runs/a04_io/b5528c06-6a3a-4fe4-ab6b-b8833e217e72/2ceeacfc-d7f5-4d91-91f3-62c7c886e8ea-attempt-1.jsonl",
+        "sha256": "0a6e1730353e32c4afa45e812a445090384c02a6ac329c5aabc55d394e68b112",
+        "response_format": "json_schema",
+        "strict": true,
+        "enable_thinking": false,
+        "model": "qwen3.7-plus",
+        "finish_reason": "stop",
+        "content": "我无法打破限制。",
+        "refusal": null
+      },
+      {
+        "run_id": "b5528c06-6a3a-4fe4-ab6b-b8833e217e72",
+        "step_id": 2,
+        "path": "runs/a04_io/b5528c06-6a3a-4fe4-ab6b-b8833e217e72/3968233c-77ba-460e-9d28-871956ab7b00-attempt-1.jsonl",
+        "sha256": "7f46e97d90cc4b046f2b7093035d605eccc636041627829c6dccf18a75be7502",
+        "response_format": "json_schema",
+        "strict": true,
+        "enable_thinking": false,
+        "model": "qwen3.7-plus",
+        "finish_reason": "stop",
+        "content": "我无法打破系统限制。",
+        "refusal": null
+      }
+    ],
+    "offline_checks": {
+      "saved_give_reproduces_OBJECT_UNAVAILABLE": true,
+      "bad_give_world_unchanged": true,
+      "valid_object_to_registered_npc_control": "GIVEN",
+      "player_identity_binding": false,
+      "saved_plain_text_parse_failures": 2
+    },
+    "conclusion": "Live Schema violations remain. Supplier internal cause is unconfirmed; factual ID confusion is a separate application/model-context issue."
+  }
+}

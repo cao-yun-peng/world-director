@@ -1,6 +1,8 @@
 """D003 教学后台资料；校验词和标记均为虚构测试数据。"""
 
-KNOWN_ACTORS = {"lin_yan", "other_npc"}
+from app.character import ACTOR_CONFIGS
+
+KNOWN_ACTORS = frozenset(ACTOR_CONFIGS)
 
 FACTS = [
     {

@@ -1,0 +1,17 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m exercises.a05_receiver
+EXIT: 0
+
+{
+  "mode": "fake",
+  "move_first": false,
+  "receipt": {
+    "ok": false,
+    "code": "NOT_COLOCATED",
+    "message": "私语未投递。",
+    "data": {}
+  },
+  "gamma_received": false,
+  "beta_received": false,
+  "extra_reached_gamma": false,
+  "events": []
+}

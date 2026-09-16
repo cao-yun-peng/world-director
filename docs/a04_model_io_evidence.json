@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-09-16T04:16:07.319995+00:00",
+  "runtime_version": "a04-v4",
+  "trace_version": 3,
+  "tests": {
+    "run": 161,
+    "result": "OK",
+    "output": "docs/a04_model_io_tests.txt"
+  },
+  "new_real_model_requests": 0,
+  "local_example": {
+    "mode": "fake",
+    "run_id": "aabdbc51-9a01-4daa-8427-9f37c30bda9a",
+    "trace_path": "runs/a04_io_example.jsonl",
+    "first_io_ref": "a04_io_example_io/aabdbc51-9a01-4daa-8427-9f37c30bda9a/97ef5b39-12d3-4c75-8a56-70eef8dd0151-attempt-1.jsonl"
+  },
+  "sha256": {
+    ".gitignore": "ba490d8254d5a9336727d747db7c9abd75951edb0fc9a10fbfc1bcc648857b47",
+    "README.md": "5e18a176aeb749bc672a1d1dcf7ca2e11c49a0ff755714cb4de5e3f0d4e62599",
+    "app/trace.py": "e394fd3590c553a3b6b2d5a339f9afd1ca5b7569ac5fac2788ed3893fa3346d6",
+    "app/execution.py": "e117703c28957c7c21da5b268bd4eca0e9b53551f2b80bab70b042874519aade",
+    "app/model.py": "825be5459df36ffd6190f618db30ba353d5b3d088adc071f4ab9a58f1af01ccc",
+    "app/async_runtime.py": "e66158c6487f87eacd7475b930729cf866f3d1290d32637ab42811078ab5803a",
+    "app/loop_cli.py": "877f678c57566883542bc6338de53255077f082128cfa86313517c9b23a5eeb9",
+    "tests/test_a04_model_io.py": "56bb38747380424f9be9f09ccf14c0709c6c2979e42f1f34a1135af19451fba7",
+    "tests/test_a04_trace_diagnostics.py": "b6a385fd6a2c610f452f6c899f6fd151cb0b679771aad78b66ac1be264198394",
+    "docs/a04_model_io.md": "e21f4ebac356c2a80fee0b6b6aed99623e1910d436f6ca25f8b737cb8417a8cc",
+    "docs/a04_model_io_tests.txt": "580339da539b898d6123be43aaabb0ce8367de9382fc038710c737718ebec462",
+    "docs/a04_results.md": "f658c5b467da90ec5d0ed78e3fb8416490ffeea5c079596040642780601226fb",
+    "docs/a04_practice.md": "d9de71c1a79ba4f0cb80cce816816ade465cbf877ddd6da18cf45247f19ad8f7",
+    "docs/a04_trace_diagnostics.md": "2b3977bd5c1e78f7797e01572911f201dd0fea2578939c7d606e18a9c84bd4b1"
+  }
+}

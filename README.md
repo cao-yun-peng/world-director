@@ -1,6 +1,30 @@
+# AI 互动世界导演 · A05
+
+新增三角色独立历史、私语事件与听闻来源、授权记忆摘录、每次请求的字符预算。复用 A04 有界异步循环与唯一提交入口。
+
+```powershell
+# 离线两分支演示，不读取密钥：
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a05_demo
+.\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p "test_a05.py" -v
+# 独立变式，先预测异地私语为何失败：
+.\.venv\Scripts\python.exe -X utf8 -m exercises.a05_receiver
+# 已配置真实模型后，显式运行：
+.\.venv\Scripts\python.exe -X utf8 -m app.main --engine memory --max-model-requests 24 --max-input-chars 8000
+```
+
+- [A05 分步教学 D029—D035](docs/a05_practice.md)
+- [你的首轮预测与修正](docs/a05_prediction.md)
+- [A05 验收结果与限制](docs/a05_results.md)
+- [两分支请求、事件、摘要和预算证据](docs/a05_memory_cases.json)
+- [源码对照与手算](docs/a05_source_notes.md)
+
+memory 模式用 /actor 切换可信对话角色，/retry 重发原角色上一请求。三人同一世界、独立历史；世界只在内存中。以下旧课程文档保留历史口径，当前角色注册已扩展为三人。
+
+---
+
 # AI 互动世界导演 · A04
 
-A04 已加入有界异步循环、统一 deadline、只读查询并发、分类重试、完整提交与 JSONL 轨迹。
+A04 当前使用终结工具结束回合（a04-v6.1），保留有界异步循环、统一 deadline、只读查询并发、分类重试、完整提交与 JSONL 轨迹。
 
 ```powershell
 # 不读取密钥的离线运行与教学：
@@ -13,9 +37,12 @@ A04 已加入有界异步循环、统一 deadline、只读查询并发、分类�
 
 - [A04 分步教学与独立练习](docs/a04_practice.md)
 - [A04 验收记录与实际限制](docs/a04_results.md)
-- [A04 九次离线互动](docs/a04_demo.json)
-- [A04 六类场景证据](docs/a04_scenarios.json)
+- [A04 九次离线互动](docs/a04_end_tool/a04_demo.json)
+- [A04 六类场景证据](docs/a04_end_tool/a04_scenarios.json)
 - [A04 源码与官方文档对照](docs/a04_source_notes.md)
+- [A04 模型输入输出与 trace 关联排查](docs/a04_model_io.md)
+- [A04 End with tool：代码、教学与验证](docs/a04_end_with_tool.md)
+- [历史 JSON Schema 实验与验证范围](docs/a04_schema.md)
 
 A01—A03 入口保留用于课程对照；默认仍为 A01。A04 世界只在内存中，退出即丢失。
 真实模型演示与学习者独立解释需要单独验收；Fake 通过不等于阶段 A 已通过。
@@ -214,4 +241,4 @@ python -m exercises.count_calls
 - **为什么假回复不能标记 real？** 会伪造接通证据，掩盖配置或网络问题，也会让后续评测失去可信度。
 - **角色说地下室有信，是否就是真实世界事实？** 不是。A01 只有角色生成的语言；A03 已增加权威世界账本，但依然只有程序裁定能改变事实，不能把一句回复当作事实变更。
 
-API Key 是访问凭证，写入代码可能经 Git 历史或分享泄露。环境变量让凭证与代码分开，日志也不保存凭证或 SDK 请求。
+API Key 是访问凭证，写入代码可能经 Git 历史或分享泄露。环境变量让凭证与代码分开，日志不保存鉴权凭证或请求头。A04 的模型请求体和原始回复会另存到本地 `runs/a04_io/`，由主 trace 的 `io_ref` 关联；详见 [模型输入输出排查](docs/a04_model_io.md)。

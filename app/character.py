@@ -11,6 +11,24 @@ GOALS = {
     "leave": "礼貌地建议玩家暂时离开，可以建议改日来访，但不能编造危险或强迫玩家。",
 }
 
+GOALS.update({
+    "verify_then_relay": "先核对玩家来意，再决定保留消息或将适合分享的部分私语给同地角色。",
+    "collect_clues": "收集交接线索；听闻未核实前保持谨慎，必要时通过观察核对。",
+    "check_archives": "核对档案与实际记录，区分亲历、听闻和推测。",
+})
+
+# 唯一角色注册。目标、身份、开局位置由可信程序读取。
+ACTOR_CONFIGS = {
+    "lin_yan": {"card": {**BASE_CARD, "world_background": "27岁，岬角旧灯塔的临时管理员。"},
+                "goal_id": "verify_then_relay", "location_id": "duty_room"},
+    "other_npc": {"card": {"name": "周澈", "background": "旧灯塔交接员，负责收集交接线索。",
+                           "style": "谨慎、直接；明确区分听闻与核实结果。"},
+                  "goal_id": "collect_clues", "location_id": "duty_room"},
+    "archive_keeper": {"card": {"name": "沈岚", "background": "旧灯塔档案保管员，负责核对记录。",
+                                "style": "严谨、简洁，信息不足时说明未知。"},
+                       "goal_id": "check_archives", "location_id": "storage_room"},
+}
+
 PROMPT_VERSION = "a01-v1"
 
 

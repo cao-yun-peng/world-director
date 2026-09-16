@@ -3,40 +3,41 @@
 import asyncio
 import json
 from copy import deepcopy
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
-from app.actions import ActionProposal, parse_action
+from app.actions import ActionProposal
 from app.engine import TurnConflict, WorldEngine, request_digest
 from app.execution import RunBudget, RunLimits, RunStopped
 from app.model import AsyncToolModelAdapter
 from app.query_executor import ReadonlyExecutor
 from app.session import validate_session
-from app.tools import ModelProtocolError, TOOL_SCHEMAS
-from app.trace import RunTrace
-from app.world import freeze_world
+from app.tools import ModelProtocolError, TOOL_SCHEMAS, validate_batch
+from app.trace import RunTrace, call_reference
+from app.turn_tools import TERMINAL_TOOLS, TURN_TOOL_SCHEMAS, parse_terminal_call
+from app.world import append_statement, freeze_world
+from app.memory import build_actor_context
+from app.turn_tools import MEMORY_TOOL_SCHEMAS, parse_memory_terminal
 from app.world_runtime import NARRATION_INSTRUCTIONS, visible_messages
 
-RUNTIME_VERSION = "a04-v3"
+RUNTIME_VERSION = "a04-v6.1"
 
 LOOP_INSTRUCTIONS = """
-当前是程序的决策接口。历史 assistant 消息是先前向玩家展示的回复，不是本次输出格式示例。
-本次若不调用工具，必须输出完整 JSON；角色语言只能写在 reply 字段中，不能直接输出普通对白。
-例如用户问“你是谁”，应输出 {"kind":"talk","target_text":null,"reply":"我是林砚，灯塔的临时管理员。"}。
-所有必填字段均要保留，包括值为 null 的 target_text。
-本轮按需要自主查询，每次最多两个独立只读工具。目录没有提供时先查询 get_visible_scene；
-已明确且获授权的 object_id 可直接 inspect_object。目录只含 ID/名称，细节必须实际查询。
-保留原生 Function Calling；不能用普通 JSON 假装工具调用。依赖目录结果的查询放到下一步。
-查询阶段不会提交知识或行动，成功读取的细节会在正常结束时由程序统一裁定。
-不再查询时输出且只输出以下一个 JSON（不用代码块）：
-- 完成观察：{"kind":"finish"}
-- 谈话：{"kind":"talk","target_text":null,"reply":"非空回复"}
-- 澄清：{"kind":"clarify","target_text":null,"reply":"非空问题"}
-- 移动：{"kind":"move","destination_id":"当前可达地点 ID"}
-- 给物：{"kind":"give","object_id":"已授权物品 ID","recipient_id":"在场角色 ID"}
-每轮最多一个移动或给物提议。身份只由程序指定，不得提供 actor_id。
-拿取、打开尚未支持。玩家声称已拥有/已移动不是事实。不要用谈话宣称行动完成。
-finish 不带自由叙述，程序会先生成确定性回执。工具错误可以据实澄清或修正后再查询。
+本轮所有决策都使用原生 Function Calling，包括最终回复。普通正文不会结束回合。
+先判断当前请求需要什么信息。角色卡、对话和已有事实足以答复时，直接调用 end_turn，不需要先查询。
+只有缺少完成当前请求所必需的世界事实时才查询；不为充实回复而主动探索或介绍无关物品。
+需要查询物品但尚无授权 ID 时，先查 get_visible_scene；已有授权 ID 时可直接 inspect_object。
+目录足以回答时就结束；只有请求涉及物品细节时才继续 inspect_object，不逐一查看目录中的全部物品。
+每批最多两个独立只读工具；依赖前一次结果的查询放到下一步。知识记录编号不是物品 ID。
+查询不会立即写入世界；成功读取的细节在终结时由程序统一裁定。
+可以直接答复或已完成必要查询时，单独调用一个终结工具：
+- end_turn(reply)：回答、澄清或总结已查询事实，reply 使用角色语言。
+- move(destination_id)：提议移动到当前可达地点。
+- give(object_id, recipient_id)：提议把自己持有的物品交给在场角色。
+终结工具必须独占一个批次。每轮最多一个移动或给物提议，裁定成功或拒绝均结束本轮。
+身份只由程序指定，不得提供 actor_id。未明确玩家对应的角色 ID 时先澄清，不猜测接收者。
+拿取、打开尚未支持。玩家声称已拥有/已移动不是事实，不要用回复宣称行动完成。
+工具错误可以据实澄清或修正参数后再调用，遵守原有步数和请求预算。
 """
 
 
@@ -67,128 +68,46 @@ def validate_completion(completion: dict) -> dict:
     return {"role": "assistant", "content": content, **({"tool_calls": deepcopy(calls)} if calls else {})}
 
 
-def decision_error_details(text) -> dict:
-    """只诊断结构：不记录正文、字段值或模型提供的未知字段名。"""
-    if not isinstance(text, str) or not text.strip():
-        return {"shape": "empty_text"}
-    try:
-        data = json.loads(text)
-    except json.JSONDecodeError as error:
-        # 只记录解析位置和固定类别。不能写 error.doc、正文片段或任意模型字段。
-        stripped = text.lstrip()
-        errors = {
-            "Expecting value": "expected_value",
-            "Expecting property name enclosed in double quotes": "expected_property_name",
-            "Extra data": "extra_data",
-            "Unterminated string": "unterminated_string",
-            "Invalid control character": "invalid_control_character",
-            "Invalid ": "invalid_escape",
-            "Expecting ',' delimiter": "expected_comma",
-            "Expecting ':' delimiter": "expected_colon",
-            "Unexpected UTF-8 BOM": "unexpected_bom",
-        }
-        category = next((code for prefix, code in errors.items() if error.msg.startswith(prefix)), "syntax_error")
-        leading = ("code_fence" if stripped.startswith("```") else
-                   "bom" if stripped.startswith("\ufeff") else
-                   "object" if stripped.startswith("{") else
-                   "array" if stripped.startswith("[") else "other")
-        return {"shape": "invalid_json", "json_error": category, "content_length": len(text),
-                "line": error.lineno, "column": error.colno, "offset": error.pos,
-                "leading_form": leading}
-    if not isinstance(data, dict):
-        return {"shape": "not_object"}
-    kind = data.get("kind")
-    if not isinstance(kind, str) or kind not in ("finish", "talk", "clarify", "move", "give"):
-        return {"shape": "unknown_kind"}
-    required = {
-        "finish": {"kind"},
-        "talk": {"kind", "target_text", "reply"},
-        "clarify": {"kind", "target_text", "reply"},
-        "move": {"kind", "destination_id"},
-        "give": {"kind", "object_id", "recipient_id"},
-    }[kind]
-    return {"shape": "invalid_fields", "kind": kind,
-            "missing_fields": sorted(required - set(data)),
-            "unexpected_field_count": len(set(data) - required),
-            "field_types": {key: type(data[key]).__name__ for key in sorted(required & set(data))}}
-
-
-class DecisionFormatError(RunStopped):
-    def __init__(self, text):
-        super().__init__("INVALID_DECISION")
-        self.details = decision_error_details(text)
-        # 额外字段、未知行动和不合法字段值直接拒绝；不偷偷删除身份字段或猜测行动。
-        self.repairable = (self.details["shape"] in ("empty_text", "invalid_json") or
-                           (bool(self.details.get("missing_fields"))
-                            and self.details.get("unexpected_field_count") == 0))
-
-
-def parse_decision(message: dict) -> ActionProposal:
-    try:
-        data = json.loads(message.get("content") or "")
-        if data == {"kind": "finish"}:
-            return ActionProposal("inspect", "当前场景")
-        proposal = parse_action(message.get("content"))
-        if proposal.kind == "inspect":
-            raise ValueError("A04 观察必须通过原生工具，不能在终态额外查一次。")
-        return proposal
-    except (ValueError, TypeError):
-        raise DecisionFormatError(message.get("content")) from None
-
-
 async def decide(wire: list[dict], model: AsyncToolModelAdapter, *, snapshot,
-                 actor_id: str, executor: ReadonlyExecutor, budget: RunBudget):
-    discoveries, feedback = {}, []
-    format_repair_used = False
+                 actor_id: str, executor: ReadonlyExecutor, budget: RunBudget, memory_mode=False):
+    discoveries = {}
     for step_id in range(1, budget.limits.max_steps + 1):
-        completion = await budget.call(
-            lambda: model.complete(deepcopy(wire), tools=TOOL_SCHEMAS, tool_choice="auto",
-                                   response_format={"type": "json_object"}),
-            kind="model", step_id=step_id, snapshot_revision=snapshot.revision,
-            request_options={"tool_choice": "auto", "response_format": "json_object",
-                             "tool_schema_count": len(TOOL_SCHEMAS)},
-            repair_used=format_repair_used)
+        completion = await budget.call_model(
+            model, wire, options={"tools": MEMORY_TOOL_SCHEMAS if memory_mode else TURN_TOOL_SCHEMAS, "tool_choice": "required"},
+            kind="model", step_id=step_id, snapshot_revision=snapshot.revision)
         message = validate_completion(completion)
         calls = message.get("tool_calls")
         if not calls:
+            raise RunStopped("TOOL_CALL_REQUIRED")
+        validate_batch(calls)
+        if len(calls) > budget.limits.max_tool_calls_per_batch:
+            raise ModelProtocolError("工具数量超过本轮限制。")
+        terminal_names = set(TERMINAL_TOOLS) | ({"whisper"} if memory_mode else set())
+        terminal = [call for call in calls if call["function"]["name"] in terminal_names]
+        if terminal:
+            # 在执行任何查询之前检查整批，避免一边结束一边仍在查询。
+            if len(calls) != 1:
+                raise RunStopped("TERMINAL_TOOL_CONFLICT")
+            call = terminal[0]
+            metadata = dict(tool_name=call["function"]["name"], call_id=call_reference(call["id"]),
+                            step_id=step_id, snapshot_revision=snapshot.revision,
+                            span_id=f"terminal-{step_id}", parent_span_id=budget.trace.run_id)
             try:
-                proposal = parse_decision(message)
-            except DecisionFormatError as error:
-                budget.trace.emit("decision", "error", step_id=step_id,
-                                  span_id=f"decision-{step_id}", parent_span_id=budget.trace.run_id,
-                                  error_code=error.code, decision_details=error.details,
-                                  repair_used=format_repair_used, repairable=error.repairable,
-                                  snapshot_revision=snapshot.revision)
-                if format_repair_used or not error.repairable:
-                    raise
-                if step_id == budget.limits.max_steps:
-                    raise RunStopped("STEP_LIMIT") from None
-                budget.check()
-                if budget.model_requests >= budget.limits.max_model_requests:
-                    raise RunStopped("MODEL_REQUEST_LIMIT") from None
-                budget.trace.emit("format_correction", "scheduled", step_id=step_id + 1,
-                                  span_id=f"format-correction-{step_id}", parent_span_id=f"decision-{step_id}",
-                                  error_code=error.code, model_requests=budget.model_requests)
-                format_repair_used = True
-                # 提供脱敏的纠错反馈后重新决策。占用下一个 step，不是传输层重试。
-                wire[0]["content"] += (
-                    "\n上一次决策格式未通过，未执行任何新的行动。结构诊断："
-                    + json.dumps(error.details, ensure_ascii=False)
-                    + "。请根据原始用户请求及已授权的工具结果，重新选择下一步。"
-                    "不调用工具时只输出上面格式的一个完整 JSON；保留 null 字段。")
-                continue
-            budget.trace.emit("decision", "validated", step_id=step_id,
-                              span_id=f"decision-{step_id}", parent_span_id=budget.trace.run_id,
-                              decision_kind="finish" if proposal.kind == "inspect" else proposal.kind,
-                              repair_used=format_repair_used, snapshot_revision=snapshot.revision)
-            return proposal, list(discoveries.values()), feedback, step_id
-        items = await executor.execute_batch(calls, snapshot=snapshot, actor_id=actor_id,
-                                             budget=budget, step_id=step_id)
+                proposal = parse_memory_terminal(call) if memory_mode else parse_terminal_call(call)
+            except ValueError as error:
+                budget.trace.emit("terminal_tool", "rejected", error_code="INVALID_ARGUMENTS", **metadata)
+                items = [{"call_id": call["id"], "ok": False, "data": None,
+                          "error": {"code": "INVALID_ARGUMENTS", "message": str(error)}}]
+            else:
+                budget.trace.emit("terminal_tool", "validated", decision_kind=proposal.kind, **metadata)
+                return proposal, list(discoveries.values()), step_id
+        else:
+            items = await executor.execute_batch(calls, snapshot=snapshot, actor_id=actor_id,
+                                                 budget=budget, step_id=step_id)
         wire.append(message)
         for call, item in zip(calls, items, strict=True):
             wire.append({"role": "tool", "tool_call_id": call["id"],
                          "content": json.dumps(item, ensure_ascii=False)})
-            feedback.append(item)
             if item["ok"] and call["function"]["name"] == "inspect_object":
                 object_id = item["data"]["id"]
                 # 同轮重复查询可以消耗预算，但持久发现只记录一次。
@@ -199,19 +118,22 @@ async def decide(wire: list[dict], model: AsyncToolModelAdapter, *, snapshot,
 async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAdapter, *,
                          expected_actor_id: str, engine: WorldEngine, turn_id: str,
                          limits: RunLimits | None = None, executor: ReadonlyExecutor | None = None,
-                         trace_path: Path | None = None) -> TurnResult:
+                         trace_path: Path | None = None, memory_mode: bool = False,
+                         memory_summary: dict | None = None) -> TurnResult:
     validate_session(session, expected_actor_id=expected_actor_id)
     if not isinstance(user_text, str) or not user_text.strip():
         raise ValueError("请输入非空文字。")
     if not isinstance(turn_id, str) or not turn_id.strip():
         raise ValueError("turn_id 必须非空。")
     limits = limits or RunLimits()
+    if memory_mode and limits.max_input_chars is None:
+        limits = replace(limits, max_input_chars=8000)
     trace = RunTrace(session["session_id"], turn_id, mode=model.mode, path=trace_path)
     budget = RunBudget(limits, trace)
     executor = executor or ReadonlyExecutor(limits.max_parallel_tools)
     if executor.max_parallel_tools > limits.max_parallel_tools:
         raise ValueError("执行器并发数超过本轮上限。")
-    trace.emit("run_started", "started", model_requests=0, runtime_version=RUNTIME_VERSION,
+    trace.emit("run_started", "started", model_requests=0, runtime_version="a05-v1" if memory_mode else RUNTIME_VERSION,
                model_name=getattr(model, "model", None), provider_host=getattr(model, "provider_host", None),
                limits=asdict(limits), history_messages=len(session["history"]))
     reason, committed_revision, record = "INTERNAL_ERROR", None, None
@@ -232,8 +154,8 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
             acquired = True
         budget.check()
         snapshot = freeze_world(engine.world)
-        wire = visible_messages(session, user_text, actor_id=expected_actor_id,
-                                world=snapshot, include_objects=False)
+        if session["session_id"] != snapshot.session_id or expected_actor_id not in snapshot.actor_locations:
+            raise ValueError("会话与世界角色不匹配。")
         digest = request_digest("text", user_text)
         record = engine.lookup(actor_id=expected_actor_id, turn_id=turn_id, digest=digest)
         if record is not None:
@@ -244,24 +166,29 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
             reply = record["reply"]
             trace.emit("replay", "completed", replayed=True, committed_revision=committed_revision)
         else:
-            wire[0]["content"] += LOOP_INSTRUCTIONS
-            proposal, discoveries, feedback, step_id = await decide(
-                wire, model, snapshot=snapshot, actor_id=expected_actor_id, executor=executor, budget=budget)
-            budget.check()
-            # 成功查询可以在错误修正后提交；旧错误仍在消息和 trace 中保留。
-            accepted_feedback = [item for item in feedback if item["ok"]]
-            if proposal.kind == "inspect":
-                if not feedback:
-                    raise RunStopped("NO_OBSERVATION")
-                operations = discoveries
-                commit_feedback = accepted_feedback or feedback
+            if memory_mode:
+                # E1 只在临时候选上预览，提交前失败不会污染正式世界。
+                preview, incoming, _ = append_statement(
+                    engine.world, speaker_id="player", recipient_id=expected_actor_id, text=user_text,
+                    turn_id=turn_id, channel="player_dialogue")
+                budget.context = build_actor_context(preview, session, expected_actor_id, user_text,
+                                                     summary=memory_summary)
+                wire = deepcopy(budget.context.wire)
+                wire[0]["content"] += "\n本轮玩家私语候选来源：" + incoming["data"]["event_id"]
             else:
-                operations = discoveries + [proposal]
-                commit_feedback = None
+                wire = visible_messages(session, user_text, actor_id=expected_actor_id,
+                                        world=snapshot, include_objects=False)
+            wire[0]["content"] += LOOP_INSTRUCTIONS
+            proposal, discoveries, step_id = await decide(
+                wire, model, snapshot=snapshot, actor_id=expected_actor_id, executor=executor, budget=budget,
+                memory_mode=memory_mode)
+            budget.check()
+            operations = discoveries + [proposal]
             trace.emit("adjudication", "started", step_id=step_id, snapshot_revision=snapshot.revision)
             record = engine.commit_turn(proposal, operations, actor_id=expected_actor_id, turn_id=turn_id,
-                                        digest=digest, feedback=commit_feedback,
-                                        expected_revision=snapshot.revision, before_accept=budget.check)
+                                        digest=digest,
+                                        expected_revision=snapshot.revision, before_accept=budget.check,
+                                        player_text=user_text if memory_mode else None)
             committed_revision = record["after_revision"]
             receipt = record["receipt"]
             reason = "completed" if receipt["ok"] else "rejected"
@@ -269,23 +196,25 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
                        committed_revision=committed_revision, error_code=None if receipt["ok"] else receipt["code"])
             reply = receipt["message"]
             updated = deepcopy(session)
-            updated["history"].extend([{"role": "user", "content": user_text},
-                                       {"role": "assistant", "content": reply}])
+            if not memory_mode or receipt["ok"]:
+                updated["history"].extend([{"role": "user", "content": user_text},
+                                           {"role": "assistant", "content": reply}])
             # 在下一个 await 前把确定性结果与完整历史放进幂等缓存。
             engine.finish_turn(actor_id=expected_actor_id, turn_id=turn_id, session=updated,
                                reply=reply, trace=summary(), status=narration_status)
-            if receipt["ok"] and proposal.kind not in ("talk", "clarify"):
+            if receipt["ok"] and proposal.kind not in ("talk", "clarify", "statement"):
                 # 叙述只看程序回执；不携带未裁定的候选工具上下文。
                 narration_messages = [
                     {"role": "system", "content": NARRATION_INSTRUCTIONS},
                     {"role": "user", "content": json.dumps(receipt, ensure_ascii=False)},
                 ]
+                if memory_mode:
+                    current_context = build_actor_context(engine.world, session, expected_actor_id, "依据已提交回执叙述。")
+                    narration_messages[0]["content"] = current_context.wire[0]["content"] + NARRATION_INSTRUCTIONS
                 try:
-                    completion = await budget.call(
-                        lambda: model.complete(narration_messages, tools=TOOL_SCHEMAS, tool_choice="none"),
-                        kind="narration", step_id=step_id, committed_revision=committed_revision,
-                        request_options={"tool_choice": "none", "response_format": "text",
-                                         "tool_schema_count": len(TOOL_SCHEMAS)})
+                    completion = await budget.call_model(
+                        model, narration_messages, options={"tools": TOOL_SCHEMAS, "tool_choice": "none"},
+                        kind="narration", step_id=step_id, committed_revision=committed_revision)
                     message = validate_completion(completion)
                     text = message.get("content")
                     if message.get("tool_calls") or not isinstance(text, str) or not text.strip():

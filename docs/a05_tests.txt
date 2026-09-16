@@ -1,0 +1,39 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p test_a05.py -v
+EXIT: 0
+
+test_main_memory_route (test_a05.CliTests.test_main_memory_route) ... ok
+test_switch_retry_budget_and_close (test_a05.CliTests.test_switch_retry_budget_and_close) ... ok
+test_bad_channel_and_sender_never_emit (test_a05.MemoryTests.test_bad_channel_and_sender_never_emit) ... ok
+test_budget_count_and_tool_protocol (test_a05.MemoryTests.test_budget_count_and_tool_protocol) ... ok
+test_cache_scope_mutation_and_reauthorization (test_a05.MemoryTests.test_cache_scope_mutation_and_reauthorization) ... ok
+test_context_scope_and_source_lookup_fail_closed (test_a05.MemoryTests.test_context_scope_and_source_lookup_fail_closed) ... ok
+test_excerpt_preserves_qualifier_speaker_type_and_source (test_a05.MemoryTests.test_excerpt_preserves_qualifier_speaker_type_and_source) ... ok
+test_fault_injection_shared_history_is_detected_then_restored (test_a05.MemoryTests.test_fault_injection_shared_history_is_detected_then_restored) ... ok
+test_hidden_later_transfer_not_exposed_by_correction (test_a05.MemoryTests.test_hidden_later_transfer_not_exposed_by_correction) ... ok
+test_history_change_vs_testimony_and_private_correction (test_a05.MemoryTests.test_history_change_vs_testimony_and_private_correction) ... ok
+test_invalid_summary_falls_back_to_raw_authorized_records (test_a05.MemoryTests.test_invalid_summary_falls_back_to_raw_authorized_records) ... ok
+test_new_events_are_not_swallowed_by_old_summary (test_a05.MemoryTests.test_new_events_are_not_swallowed_by_old_summary) ... ok
+test_summary_and_context_nested_snapshots_are_independent (test_a05.MemoryTests.test_summary_and_context_nested_snapshots_are_independent) ... ok
+test_summary_rejects_bad_reference_type_rewrite_and_scope (test_a05.MemoryTests.test_summary_rejects_bad_reference_type_rewrite_and_scope) ... ok
+test_cancel_after_commit_preserves_input_action_and_history (test_a05.RuntimeTests.test_cancel_after_commit_preserves_input_action_and_history) ... ok
+test_cancel_before_commit_drops_input_and_discovery (test_a05.RuntimeTests.test_cancel_before_commit_drops_input_and_discovery) ... ok
+test_failure_before_commit_drops_input_and_discovery (test_a05.RuntimeTests.test_failure_before_commit_drops_input_and_discovery) ... ok
+test_keep_branch_all_requests_exclude_secret (test_a05.RuntimeTests.test_keep_branch_all_requests_exclude_secret) ... ok
+test_long_history_and_memory_keeps_protocol_and_actual_budget (test_a05.RuntimeTests.test_long_history_and_memory_keeps_protocol_and_actual_budget) ... ok
+test_long_input_fails_without_model_or_commit (test_a05.RuntimeTests.test_long_input_fails_without_model_or_commit) ... ok
+test_narration_failure_keeps_delivery_and_action (test_a05.RuntimeTests.test_narration_failure_keeps_delivery_and_action) ... ok
+test_receiver_variant_move_then_whisper (test_a05.RuntimeTests.test_receiver_variant_move_then_whisper) ... ok
+test_rejected_recipient_location_source_atomic (test_a05.RuntimeTests.test_rejected_recipient_location_source_atomic) ... ok
+test_relay_path_and_no_parent_expansion_or_narration (test_a05.RuntimeTests.test_relay_path_and_no_parent_expansion_or_narration) ... ok
+test_replay_and_conflict (test_a05.RuntimeTests.test_replay_and_conflict) ... ok
+test_story_lock_wait_counts_against_deadline (test_a05.RuntimeTests.test_story_lock_wait_counts_against_deadline) ... ok
+test_summary_timeout_falls_back_without_extra_model_requests (test_a05.RuntimeTests.test_summary_timeout_falls_back_without_extra_model_requests) ... ok
+test_three_cards_histories_world_scope_and_snapshots (test_a05.RuntimeTests.test_three_cards_histories_world_scope_and_snapshots) ... ok
+test_tool_block_overflow_rejects_before_next_model (test_a05.RuntimeTests.test_tool_block_overflow_rejects_before_next_model) ... ok
+test_trusted_identity_spoof_rejected_and_text_does_not_switch (test_a05.RuntimeTests.test_trusted_identity_spoof_rejected_and_text_does_not_switch) ... ok
+test_untrue_statement_is_not_world_action (test_a05.RuntimeTests.test_untrue_statement_is_not_world_action) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 2.613s
+
+OK

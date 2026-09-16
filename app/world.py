@@ -7,6 +7,7 @@ from pathlib import Path
 from types import MappingProxyType
 
 from app.actions import ActionProposal, normalize_action
+from app.character import ACTOR_CONFIGS
 
 
 @dataclass
@@ -60,9 +61,9 @@ def create_world(session_id: str) -> WorldState:
     return WorldState(
         session_id=session_id,
         locations={"duty_room": ["storage_room"], "storage_room": ["duty_room"]},
-        actor_locations=deepcopy(data["actor_locations"]),
+        actor_locations={actor: config["location_id"] for actor, config in ACTOR_CONFIGS.items()},
         objects=objects, owners=owners,
-        knowledge={actor: [] for actor in data["actor_locations"]},
+        knowledge={actor: [] for actor in ACTOR_CONFIGS},
     )
 
 
@@ -107,6 +108,10 @@ def adjudicate(state: WorldState, proposal: ActionProposal, *, actor_id: str, tu
     changes = {}
     discovery = None
     kind = proposal.kind
+    if kind == "statement":
+        return append_statement(state, speaker_id=actor_id, recipient_id=proposal.recipient_id,
+                                text=proposal.reply, turn_id=turn_id,
+                                cause_event_id=proposal.cause_event_id, channel="whisper")
     if kind in ("talk", "clarify"):
         return deepcopy(state), result(True, kind.upper(), proposal.reply), []
 
@@ -184,3 +189,49 @@ def adjudicate(state: WorldState, proposal: ActionProposal, *, actor_id: str, tu
         event.update(deepcopy(discovery))
     updated.events.append(deepcopy(event))
     return updated, receipt, [deepcopy(event)]
+
+
+def append_statement(state: WorldState, *, speaker_id: str, recipient_id: str, text: str,
+                     turn_id: str, channel: str, cause_event_id: str | None = None):
+    """纯裁定：只生成事件和经历；发送者只能由可信入口绑定。"""
+    from app.memory import visible_records
+
+    def reject(code):
+        return deepcopy(state), result(False, code, "私语未投递。"), []
+
+    actors = state.actor_locations
+    if not isinstance(text, str) or not text.strip() or not isinstance(turn_id, str) or not turn_id.strip():
+        return reject("INVALID_STATEMENT")
+    if speaker_id == recipient_id:
+        return reject("INVALID_RECIPIENT")
+    if channel == "player_dialogue":
+        # 玩家经程序选定的本地对话入口发言，不是第四个自治角色。
+        if not ((speaker_id == "player" and recipient_id in actors)
+                or (recipient_id == "player" and speaker_id in actors)):
+            return reject("INVALID_CHANNEL")
+    elif channel == "whisper":
+        if speaker_id not in actors or recipient_id not in actors:
+            return reject("INVALID_RECIPIENT")
+        if actors[speaker_id] != actors[recipient_id]:
+            return reject("NOT_COLOCATED")
+    else:
+        return reject("INVALID_CHANNEL")
+    if cause_event_id is not None:
+        allowed = {item["event_id"] for item in visible_records(state, speaker_id)} if speaker_id in actors else set()
+        if cause_event_id not in allowed:
+            return reject("SOURCE_UNAVAILABLE")
+    updated = deepcopy(state)
+    updated.revision += 1
+    event_id = f"{state.session_id}:E{len(state.events) + 1:04d}"
+    event = {"kind": "StatementEvent", "event_id": event_id, "session_id": state.session_id,
+             "turn_id": turn_id, "revision": updated.revision,
+             "before_revision": state.revision, "after_revision": updated.revision,
+             "actor_id": speaker_id, "speaker_id": speaker_id, "recipient_ids": [recipient_id],
+             "channel": channel, "text": text, "cause_event_id": cause_event_id, "changes": {}}
+    updated.events.append(deepcopy(event))
+    for actor_id, evidence_type in ((speaker_id, "said"), (recipient_id, "reported")):
+        if actor_id in actors:
+            updated.knowledge[actor_id].append({"event_id": event_id, "evidence_type": evidence_type,
+                                                "speaker_id": speaker_id, "facts": [text]})
+    return updated, result(True, "STATEMENT_DELIVERED", text,
+                           event_id=event_id, recipient_id=recipient_id), [deepcopy(event)]

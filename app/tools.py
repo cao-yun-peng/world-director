@@ -4,9 +4,10 @@ import json
 from pathlib import Path
 
 from app.scene_data import KNOWN_ACTORS
+from app.character import ACTOR_CONFIGS
 
 _WORLD = json.loads(Path(__file__).with_name("objects.json").read_text(encoding="utf-8"))
-ACTOR_LOCATIONS = _WORLD["actor_locations"]
+ACTOR_LOCATIONS = {actor: config["location_id"] for actor, config in ACTOR_CONFIGS.items()}
 OBJECTS = _WORLD["objects"]
 
 

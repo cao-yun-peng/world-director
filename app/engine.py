@@ -7,7 +7,7 @@ from copy import deepcopy
 from dataclasses import asdict
 
 from app.actions import ActionProposal, normalize_action
-from app.world import WorldState, adjudicate, result
+from app.world import WorldState, adjudicate, append_statement, result
 
 
 class TurnConflict(ValueError):
@@ -58,7 +58,8 @@ class WorldEngine:
     def commit_turn(self, proposal: ActionProposal, operations: list[ActionProposal], *,
                     actor_id: str, turn_id: str, digest: str,
                     cause_event_id: str | None = None, feedback: list[dict] | None = None,
-                    before_accept=None, expected_revision: int | None = None) -> dict:
+                    before_accept=None, expected_revision: int | None = None,
+                    player_text: str | None = None) -> dict:
         """operations/feedback 来自可信运行时，绝不直接消费模型提供的成功标志。"""
         previous = self.lookup(actor_id=actor_id, turn_id=turn_id, digest=digest)
         if previous is not None:
@@ -67,6 +68,13 @@ class WorldEngine:
             raise TurnConflict("查询快照已过期。")
         candidate = self.world
         receipts, events = [], []
+        if player_text is not None:
+            candidate, incoming, emitted = append_statement(
+                candidate, speaker_id="player", recipient_id=actor_id, text=player_text,
+                turn_id=turn_id, channel="player_dialogue")
+            if not incoming["ok"]:
+                raise ValueError("玩家消息无效。")
+            events.extend(emitted)
         for operation in operations:
             candidate, receipt, emitted = adjudicate(
                 candidate, operation, actor_id=actor_id, turn_id=turn_id, cause_event_id=cause_event_id)
@@ -92,6 +100,11 @@ class WorldEngine:
         if not receipt["ok"]:
             # 包括先发现、后行动被拒绝：不留下半份世界更新。
             candidate, events = self.world, []
+        if receipt["ok"] and player_text is not None and proposal.kind in ("talk", "clarify"):
+            candidate, _, emitted = append_statement(
+                candidate, speaker_id=actor_id, recipient_id="player", text=proposal.reply,
+                turn_id=turn_id, channel="player_dialogue")
+            events.extend(emitted)
         record = {
             "request_digest": digest, "proposal": asdict(proposal),
             "receipt": receipt, "results": receipts, "event_ids": [e["event_id"] for e in events],

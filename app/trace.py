@@ -1,4 +1,4 @@
-"""A04 元数据轨迹。业务事实仍以 WorldEngine 的正式事件为准。"""
+"""A04 元数据轨迹及关联的模型输入输出。业务事实以 WorldEngine 为准。"""
 
 import hashlib
 import json
@@ -18,9 +18,12 @@ class RunTrace:
         "step_id", "span_id", "parent_span_id", "attempt", "tool_name", "call_id",
         "snapshot_revision", "committed_revision", "started_at", "duration_ms",
         "error_code", "termination_reason", "model_requests", "usage",
-        "replayed", "cleanup_ms", "trace_write_failed", "decision_details",
+        "replayed", "cleanup_ms", "trace_write_failed",
         "runtime_version", "model_name", "provider_host", "limits", "history_messages",
-        "request_options", "response_details", "decision_kind", "repair_used", "repairable",
+        "request_options", "response_details", "decision_kind",
+        "io_ref", "io_write_failed",
+        "input_chars", "max_input_chars", "unit", "counted_fields", "selected_event_ids",
+        "history_turn_indices", "summary_used", "summary_issues", "dropped",
     }
 
     def __init__(self, session_id: str, turn_id: str, *, mode: str, path: Path | None = None):
@@ -28,7 +31,7 @@ class RunTrace:
             raise ValueError("mode 必须是 fake 或 real。")
         self.run_id = str(uuid4())
         self.context = dict(session_id=session_id, turn_id=turn_id, run_id=self.run_id, mode=mode,
-                            trace_version=2)
+                            trace_version=3)
         self.path = path
         self.records: list[dict] = []
         self.write_failed = False
@@ -49,6 +52,29 @@ class RunTrace:
             except OSError:
                 # 不能因记录失败重新执行业务。调用方通过结果/CLI 明确报告证据缺口。
                 self.write_failed = True
+
+    def io_reference(self, span_id: str, attempt: int) -> str | None:
+        """相对于主 trace 所在目录；只使用程序生成的 ID 构造路径。"""
+        if self.path is None or self.path.is_dir():
+            return None
+        return f"{self.path.stem}_io/{self.run_id}/{span_id}-attempt-{attempt}.jsonl"
+
+    def write_io(self, reference: str, phase: str, payload, *, kind: str, **fields) -> bool:
+        """每次尝试先写 input，再写 output/end；失败只报告，不重跑业务。"""
+        record = {**self.context, "kind": kind, "phase": phase,
+                  "recorded_at": datetime.now(timezone.utc).isoformat(),
+                  **{key: value for key, value in fields.items() if key in self.FIELDS},
+                  "payload": payload}
+        try:
+            line = json.dumps(record, ensure_ascii=False, allow_nan=False)
+            path = self.path.parent / reference
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as stream:
+                stream.write(line + "\n")
+            return True
+        except (OSError, TypeError, ValueError):
+            self.write_failed = True
+            return False
 
     def finish(self, reason: str, *, model_requests: int, committed_revision: int | None) -> None:
         self.emit("run_finished", reason, termination_reason=reason,

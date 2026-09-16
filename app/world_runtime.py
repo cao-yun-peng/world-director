@@ -50,7 +50,7 @@ def visible_messages(session: dict, text: str, *, actor_id: str, world: WorldSta
         raise ValueError("请输入非空文字。")
     card = {**ACTOR_CARDS[actor_id], "goal": GOALS[session["goal_id"]]}
     # A01 背景是开局设定；当前位置只从本轮账本构造。
-    card["background"] = "27岁，岬角旧灯塔的临时管理员。当前位置以本轮授权场景为准。"
+    card["background"] = card.get("world_background", card["background"]) + "当前位置以本轮授权场景为准。"
     scene = get_visible_scene(actor_id=actor_id, world=world)
     scene["destinations"] = list(world.locations[scene["location_id"]])
     scene["actors"] = [actor for actor, location in world.actor_locations.items()
@@ -59,8 +59,9 @@ def visible_messages(session: dict, text: str, *, actor_id: str, world: WorldSta
                           if world.owners[obj["id"]] == "actor:" + actor_id]
     if not include_objects:
         del scene["objects"], scene["inventory"]
-    facts = [{"id": f"discovery-{index}", "text": fact}
-             for index, item in enumerate(world.knowledge[actor_id]) for fact in item["facts"]]
+    from app.memory import visible_records
+    facts = [{"id": item["event_id"], "text": json.dumps(item, ensure_ascii=False)}
+             for item in visible_records(world, actor_id)]
     system = build_prompt(card, facts) + "\n本轮授权场景（目录无细节）：\n" + json.dumps(scene, ensure_ascii=False)
     return [{"role": "system", "content": system}, *deepcopy(session["history"]),
             {"role": "user", "content": text}]

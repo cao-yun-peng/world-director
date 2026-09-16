@@ -24,12 +24,12 @@ TRACE_PATH = ROOT / "runs" / "a04.jsonl"
 def load_model() -> AsyncRealModelAdapter:
     load_dotenv(ROOT / ".env", override=False, encoding="utf-8-sig")
     api_key = os.getenv("LLM_API_KEY", "").strip()
-    model_name = os.getenv("LLM_MODEL", "qwen-plus").strip()
+    model_name = os.getenv("LLM_MODEL", "qwen3.7-plus").strip()
     base_url = os.getenv("LLM_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1").strip()
     if not api_key:
         raise ValueError("A04 互动需要 LLM_API_KEY；离线演示：python -m scripts.a04_demo")
     if not model_name or not base_url or model_name == "qwen-plus-character":
-        raise ValueError("请配置支持 Function Calling 的 LLM_MODEL（例如 qwen-plus）及 LLM_BASE_URL。")
+        raise ValueError("请配置支持 Function Calling 及 tool_choice=required 的 LLM_MODEL（例如 qwen3.7-plus）及 LLM_BASE_URL。")
     return AsyncRealModelAdapter(api_key, model_name, base_url)
 
 
@@ -41,6 +41,7 @@ async def chat(model, *, session: dict, limits: RunLimits, max_model_requests: i
     print(f"AI互动世界导演 · A04 [{model.mode}]\n会话：{session['session_id']}")
     print("/retry 重发上一请求；/exit 退出。世界保存在内存中，Ctrl+C 取消并退出。")
     print(f"轨迹：{trace_path.resolve()}（运行协议 {RUNTIME_VERSION}）")
+    print(f"模型输入输出：{trace_path.with_name(trace_path.stem + '_io').resolve()}（通过 io_ref 关联）")
     try:
         while True:
             # input 只在上一轮所有任务都回收后执行；运行中的模型请求始终是异步的。
@@ -74,27 +75,11 @@ async def chat(model, *, session: dict, limits: RunLimits, max_model_requests: i
             except AgentTurnError as error:
                 trace = error.trace
                 print(f"本轮未提交（{error.code}）。")
-                if error.code == "INVALID_DECISION":
-                    details = next((row["decision_details"] for row in reversed(trace["records"])
-                                    if "decision_details" in row), {})
-                    explanation = {
-                        "empty_text": "模型没有返回决策内容",
-                        "invalid_json": "模型返回的决策不是有效 JSON",
-                        "not_object": "模型返回的 JSON 不是对象",
-                        "unknown_kind": "模型返回了不支持的决策类型",
-                        "invalid_fields": "模型决策的字段缺失、多余或类型不合法",
-                    }.get(details.get("shape"), "模型返回的决策格式不合要求")
-                    print(explanation + "；重复 /retry 仍可能遇到相同的格式问题。")
-                    if details.get("json_error"):
-                        label = {"unterminated_string": "字符串未闭合",
-                                 "expected_value": "缺少合法 JSON 值",
-                                 "invalid_control_character": "字符串含未转义控制字符",
-                                 "extra_data": "JSON 后存在多余内容"}.get(details["json_error"], details["json_error"])
-                        print(f"JSON 诊断：{label}；第 {details['line']} 行、第 {details['column']} 列。")
-                    if details.get("missing_fields"):
-                        print("缺少字段：" + "、".join(details["missing_fields"]))
-                else:
-                    print("可用 /retry 重试。")
+                if error.code == "TOOL_CALL_REQUIRED":
+                    print("模型未调用工具；本轮必须通过终结工具提交结果。请通过 io_ref 查看原始响应。")
+                elif error.code == "TERMINAL_TOOL_CONFLICT":
+                    print("终结工具必须单独调用；本批工具均未执行。")
+                print("可用 /retry 重试。")
             except TurnConflict:
                 print("同一 turn_id 的请求冲突，未再次执行。")
                 continue
@@ -125,6 +110,7 @@ async def chat(model, *, session: dict, limits: RunLimits, max_model_requests: i
 
 async def configured_chat(args, limits: RunLimits) -> int:
     model = load_model()
+    print(f"模型：{model.model}")
     try:
         session = create_session(actor_id="lin_yan", goal_id=os.getenv("CHARACTER_GOAL", "clarify").strip())
     except ValueError:

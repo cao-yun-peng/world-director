@@ -1,0 +1,83 @@
+{
+  "task_id": "A05",
+  "revision": 2,
+  "mode": "fake_offline",
+  "captured_at_utc": "2026-09-16T12:38:42.354660+00:00",
+  "base_head": "2e4255e08f472f5a8e89e60677e0440bc54bd468",
+  "worktree_contains_preexisting_a04_changes": true,
+  "commit_created": false,
+  "real_model_called": false,
+  "checks": {
+    "A05-T": {
+      "tests": 31,
+      "exit_code": 0,
+      "output": "docs/a05_tests.txt"
+    },
+    "A05-REG": {
+      "tests": 192,
+      "exit_code": 0,
+      "output": "docs/a05_all_tests.txt"
+    },
+    "A05-DEMO": {
+      "exit_code": 0,
+      "output": "docs/a05_demo_output.txt"
+    },
+    "A05-VAR": {
+      "exit_code": 0,
+      "output": "docs/a05_variant_output.txt"
+    }
+  },
+  "validity": "Results apply only to these file hashes; revalidate after implementation changes.",
+  "sha256": {
+    "app/__init__.py": "0ebb5598684b70b536b3d05cab1dea1ece36d79614a32bfbb1e8d7091c1fd1f7",
+    "app/actions.py": "d839c79570fbd58c829a25f0a7ba8e90a5f6f0c09216ac2bec2efd152aa405af",
+    "app/async_runtime.py": "1bfdb950a3ad13d35f462261b1efa026fe8e11a48f855a4a1260d97ffcd8741f",
+    "app/character.py": "417eba643803d001022cae372c77aa0f400190680696719609b219d3cb6419cf",
+    "app/engine.py": "e2195397963b23b13ac31deacef506534f4d010fd7355a0293e3769e342327b7",
+    "app/execution.py": "591e1ea4b100f77ab36df59ad2a5c70d5f8a02c57b3b3d60ddbf3fd31cc12efa",
+    "app/loop_cli.py": "9c09ef5d8969c36bb1400176bf4295bbc210cc6a8bd3056da388f4685b113048",
+    "app/main.py": "965db0b4b931dc77d2aed7ff29f50c38c8ffe8750185a6a5f4a587fc53773385",
+    "app/memory.py": "200cd240f4ae15cc373609188a453b7c18095fc1fa89d02d561235531e403f76",
+    "app/memory_cli.py": "bc514ba2aeb84e37519a74936ec68427f7edc4879274588ecae6d54a4941e811",
+    "app/memory_runtime.py": "6dee9212731c68a811cbbd7e41fd322bbd684970781506dc79475fde084e2ed4",
+    "app/model.py": "825be5459df36ffd6190f618db30ba353d5b3d088adc071f4ab9a58f1af01ccc",
+    "app/objects.json": "b4b3f72f40a0792243047a432dfd4534d73a8ac935f465f1425287d3f47fca02",
+    "app/query_executor.py": "985dcb611a284bf472805a941022eac1eeb1a86496b50d7b3b773798ab7377a7",
+    "app/runtime.py": "511971e061f8040dcee0823909b191380602e504738d4fad771a6018d2ce4696",
+    "app/scene_data.py": "602f5a2f4443532bee5ae1d9ce457b318295b57fa6dff12311bbca9623aaf102",
+    "app/session.py": "f565cf95396ac078b1c6ccce854587abab21c977a87fa8fd20b9bb6b5021b5d0",
+    "app/storage.py": "601e759b51fa1c3475666fc8aabfb10df01f560c978b39fb84e6154e8455f6a3",
+    "app/tools.py": "2a8bef83799b235006a353afbc2cdba6bb4c9926a4364986860f4fa18af73ff6",
+    "app/trace.py": "07050b028586c548f279b182af6952e1c8b6745b7c27864963fd74cfa4d4a253",
+    "app/turn_tools.py": "4a0d1e68d937378af04c2a829dfe34e8e90fa28b485abaf0e974c08811b77319",
+    "app/view.py": "0b0525686a5d0159d63321bddbd5dbd17ad7d1d294315fda2dc04bc4b40d269c",
+    "app/world.py": "082fb9ab3aadc0be7d9607ed5d5f22f4fd4d0f7557b0f24159f69b54257b72b8",
+    "app/world_runtime.py": "643c3d7185c9952e82229f63e47d444310faab60839547a65691d4de239da897",
+    "docs/a05_all_tests.txt": "a570d4a5045d1466ea55851a31327b5eea0998bd639bb46d42ec52c62510cabf",
+    "docs/a05_demo_output.txt": "fef9106c56f0df783d8a888f8dfbf405e80591ae9c3b9cfc6cd8bfa7a3fff406",
+    "docs/a05_memory_cases.json": "e2d55fe65c05a1c5fe97a57e6580ea1a79177d098fd8d90689146ffcd4bc3c3a",
+    "docs/a05_practice.md": "2124ca86a6d74270d6d62a8bae53e23b0fad0dab968e4db3468f28153494e027",
+    "docs/a05_prediction.md": "9b4a8b64c061a57ef8e5812ffd1269d30e8ad12afe3a089c78df8563e1c9221b",
+    "docs/a05_results.md": "47ab238a481e477898792b1915f193fe28869dbd369d026b746458ae7e43e1cc",
+    "docs/a05_source_notes.md": "361a10728b183603aaa33f87783f61eb5126cfd3b520b1ab0f420d59846f12fb",
+    "docs/a05_tests.txt": "7208f2debc4fca60a1cb64b3fe8e6f2f64de8e3028058adfa613b4226cacbd09",
+    "docs/a05_variant_output.txt": "775aa76f9bc4b986db8c50ab77a2493908dbdfe611c8430ce9e116885d1c61f1",
+    "exercises/a05_receiver.py": "b1018dfb2165290d927f89131ab64a5448b95d0a71dd6e1b83227e17f8c914c8",
+    "scripts/a04_demo.py": "667d62609a83b447e664ac57c8ccb8e515085606b5afab196d890c91c42ceaed",
+    "scripts/a05_demo.py": "9b526727e7646ef8c0f10b7722585d3c7d68253f5eba850dfc0472db4739607c",
+    "tests/test_a02.py": "1807d1bc693ef4f327ca9c0d12ffde1ec65ecaf593eedc524ac3ffe534bfad0e",
+    "tests/test_a03.py": "38bfe4c0597122d87f72363c41ac884c1cf6bb742f9c95b80dd6c61763219c38",
+    "tests/test_a04.py": "d731e170ad98c920a7911f41354437119a40a83901209b016891d8319f0dda37",
+    "tests/test_a04_cli.py": "d018879c998c51ee2fd086b184f68e8ded93bfaef559df6eda063fa4fa813331",
+    "tests/test_a04_decision_format.py": "f0215f70c16d1d58a5e4669679ab56121f9ba2cee4a9d979db28bd6d7159f843",
+    "tests/test_a04_model_io.py": "f28629236722a53ce0177d3a9eec837ac7bec2e79f2b6f00e92f76979ca2ba73",
+    "tests/test_a04_protocol_probe.py": "d365f3709164a44f7f355883c127d322a386218f305e76dbf18f6ded3afa772b",
+    "tests/test_a04_trace_diagnostics.py": "08bb361e4d72ec520970fc9fb02bd46a43f1bc016fbab488091b2ec4023fc03e",
+    "tests/test_a05.py": "bff9b0baf29888e45b4c6232d56775ead322debf45361d329bb86d4135234100",
+    "tests/test_character.py": "5c2565caae61d559725af4c12e04fece32a360eeb61c347cf237d9be399f5de6",
+    "tests/test_d001.py": "b382205281562d770ae919d4c31cdc4a3fc32ae39b1456416feda698f3be2cdc",
+    "tests/test_d004.py": "66d7e6a32599bf73fa12c3b9c2527a6f043fa1a99f23c3dd35928c50fcae016f",
+    "tests/test_session.py": "4c0a2185aefc4e827c13a998107b48132654398018c4c8860213606f2afd3f3d",
+    "tests/test_view.py": "b5621639265b2f7fde79a20aa710c7f9a02c1ced72dc098815685ef887fa4910"
+  }
+}

@@ -89,13 +89,17 @@ class AsyncRealModelAdapter:
         self.request_count = 0
         self.provider_host = urlsplit(base_url).hostname
 
+    @property
+    def request_defaults(self) -> dict[str, Any]:
+        # 只含请求体参数；客户端的 API Key、请求头和完整 URL 不进入日志。
+        return {"model": self.model, "max_tokens": 512, "stream": False,
+                "extra_body": {"enable_thinking": False}}
+
     async def complete(self, messages: list[dict[str, Any]], **options) -> dict[str, Any]:
         self.request_count += 1
         try:
             response = await self.client.chat.completions.create(
-                model=self.model, messages=messages, max_tokens=512, stream=False,
-                extra_body={"enable_thinking": False}, **options,
-            )
+                **{**self.request_defaults, "messages": messages, **options})
         except APIConnectionError:
             raise TransientFailure() from None
         except APIStatusError as error:
@@ -113,15 +117,18 @@ class AsyncRealModelAdapter:
                         delay = 0.0
                 raise TransientFailure(retry_after_s=max(0.0, delay)) from None
             raise
+        raw = {"raw_response": response.model_dump(mode="json"),
+               "provider_request_id": getattr(response, "_request_id", None)}
         if not response.choices:
-            raise ValueError("模型没有返回消息。")
+            # 保留异常协议响应，交给运行时统一校验，不能先丢掉原文。
+            return {"message": None, "finish_reason": None, **raw}
         choice = response.choices[0]
         message = {"role": choice.message.role, "content": choice.message.content}
         if choice.message.tool_calls:
             message["tool_calls"] = [call.model_dump(include={"id", "type", "function"})
                                      for call in choice.message.tool_calls]
         return {"message": message, "finish_reason": choice.finish_reason,
-                "usage": response.usage.model_dump() if response.usage else None}
+                "usage": response.usage.model_dump() if response.usage else None, **raw}
 
     async def aclose(self) -> None:
         await self.client.close()

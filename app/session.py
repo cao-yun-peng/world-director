@@ -2,13 +2,12 @@
 
 from uuid import uuid4
 
-from app.character import BASE_CARD, GOALS, PROMPT_VERSION, build_prompt
+from app.character import ACTOR_CONFIGS, GOALS, PROMPT_VERSION, build_prompt
 from app.model import ModelAdapter
 from app.scene_data import FACTS
 from app.view import build_view
 
-# other_npc只是权限测试主体，目前没有可供对话的角色卡。
-ACTOR_CARDS = {"lin_yan": BASE_CARD}
+ACTOR_CARDS = {actor: config["card"] for actor, config in ACTOR_CONFIGS.items()}
 
 
 def validate_session(session: dict, *, expected_actor_id: str) -> None:
@@ -45,6 +44,18 @@ def create_session(*, actor_id: str, goal_id: str) -> dict:
     }
     validate_session(session, expected_actor_id=actor_id)
     return session
+
+
+def create_actor_conversations(world) -> dict[str, dict]:
+    """显式绑定同一个故事；每份 history 独立，不产生三个不同世界。"""
+    if set(world.actor_locations) != set(ACTOR_CONFIGS):
+        raise ValueError("世界注册与角色配置不匹配。")
+    conversations = {}
+    for actor_id, config in ACTOR_CONFIGS.items():
+        session = create_session(actor_id=actor_id, goal_id=config["goal_id"])
+        session["session_id"] = world.session_id
+        conversations[actor_id] = session
+    return conversations
 
 
 def build_messages(session: dict, user_text: str, *, expected_actor_id: str) -> list[dict[str, str]]:

@@ -12,12 +12,12 @@ from unittest.mock import AsyncMock, patch
 from app import loop_cli, main as cli
 from app.execution import RunLimits
 from app.session import create_session
-from scripts.a04_demo import ScriptedModel, decision, response
+from scripts.a04_demo import ScriptedModel, terminal, response
 
 
 class CliTests(unittest.IsolatedAsyncioTestCase):
     async def test_budget_replay_and_client_close(self):
-        model = ScriptedModel([decision("give", object_id="envelope_01", recipient_id="other_npc"), response("给你。")])
+        model = ScriptedModel([terminal("give", object_id="envelope_01", recipient_id="other_npc"), response("给你。")])
         model.aclose = AsyncMock()
         session = create_session(actor_id="lin_yan", goal_id="clarify")
         output = io.StringIO()
@@ -37,7 +37,7 @@ class CliTests(unittest.IsolatedAsyncioTestCase):
         async def wait(messages):
             started.set()
             await asyncio.Event().wait()
-        model = ScriptedModel([decision("give", object_id="envelope_01", recipient_id="other_npc"), wait])
+        model = ScriptedModel([terminal("give", object_id="envelope_01", recipient_id="other_npc"), wait])
         model.aclose = AsyncMock()
         session = create_session(actor_id="lin_yan", goal_id="clarify")
         output = io.StringIO()

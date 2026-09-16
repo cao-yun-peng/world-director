@@ -1,0 +1,20 @@
+test_attempt_timeout_can_retry_but_total_deadline_is_fixed (tests.test_a04.RuntimeTests.test_attempt_timeout_can_retry_but_total_deadline_is_fixed) ... FAIL
+
+======================================================================
+FAIL: test_attempt_timeout_can_retry_but_total_deadline_is_fixed (tests.test_a04.RuntimeTests.test_attempt_timeout_can_retry_but_total_deadline_is_fixed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "E:\project\self-agent\world-director\tests\test_a04.py", line 121, in test_attempt_timeout_can_retry_but_total_deadline_is_fixed
+    self.assertEqual(len(self.model.requests), 2)
+AssertionError: 1 != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 0.512s
+
+FAILED (failures=1)

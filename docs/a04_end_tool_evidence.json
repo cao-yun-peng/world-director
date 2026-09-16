@@ -1,0 +1,85 @@
+{
+  "task_id": "A04-END-TOOL",
+  "revision": 8,
+  "runtime_version": "a04-v6",
+  "recorded_at": "2026-09-16T10:36:44.169419+00:00",
+  "git_head": "2e4255e08f472f5a8e89e60677e0440bc54bd468",
+  "scope": "local course prototype; working-tree changes; no commit created",
+  "checks": [
+    {
+      "id": "END-T1-specialized",
+      "command": "python -X utf8 -m unittest discover -s tests -p test_a04*.py -v",
+      "exit_code": 0,
+      "tests": 61
+    },
+    {
+      "id": "END-T1",
+      "command": "python -X utf8 -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests": 161,
+      "output": "docs/a04_end_tool_tests.txt"
+    },
+    {
+      "id": "END-D1",
+      "command": "python -X utf8 -m scripts.a04_demo",
+      "exit_code": 0,
+      "interactions": 9,
+      "fake_model_requests": 14,
+      "output": "docs/a04_end_tool/a04_demo.json"
+    },
+    {
+      "id": "END-F1",
+      "command": "python -X utf8 -m scripts.a04_faults",
+      "exit_code": 0,
+      "cases": 6,
+      "output": "docs/a04_end_tool/a04_scenarios.json"
+    },
+    {
+      "id": "END-DIFF",
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "real_model_requests": 0,
+  "gate": {
+    "offline": "passed",
+    "real_service": "not_run",
+    "production": "not_assessed"
+  },
+  "limitations": [
+    "World state remains in memory.",
+    "Player actor binding is not implemented.",
+    "Move/give narration still runs after commit.",
+    "Real provider tool_choice=required support and language quality need live verification."
+  ],
+  "sha256": {
+    "app/turn_tools.py": "62dc686a7989b472061136d0c91094a8a4d84c82a64d5bcaf88009508ce51c22",
+    "app/async_runtime.py": "e4803ad32a94702f16bc374ec36263a5990a8d012f8310317190c4c699bd19c5",
+    "app/loop_cli.py": "9c09ef5d8969c36bb1400176bf4295bbc210cc6a8bd3056da388f4685b113048",
+    "app/trace.py": "f01f58b91cce0171d8e43ce93a8ffdd6293708654de84da641cf6773016435f4",
+    "app/model.py": "825be5459df36ffd6190f618db30ba353d5b3d088adc071f4ab9a58f1af01ccc",
+    "app/execution.py": "e117703c28957c7c21da5b268bd4eca0e9b53551f2b80bab70b042874519aade",
+    "app/query_executor.py": "985dcb611a284bf472805a941022eac1eeb1a86496b50d7b3b773798ab7377a7",
+    "app/engine.py": "b55a298a8f0fdd3e76b94551a04ab3787d1feb3a0072a0a3f6023129674e2f7d",
+    "scripts/a04_demo.py": "667d62609a83b447e664ac57c8ccb8e515085606b5afab196d890c91c42ceaed",
+    "scripts/a04_faults.py": "31030395d0125fa3988cec9a562a6eaea9021f284ab7df18343a9f2f796a1bf7",
+    "scripts/a04_protocol_probe.py": "9ad98a97d2546a13482a6a8a4c3e172c10eb46204976c11c3d43577de8923af4",
+    "tests/test_a04.py": "d731e170ad98c920a7911f41354437119a40a83901209b016891d8319f0dda37",
+    "tests/test_a04_cli.py": "d018879c998c51ee2fd086b184f68e8ded93bfaef559df6eda063fa4fa813331",
+    "tests/test_a04_decision_format.py": "f0215f70c16d1d58a5e4669679ab56121f9ba2cee4a9d979db28bd6d7159f843",
+    "tests/test_a04_model_io.py": "f28629236722a53ce0177d3a9eec837ac7bec2e79f2b6f00e92f76979ca2ba73",
+    "tests/test_a04_trace_diagnostics.py": "08bb361e4d72ec520970fc9fb02bd46a43f1bc016fbab488091b2ec4023fc03e",
+    "tests/test_a04_protocol_probe.py": "d365f3709164a44f7f355883c127d322a386218f305e76dbf18f6ded3afa772b",
+    "docs/a04_end_with_tool.md": "c7c8cd12388aa84c2e2d6d0e6f66d50393074f3946dbd34934d540e8449afb73",
+    "docs/a04_end_tool_tests.txt": "0d4b2b3e6849b740b8ed9d11d4f2fe9265adcf154cdaeecc0ce5d3ea9f6ad802",
+    "docs/a04_practice.md": "8b433ec84918cb9c45bfe70ad635773ba725c027aa3a301b95bc1676e4c8410e",
+    "docs/a04_results.md": "3588c53aeb67776f84d04c2f587f94cfd79a5b6ea850d2319a7135129dace0f8",
+    "README.md": "0f78e61a72bb0690fb7d27cb540d246954a4fe16a2faf73b0da9062afafca964",
+    "docs/a04_end_tool/a04_demo.json": "095834da4f43b56a23be41d3ca86738cb9457d7fd3b44aee2d59ba197d475613",
+    "docs/a04_end_tool/a04_fault_trace.jsonl": "e67939d477b20549560f24851ed677fd95a2a1003b149850114053366016d1dd",
+    "docs/a04_end_tool/a04_scenarios.json": "16d13230394aaecb236287b8a5ece41c3eae3a4e85383b6d348d6ac1ae789d0e",
+    "docs/a04_end_tool/a04_trace_sample.jsonl": "3aac429984021aa4618d92669ec57d4c9204e89581b816b9dfde23907f29ba48",
+    "docs/a04_end_tool/demo_output.txt": "32c64bbe1c40843b8e79191ad0195ddab179a04a17d36f01092cecf76c549d82",
+    "docs/a04_end_tool/faults_output.txt": "4111c30ac03e9318df4d8c2cc9e6b38a44b6e26a43415f6501dd1ba8f17fbc5d"
+  }
+}

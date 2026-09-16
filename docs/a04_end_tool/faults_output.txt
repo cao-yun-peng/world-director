@@ -1,0 +1,6 @@
+normal: completed requests=2 revision=0->1
+bad_arguments: completed requests=2 revision=0->0
+unauthorized: completed requests=2 revision=0->0
+timeout: RETRY_BUDGET_EXHAUSTED requests=1 revision=0->0
+loop: STEP_LIMIT requests=4 revision=0->0
+duplicate: completed requests=2 revision=0->1

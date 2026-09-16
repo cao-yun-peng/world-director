@@ -1,15 +1,16 @@
-"""对照 tools + JSON 和仅 JSON；只读取决策，不执行工具或提交世界。"""
+"""有限对照 required/auto 的原生工具响应；不执行查询或终结工具。"""
 
 import argparse
 import asyncio
 import json
 from copy import deepcopy
 
-from app.async_runtime import LOOP_INSTRUCTIONS, parse_decision, validate_completion, DecisionFormatError
+from app.async_runtime import LOOP_INSTRUCTIONS, validate_completion
 from app.execution import RunStopped
 from app.loop_cli import load_model
 from app.session import create_session
-from app.tools import TOOL_SCHEMAS
+from app.tools import ModelProtocolError, validate_batch
+from app.turn_tools import TERMINAL_TOOLS, TURN_TOOL_SCHEMAS, parse_terminal_call
 from app.world import create_world
 from app.world_runtime import visible_messages
 
@@ -39,22 +40,31 @@ async def probe(model, max_requests):
     rows = []
     try:
         for index in range(max_requests):
-            combined = index % 2 == 0
-            options = {"response_format": {"type": "json_object"}}
-            if combined:
-                options.update(tools=TOOL_SCHEMAS, tool_choice="auto")
-            row = {"sample": index + 1, "profile": "tools_and_json" if combined else "json_only"}
+            choice = "required" if index % 2 == 0 else "auto"
+            options = {"tools": TURN_TOOL_SCHEMAS, "tool_choice": choice}
+            row = {"sample": index + 1, "profile": choice}
             try:
                 async with asyncio.timeout(15):
                     completion = await model.complete(deepcopy(wire), **options)
                 message = validate_completion(completion)
-                if message.get("tool_calls"):
-                    row.update(outcome="tool_calls_not_executed", call_count=len(message["tool_calls"]))
+                calls = message.get("tool_calls")
+                if not calls:
+                    raise RunStopped("TOOL_CALL_REQUIRED")
+                validate_batch(calls)
+                terminal = [call for call in calls if call["function"]["name"] in TERMINAL_TOOLS]
+                if terminal:
+                    if len(calls) != 1:
+                        raise RunStopped("TERMINAL_TOOL_CONFLICT")
+                    try:
+                        parse_terminal_call(terminal[0])
+                    except ValueError:
+                        row.update(outcome="INVALID_ARGUMENTS")
+                    else:
+                        row.update(outcome="terminal_not_executed", tool_name=terminal[0]["function"]["name"])
                 else:
-                    proposal = parse_decision(message)
-                    row.update(outcome="valid_decision", decision_kind=proposal.kind)
-            except DecisionFormatError as error:
-                row.update(outcome=error.code, details=error.details)
+                    row.update(outcome="tool_calls_not_executed", call_count=len(calls))
+            except ModelProtocolError:
+                row.update(outcome="MODEL_PROTOCOL_ERROR")
             except RunStopped as error:
                 row.update(outcome=error.code)
             except TimeoutError:

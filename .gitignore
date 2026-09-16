@@ -7,3 +7,6 @@ saves/
 
 # A04 real interaction evidence stays local until reviewed.
 runs/a04_real_evidence.json
+
+# Full model messages and responses are local debug artifacts.
+runs/*_io/

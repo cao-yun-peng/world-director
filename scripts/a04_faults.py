@@ -11,19 +11,19 @@ from app.execution import RunLimits
 from app.runtime import AgentTurnError
 from app.session import create_session
 from app.world import create_world
-from scripts.a04_demo import ScriptedModel, call, decision, response
+from scripts.a04_demo import ScriptedModel, call, terminal, response
 
 
-async def collect(output_dir=Path("docs")):
+async def collect(output_dir=Path("docs/a04_end_tool")):
     async def slow(messages):
         await asyncio.Event().wait()
     cases = [
-        ("normal", [response(calls=[call()]), decision(), response("已查看。")], RunLimits()),
-        ("bad_arguments", [response(calls=[call(arguments="{}")]), decision()], RunLimits()),
-        ("unauthorized", [response(calls=[call(object_id="box_01")]), decision()], RunLimits()),
+        ("normal", [response(calls=[call()]), terminal(reply="已查看。")], RunLimits()),
+        ("bad_arguments", [response(calls=[call(arguments="{}")]), terminal(reply="查询参数有误，请明确物品。")], RunLimits()),
+        ("unauthorized", [response(calls=[call(object_id="box_01")]), terminal(reply="当前无法查看这个对象。")], RunLimits()),
         ("timeout", [slow], replace(RunLimits(), turn_timeout_s=0.05)),
         ("loop", [response(calls=[call()])] * 5, RunLimits()),
-        ("duplicate", [decision("give", object_id="envelope_01", recipient_id="other_npc"), response("给你。")], RunLimits()),
+        ("duplicate", [terminal("give", object_id="envelope_01", recipient_id="other_npc"), response("给你。")], RunLimits()),
     ]
     rows, records = [], []
     for name, responses, limits in cases:

@@ -2,6 +2,7 @@
 
 import asyncio
 import math
+from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from time import monotonic
@@ -40,8 +41,11 @@ class RunLimits:
     max_parallel_tools: int = 2
     max_attempts: int = 2
     retry_delay_s: float = 0.1
+    max_input_chars: int | None = None
 
     def __post_init__(self):
+        if self.max_input_chars is not None and (type(self.max_input_chars) is not int or self.max_input_chars < 1):
+            raise ValueError("max_input_chars 必须是正整数或 None。")
         for name in ("max_steps", "max_parallel_tools", "max_attempts", "max_tool_calls_per_batch"):
             if type(getattr(self, name)) is not int or getattr(self, name) < 1:
                 raise ValueError(f"{name} 必须是正整数。")
@@ -60,12 +64,36 @@ class RunBudget:
         self.limits, self.trace = limits, trace
         self.deadline = asyncio.get_running_loop().time() + limits.turn_timeout_s
         self.model_requests = 0
+        self.context = None
 
     def check(self) -> None:
         if asyncio.get_running_loop().time() >= self.deadline:
             raise RunStopped("TURN_TIMEOUT")
 
-    async def call(self, operation, *, kind: str, step_id: int, semaphore=None, **metadata):
+    async def call_model(self, model, messages, *, options: dict, kind: str, step_id: int, **metadata):
+        """冻结这次调用的输入；真实适配器与日志共用同一份默认模型参数。"""
+        messages, options = deepcopy(messages), deepcopy(options)
+        if self.limits.max_input_chars is not None:
+            from app.memory import input_chars
+            if self.context is not None and kind == "model":
+                messages, report = self.context.pack(messages, options.get("tools", []), self.limits.max_input_chars)
+            else:
+                count = input_chars(messages, options.get("tools", []))
+                report = {"input_chars": count, "max_input_chars": self.limits.max_input_chars,
+                          "unit": "unicode_characters", "counted_fields": ["messages", "tools"]}
+                if count > self.limits.max_input_chars:
+                    raise RunStopped("CONTEXT_BUDGET_EXCEEDED")
+            self.trace.emit("context", "validated", step_id=step_id, **report)
+        model_input = {**deepcopy(getattr(model, "request_defaults", {})), "messages": messages, **options}
+        return await self.call(
+            lambda: model.complete(deepcopy(messages), **deepcopy(options)),
+            kind=kind, step_id=step_id, model_input=model_input,
+            request_options={"tool_choice": options.get("tool_choice"),
+                             "response_format": options.get("response_format", {"type": "text"}).get("type"),
+                             "tool_schema_count": len(options.get("tools", []))}, **metadata)
+
+    async def call(self, operation, *, kind: str, step_id: int, semaphore=None,
+                   model_input: dict | None = None, **metadata):
         """operation 是创建新协程的函数；每个 attempt 才创建，避免泄漏未等待协程。"""
         logical_span = str(uuid4())
         is_model = kind in ("model", "narration")
@@ -81,6 +109,8 @@ class RunBudget:
                           attempt=attempt, started_at=datetime.now(timezone.utc).isoformat(), **metadata)
             status, error_code, usage = "ok", None, None
             acquired = False
+            io_ref = self.trace.io_reference(logical_span, attempt) if is_model and model_input is not None else None
+            io_ok = True
             try:
                 # 排队受整轮 deadline 限制，单次调用计时从拿到名额后开始。
                 async with asyncio.timeout_at(self.deadline):
@@ -89,9 +119,23 @@ class RunBudget:
                         acquired = True
                     self.check()
                     async with asyncio.timeout(timeout_s):
+                        if io_ref is not None:
+                            fields["io_ref"] = io_ref
+                            io_ok = self.trace.write_io(io_ref, "input", model_input, kind=kind, **fields)
+                            self.trace.emit(kind + "_request", "prepared", **fields,
+                                            io_write_failed=not io_ok, model_requests=self.model_requests)
+                        self.check()  # 本地写日志也计入原 deadline。
                         if is_model:
                             self.model_requests += 1
                         value = await operation()
+                        # 在预算检查、协议校验及 JSON 解析前保留原文，包括格式不合法的回答。
+                        if io_ref is not None:
+                            output = ({"format": "provider_completion" if "raw_response" in value else "adapter_completion",
+                                       "response": value.get("raw_response", value),
+                                       "provider_request_id": value.get("provider_request_id")}
+                                      if isinstance(value, dict) else {"response": value})
+                            saved = self.trace.write_io(io_ref, "output", output, kind=kind, **fields)
+                            io_ok = io_ok and saved
                     self.check()  # 同步代码也可能花时间；返回后再次检查。
                 if is_model:
                     fields["response_details"] = safe_response_details(value)
@@ -119,6 +163,10 @@ class RunBudget:
             finally:
                 if acquired:
                     semaphore.release()
+                if io_ref is not None and "io_ref" in fields:
+                    saved = self.trace.write_io(io_ref, "end", {"status": status, "error_code": error_code},
+                                                kind=kind, **fields)
+                    fields["io_write_failed"] = not (io_ok and saved)
                 self.trace.emit(kind, status, **fields, error_code=error_code, usage=usage,
                                 model_requests=self.model_requests,
                                 duration_ms=round((monotonic() - started) * 1000, 3))

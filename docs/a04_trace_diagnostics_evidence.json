@@ -1,0 +1,64 @@
+{
+  "recorded_at": "2026-09-16T03:02:40.983077+00:00",
+  "runtime_version": "a04-v3",
+  "trace_version": 2,
+  "offline_tests": {
+    "run": 153,
+    "result": "OK",
+    "output": "docs/a04_trace_diagnostics_tests.txt"
+  },
+  "real_probe": {
+    "actual_model_requests": 4,
+    "source": "stdout of scripts.a04_protocol_probe --real --max-model-requests 4",
+    "rows": [
+      {
+        "sample": 1,
+        "profile": "tools_and_json",
+        "outcome": "valid_decision",
+        "decision_kind": "clarify"
+      },
+      {
+        "sample": 2,
+        "profile": "json_only",
+        "outcome": "valid_decision",
+        "decision_kind": "clarify"
+      },
+      {
+        "sample": 3,
+        "profile": "tools_and_json",
+        "outcome": "INVALID_DECISION"
+      },
+      {
+        "sample": 4,
+        "profile": "json_only",
+        "outcome": "INVALID_DECISION"
+      }
+    ],
+    "failed_samples_details": {
+      "shape": "invalid_json",
+      "json_error": "unterminated_string",
+      "content_length": 74,
+      "line": 1,
+      "column": 46,
+      "offset": 45,
+      "leading_form": "object"
+    },
+    "tools_executed": 0,
+    "world_commits": 0,
+    "acceptance": "malformed_json_reproduced_not_resolved"
+  },
+  "sha256": {
+    "app/async_runtime.py": "859267867baf658d8578a6a625fa63582104ba5bc7ea0e91e472f0980e7ab3ff",
+    "app/execution.py": "04561481ac09f3708a745c007c5f39565ff57f8a944b355ad16c69fc4f545111",
+    "app/trace.py": "2230b483327f7b7e9480f52ce9ee3bdc61f5f8c59d673c1ba532fb481ed8230a",
+    "app/model.py": "72143cb1042f8a64e3ca533e3143b440f6af6d8fead71e21f336ff0e08795d12",
+    "app/loop_cli.py": "7a105078ef16011797007097e3f232e1e57ebb30ea901300c7649c4f3a5cbcc1",
+    "scripts/a04_protocol_probe.py": "4bbb97de458a4c85a9ffc1bc170a779b23fe9ab785b71407fd0280376d5cec83",
+    "tests/test_a04_protocol_probe.py": "3ff28c8e7c0c0d2cd91f8af37230d6498eb5dfa21d6eb49649a1020b357bd991",
+    "tests/test_a04_trace_diagnostics.py": "214425252d924e8edee543afb6fd6d9412b5100767df0998d51a003b7a722c6e",
+    "tests/test_a04_decision_format.py": "cdac9e8ffd8a4a4571148aee37fd2677edf5c80dfd90a5a3840e93f7fd1666c6",
+    "docs/a04_trace_diagnostics.md": "8dc60ffe301073f0823c02fec4788a86d80720c093db5a68ab29f11e6b9d85b1",
+    "docs/a04_trace_diagnostics_tests.txt": "bcef3c6b1d2d71ddf71695a45e0a91b83b669202c0842099258c83f4b9240dbc",
+    "docs/a04_results.md": "5a768a470c5ed8a7f89999c6c0ce7420ad9082c1437891eccb70ac4eef15b778"
+  }
+}

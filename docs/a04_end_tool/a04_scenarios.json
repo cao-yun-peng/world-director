@@ -1,0 +1,81 @@
+[
+  {
+    "case": "normal",
+    "mode": "fake",
+    "run_id": "3ba98ad6-fd85-4963-a57c-7c64b97172a6",
+    "turn_id": "T1",
+    "termination_reason": "completed",
+    "model_requests": 2,
+    "before_revision": 0,
+    "after_revision": 1,
+    "events_before": 0,
+    "events_after": 1
+  },
+  {
+    "case": "bad_arguments",
+    "mode": "fake",
+    "run_id": "765d1d46-2f06-42da-aded-30bf4b6cd092",
+    "turn_id": "T1",
+    "termination_reason": "completed",
+    "model_requests": 2,
+    "before_revision": 0,
+    "after_revision": 0,
+    "events_before": 0,
+    "events_after": 0,
+    "world_unchanged": true
+  },
+  {
+    "case": "unauthorized",
+    "mode": "fake",
+    "run_id": "7963b6d6-a0e2-4b00-8731-fa19809bd299",
+    "turn_id": "T1",
+    "termination_reason": "completed",
+    "model_requests": 2,
+    "before_revision": 0,
+    "after_revision": 0,
+    "events_before": 0,
+    "events_after": 0,
+    "world_unchanged": true
+  },
+  {
+    "case": "timeout",
+    "mode": "fake",
+    "run_id": "ae9d59e2-64dd-41f5-989e-b14428520fda",
+    "turn_id": "T1",
+    "termination_reason": "RETRY_BUDGET_EXHAUSTED",
+    "model_requests": 1,
+    "before_revision": 0,
+    "after_revision": 0,
+    "events_before": 0,
+    "events_after": 0,
+    "world_unchanged": true
+  },
+  {
+    "case": "loop",
+    "mode": "fake",
+    "run_id": "562b84f3-3f60-406a-bee8-64a4aae1824b",
+    "turn_id": "T1",
+    "termination_reason": "STEP_LIMIT",
+    "model_requests": 4,
+    "before_revision": 0,
+    "after_revision": 0,
+    "events_before": 0,
+    "events_after": 0,
+    "world_unchanged": true
+  },
+  {
+    "case": "duplicate",
+    "mode": "fake",
+    "run_id": "d797f9e6-993d-4ebc-8c78-b897e6846310",
+    "turn_id": "T1",
+    "termination_reason": "completed",
+    "model_requests": 2,
+    "before_revision": 0,
+    "after_revision": 1,
+    "events_before": 0,
+    "events_after": 1,
+    "replay_requests": 0,
+    "replay_world_unchanged": true,
+    "changed_request_rejected": true
+  }
+]
