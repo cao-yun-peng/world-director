@@ -1,0 +1,22 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -c "import asyncio,json; from exercises.a07_visibility import run_variant; print(json.dumps([asyncio.run(run_variant(False)),asyncio.run(run_variant(True))],ensure_ascii=False,indent=2))"
+STARTED_UTC: 2026-09-17T03:52:29.502930+00:00
+EXIT_CODE: 0
+
+[
+  {
+    "player_has_L12": true,
+    "lin_yan_has_L12": true,
+    "version": "a07-lore-v1",
+    "mode": "fake",
+    "status": "completed",
+    "player_request_has_L12": true
+  },
+  {
+    "player_has_L12": false,
+    "lin_yan_has_L12": true,
+    "version": "a07-lore-v2",
+    "mode": "fake",
+    "status": "completed",
+    "player_request_has_L12": false
+  }
+]

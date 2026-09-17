@@ -18,6 +18,7 @@ from app.turn_tools import TERMINAL_TOOLS, TURN_TOOL_SCHEMAS, parse_terminal_cal
 from app.world import append_statement, freeze_world
 from app.memory import build_actor_context, visible_records
 from app.scene_tools import SCENE_TOOL_SCHEMAS, SCENE_INSTRUCTIONS, parse_scene_terminal
+from app.lore_tools import LORE_TOOL_SCHEMAS, LORE_INSTRUCTIONS, parse_lore_terminal
 from app.turn_tools import MEMORY_TOOL_SCHEMAS, parse_memory_terminal
 from app.world_runtime import NARRATION_INSTRUCTIONS, visible_messages
 
@@ -71,11 +72,11 @@ def validate_completion(completion: dict) -> dict:
 
 
 async def decide(wire: list[dict], model: AsyncToolModelAdapter, *, snapshot,
-                 actor_id: str, executor: ReadonlyExecutor, budget: RunBudget, memory_mode=False, scene_mode=False):
+                 actor_id: str, executor: ReadonlyExecutor, budget: RunBudget, memory_mode=False, scene_mode=False, lore_mode=False):
     discoveries = {}
     for step_id in range(1, budget.limits.max_steps + 1):
         completion = await budget.call_model(
-            model, wire, options={"tools": SCENE_TOOL_SCHEMAS if scene_mode else MEMORY_TOOL_SCHEMAS if memory_mode else TURN_TOOL_SCHEMAS, "tool_choice": "required"},
+            model, wire, options={"tools": LORE_TOOL_SCHEMAS if lore_mode else SCENE_TOOL_SCHEMAS if scene_mode else MEMORY_TOOL_SCHEMAS if memory_mode else TURN_TOOL_SCHEMAS, "tool_choice": "required"},
             kind="model", step_id=step_id, snapshot_revision=snapshot.revision)
         message = validate_completion(completion)
         calls = message.get("tool_calls")
@@ -98,7 +99,8 @@ async def decide(wire: list[dict], model: AsyncToolModelAdapter, *, snapshot,
                 decision_summary = None
                 if scene_mode:
                     allowed_refs = {record['event_id'] for record in visible_records(snapshot, actor_id)}
-                    proposal, decision_summary = parse_scene_terminal(call, allowed_refs)
+                    proposal, decision_summary = (parse_lore_terminal(call, allowed_refs, budget.delivered_lore)
+                        if lore_mode else parse_scene_terminal(call, allowed_refs))
                 else:
                     proposal = parse_memory_terminal(call) if memory_mode else parse_terminal_call(call)
             except ValueError as error:
@@ -128,9 +130,11 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
                          limits: RunLimits | None = None, executor: ReadonlyExecutor | None = None,
                          trace_path: Path | None = None, memory_mode: bool = False,
                          memory_summary: dict | None = None, shared_budget=None, scene_mode=False,
-                          record_player_input=True, player_text=None) -> TurnResult:
+                          record_player_input=True, player_text=None, lore=None) -> TurnResult:
     if scene_mode and not memory_mode:
         raise ValueError('scene_mode 需要授权记忆模式。')
+    if lore is not None and not scene_mode:
+        raise ValueError('lore 需要 scene_mode。')
     validate_session(session, expected_actor_id=expected_actor_id)
     if not isinstance(user_text, str) or not user_text.strip():
         raise ValueError("请输入非空文字。")
@@ -141,10 +145,13 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
         limits = replace(limits, max_input_chars=8000)
     trace = RunTrace(session["session_id"], turn_id, mode=model.mode, path=trace_path)
     budget = RunBudget(limits, trace, shared=shared_budget)
-    executor = executor or ReadonlyExecutor(limits.max_parallel_tools)
+    budget.lore_mode = lore is not None
+    executor = executor or ReadonlyExecutor(limits.max_parallel_tools, lore=lore)
+    if lore is not None and (executor.lore is not lore or executor.recipient_id != 'player'):
+        raise ValueError('lore 生成必须使用当前快照与玩家接收范围。')
     if executor.max_parallel_tools > limits.max_parallel_tools:
         raise ValueError("执行器并发数超过本轮上限。")
-    trace.emit("run_started", "started", model_requests=0, runtime_version="a06-scene-v1" if scene_mode else MEMORY_RUNTIME_VERSION if memory_mode else RUNTIME_VERSION,
+    trace.emit("run_started", "started", model_requests=0, runtime_version="a07-lore-v1" if lore is not None else "a06-scene-v1" if scene_mode else MEMORY_RUNTIME_VERSION if memory_mode else RUNTIME_VERSION,
                model_name=getattr(model, "model", None), provider_host=getattr(model, "provider_host", None),
                limits=asdict(limits), history_messages=len(session["history"]))
     reason, committed_revision, record = "INTERNAL_ERROR", None, None
@@ -156,6 +163,7 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
     def summary():
         return {"run_id": trace.run_id, "turn_id": turn_id, "mode": model.mode,
                 "model_requests": budget.model_requests, "termination_reason": reason,
+                "chat_requests": budget.chat_requests, "embedding_requests": budget.embedding_requests,
                 "committed_revision": committed_revision, "replayed": replayed,
                 "trace_write_failed": trace.write_failed, "records": deepcopy(trace.records)}
 
@@ -198,9 +206,11 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
             wire[0]["content"] += LOOP_INSTRUCTIONS
             if scene_mode:
                 wire[0]["content"] += SCENE_INSTRUCTIONS
+            if lore is not None:
+                wire[0]["content"] += LORE_INSTRUCTIONS
             proposal, discoveries, step_id = await decide(
                 wire, model, snapshot=snapshot, actor_id=expected_actor_id, executor=executor, budget=budget,
-                memory_mode=memory_mode, scene_mode=scene_mode)
+                memory_mode=memory_mode, scene_mode=scene_mode, lore_mode=lore is not None)
             budget.check()
             operations = discoveries + [proposal]
             trace.emit("adjudication", "started", step_id=step_id, snapshot_revision=snapshot.revision)

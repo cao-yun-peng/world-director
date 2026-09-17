@@ -1,3 +1,31 @@
+# AI 互动世界导演 · A07
+
+已完成版本化设定库、权限前置的关键词/向量检索、Embedding 适配与缓存、原生 search_lore、独立 lore_refs、共享调用预算及三条回答路径。离线工程通过：A07 48 项、全量 276 项；真实服务与学习者独立验收仍待完成。
+
+```powershell
+# 完全离线，三条路径 × 两种检索：
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a07_demo
+# 一键验收与证据归档，不覆盖旧课程证据：
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a07_verify
+# SQL 小表与权限变式；先保存自己的预测：
+.\.venv\Scripts\python.exe -X utf8 -m exercises.a07_sql
+.\.venv\Scripts\python.exe -X utf8 -m exercises.a07_visibility
+# 真实聊天 + 本地关键词（显式启用，需已有 LLM 配置）：
+.\.venv\Scripts\python.exe -X utf8 -m app.main --engine scene --lore-mode keyword --max-model-requests 24
+```
+
+- [实现、验证结果、真实配置和待验收项](docs/a07_results.md)
+- [A07 原计划](docs/a07_plan.md) · [实施契约](docs/a07_contract.md)
+- [学习者原预测（待填写）](docs/a07_prediction.md)
+- [源码对照](docs/a07_source_notes.md) · [SQL 参考](docs/a07_sql_notes.md)
+- [三路径实际请求与引用证据](docs/a07_retrieval_probe.json) · [命令及哈希清单](docs/a07_evidence_manifest.json)
+
+lore 默认 off；向量模式需显式 --build-lore-index，在开局前构建。真实 Embedding 使用独立 EMBEDDING_* 配置，另需 --allow-lore-upload；没有配置就失败，不假装真实成功。新局固定不可变快照，旧局不热更新。检索不改变账本，合法引用也不能保证回答语义正确。
+
+以下是前序课程记录，历史测试数和“未提交”描述按当时状态保留。A05 已进入 54cf484，A06 已进入 7e9f1bf；当前工作区是这两个已提交阶段之上的 A07 实现。
+
+---
+
 # AI 互动世界导演 · A06
 
 已实现人物策略摘要、受众隔离的顺序场景调度、规则导演机会、交接主线、计划失效和两种程序判定结局。离线工程已验证；真实模型与学习者独立验收待完成。

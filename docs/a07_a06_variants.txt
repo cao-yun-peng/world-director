@@ -1,0 +1,198 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -c "import asyncio,json; from exercises.a06_replan import run_variant; print(json.dumps([asyncio.run(run_variant(False)),asyncio.run(run_variant(True))],ensure_ascii=False,indent=2))"
+STARTED_UTC: 2026-09-17T03:52:32.109159+00:00
+EXIT_CODE: 0
+
+[
+  {
+    "mode": "fake",
+    "move_recipient": false,
+    "old_plan": {
+      "plan_id": "plan-2",
+      "based_on_revision": 5,
+      "source_refs": [
+        "a06-replan-exercise:E0002"
+      ],
+      "steps": [
+        "offer_handover",
+        "verify_transfer_receipt"
+      ],
+      "status": "active",
+      "invalidated_reason": null,
+      "superseded_by": null
+    },
+    "old_plan_after": {
+      "plan_id": "plan-2",
+      "based_on_revision": 5,
+      "source_refs": [
+        "a06-replan-exercise:E0002"
+      ],
+      "steps": [
+        "offer_handover",
+        "verify_transfer_receipt"
+      ],
+      "status": "invalidated",
+      "invalidated_reason": "choice_or_world_revision_changed",
+      "superseded_by": "plan-3"
+    },
+    "result": {
+      "scene_turn_id": "attempt",
+      "status": "completed",
+      "error_code": null,
+      "selected": [
+        "lin_yan"
+      ],
+      "responses": [
+        {
+          "actor_id": "lin_yan",
+          "code": "GIVEN",
+          "reply": "已将信封交给 other_npc。\n交接完成。"
+        }
+      ],
+      "skipped": [
+        {
+          "actor_id": "other_npc",
+          "reason": "NO_AUTHORIZED_STIMULUS"
+        },
+        {
+          "actor_id": "archive_keeper",
+          "reason": "NOT_COLOCATED"
+        }
+      ],
+      "replayed": false,
+      "model_requests": 2,
+      "before_revision": 5,
+      "replans": 1,
+      "ending_text": "信封已交给周澈，交接线已解决。",
+      "ending_narration": "deterministic",
+      "chat_requests": 2,
+      "embedding_requests": 0,
+      "after_revision": 8,
+      "state": {
+        "choice": "offer_handover",
+        "story_status": "ended",
+        "ending": "handed_over",
+        "ending_ref": "a06-replan-exercise:E0008",
+        "thread_status": "resolved",
+        "owner_status": "recipient",
+        "transfer_ref": "a06-replan-exercise:E0007",
+        "threads": [
+          {
+            "thread_id": "envelope_handover",
+            "topic": "信封交接",
+            "origin_ref": "a06-replan-exercise:config:handover-v1",
+            "visibility_scope": [
+              "player",
+              "lin_yan",
+              "other_npc"
+            ],
+            "status": "resolved",
+            "next_opportunity": null,
+            "resolved_by_event_ids": [
+              "a06-replan-exercise:E0007"
+            ],
+            "updated_revision": 8
+          }
+        ]
+      }
+    },
+    "owner_before": "actor:lin_yan",
+    "owner_after": "actor:other_npc",
+    "receiver_location": "duty_room",
+    "world_unchanged_by_attempt": false
+  },
+  {
+    "mode": "fake",
+    "move_recipient": true,
+    "old_plan": {
+      "plan_id": "plan-2",
+      "based_on_revision": 5,
+      "source_refs": [
+        "a06-replan-exercise:E0002"
+      ],
+      "steps": [
+        "offer_handover",
+        "verify_transfer_receipt"
+      ],
+      "status": "active",
+      "invalidated_reason": null,
+      "superseded_by": null
+    },
+    "old_plan_after": {
+      "plan_id": "plan-2",
+      "based_on_revision": 5,
+      "source_refs": [
+        "a06-replan-exercise:E0002"
+      ],
+      "steps": [
+        "offer_handover",
+        "verify_transfer_receipt"
+      ],
+      "status": "invalidated",
+      "invalidated_reason": "choice_or_world_revision_changed",
+      "superseded_by": "plan-3"
+    },
+    "result": {
+      "scene_turn_id": "attempt",
+      "status": "stopped",
+      "error_code": "ACTION_REJECTED",
+      "selected": [
+        "lin_yan"
+      ],
+      "responses": [
+        {
+          "actor_id": "lin_yan",
+          "code": "NOT_COLOCATED",
+          "reply": "接收者不在同一地点。"
+        }
+      ],
+      "skipped": [
+        {
+          "actor_id": "other_npc",
+          "reason": "NOT_COLOCATED"
+        },
+        {
+          "actor_id": "archive_keeper",
+          "reason": "NOT_COLOCATED"
+        }
+      ],
+      "replayed": false,
+      "model_requests": 1,
+      "before_revision": 6,
+      "replans": 1,
+      "ending_text": null,
+      "ending_narration": "not_requested",
+      "chat_requests": 1,
+      "embedding_requests": 0,
+      "after_revision": 6,
+      "state": {
+        "choice": "offer_handover",
+        "story_status": "active",
+        "ending": null,
+        "ending_ref": null,
+        "thread_status": "blocked",
+        "owner_status": "sender",
+        "transfer_ref": null,
+        "threads": [
+          {
+            "thread_id": "envelope_handover",
+            "topic": "信封交接",
+            "origin_ref": "a06-replan-exercise:config:handover-v1",
+            "visibility_scope": [
+              "player",
+              "lin_yan",
+              "other_npc"
+            ],
+            "status": "blocked",
+            "next_opportunity": "核对交接意愿与同地条件",
+            "resolved_by_event_ids": [],
+            "updated_revision": 6
+          }
+        ]
+      }
+    },
+    "owner_before": "actor:lin_yan",
+    "owner_after": "actor:lin_yan",
+    "receiver_location": "storage_room",
+    "world_unchanged_by_attempt": true
+  }
+]

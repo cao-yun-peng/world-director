@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/pydantic/pydantic-ai/1bcd8d78f13fc324baf21911afde2b1eda9f4789/examples/pydantic_ai_examples/rag.py",
+    "sha256": "a76ad558185d520267ab839e0b8ae274a7f09201f26c8d465ddbe540e0ae7211",
+    "status": "read",
+    "line_count": 259
+  },
+  {
+    "url": "https://raw.githubusercontent.com/pydantic/pydantic-ai/1bcd8d78f13fc324baf21911afde2b1eda9f4789/pydantic_ai_slim/pydantic_ai/_run_context.py",
+    "sha256": "d5e8f7c639784722736222656274c34a8820cad843274a3b33fb74f8cb40e472",
+    "status": "read",
+    "line_count": 901
+  }
+]

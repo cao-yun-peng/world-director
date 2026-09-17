@@ -18,7 +18,7 @@ from app.trace import RunTrace
 
 
 class SceneStory:
-    def __init__(self, world=None, *, max_story_requests=24):
+    def __init__(self, world=None, *, max_story_requests=24, lore=None):
         if type(max_story_requests) is not int or max_story_requests < 0:
             raise ValueError('故事总请求额度必须是非负整数。')
         self.memory = MemoryStory(world)
@@ -31,6 +31,11 @@ class SceneStory:
         self._audits = {}
         self.max_story_requests = max_story_requests
         self.model_requests = 0
+        self._lore = lore
+
+    @property
+    def lore(self):
+        return self._lore
 
     @property
     def records(self):
@@ -80,7 +85,8 @@ class SceneStory:
             if previous is not None:
                 if previous['request_digest'] != digest:
                     raise TurnConflict('同一 scene_turn_id 已用于不同参数。')
-                return {**deepcopy(previous['result']), 'replayed': True, 'model_requests': 0}
+                return {**deepcopy(previous['result']), 'replayed': True, 'model_requests': 0,
+                        'chat_requests': 0, 'embedding_requests': 0}
             before = self.engine.world
             if text.strip() and before.actor_locations[private_to] != before.actor_locations[focus_actor]:
                 raise ValueError('私语接收者不在本场景。')
@@ -147,7 +153,8 @@ class SceneStory:
                     try:
                         actor_result = await self.memory.turn(actor, stimuli[actor], model, turn_id=actor_turn_id,
                             limits=limits, shared_budget=shared, scene_mode=True, trace_path=trace_path,
-                            record_player_input=actor == private_to and bool(text.strip()), player_text=text)
+                            record_player_input=actor == private_to and bool(text.strip()), player_text=text,
+                            lore=self.lore)
                     except (AgentTurnError, asyncio.CancelledError) as error:
                         audit['actors'].append({'actor_id': actor, 'trace': deepcopy(getattr(error, 'trace', {}))})
                         # 提交后的取消已由 A05 保存回执；记录事实，不重新执行该子步骤。
@@ -185,6 +192,8 @@ class SceneStory:
                 raise
             finally:
                 output['model_requests'] = shared.model_requests
+                output['chat_requests'] = shared.chat_requests
+                output['embedding_requests'] = shared.embedding_requests
                 self.model_requests += shared.model_requests
                 output['after_revision'] = self.engine.world.revision
                 output['state'] = self.view()

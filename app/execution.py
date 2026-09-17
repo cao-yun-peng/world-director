@@ -42,6 +42,7 @@ class RunLimits:
     max_attempts: int = 2
     retry_delay_s: float = 0.1
     max_input_chars: int | None = None
+    max_embedding_requests: int = 2
 
     def __post_init__(self):
         if self.max_input_chars is not None and (type(self.max_input_chars) is not int or self.max_input_chars < 1):
@@ -51,6 +52,8 @@ class RunLimits:
                 raise ValueError(f"{name} 必须是正整数。")
         if type(self.max_model_requests) is not int or self.max_model_requests < 0:
             raise ValueError("max_model_requests 必须是非负整数（0 仍允许重放）。")
+        if type(self.max_embedding_requests) is not int or self.max_embedding_requests < 0:
+            raise ValueError('max_embedding_requests 必须是非负整数。')
         if self.max_tool_calls_per_batch > 2:
             raise ValueError("模型每批最多两个查询；执行器压力实验另走执行器接口。")
         for name in ("turn_timeout_s", "model_attempt_timeout_s", "query_attempt_timeout_s", "retry_delay_s"):
@@ -65,6 +68,9 @@ class SharedBudget:
         self.max_model_requests = limits.max_model_requests
         self.deadline = asyncio.get_running_loop().time() + limits.turn_timeout_s
         self.model_requests = 0
+        self.chat_requests = 0
+        self.embedding_requests = 0
+        self.max_embedding_requests = limits.max_embedding_requests
 
     def check(self):
         if asyncio.get_running_loop().time() >= self.deadline:
@@ -75,9 +81,15 @@ class SharedBudget:
         if self.model_requests >= self.max_model_requests:
             raise RunStopped('MODEL_REQUEST_LIMIT')
 
-    def claim(self):
+    def claim(self, kind='model'):
         self.check_capacity()
+        if kind == 'embedding' and self.embedding_requests >= self.max_embedding_requests:
+            raise RunStopped('EMBEDDING_REQUEST_LIMIT')
         self.model_requests += 1
+        if kind == 'embedding':
+            self.embedding_requests += 1
+        else:
+            self.chat_requests += 1
 
 
 class RunBudget:
@@ -88,7 +100,12 @@ class RunBudget:
         if shared is not None:
             self.deadline = min(self.deadline, shared.deadline)
         self.model_requests = 0
+        self.chat_requests = 0
+        self.embedding_requests = 0
+        self.max_embedding_requests = limits.max_embedding_requests
         self.context = None
+        self.lore_mode = False
+        self.delivered_lore = {}
 
     def check(self) -> None:
         if asyncio.get_running_loop().time() >= self.deadline:
@@ -97,6 +114,12 @@ class RunBudget:
     async def call_model(self, model, messages, *, options: dict, kind: str, step_id: int, **metadata):
         """冻结这次调用的输入；真实适配器与日志共用同一份默认模型参数。"""
         messages, options = deepcopy(messages), deepcopy(options)
+        if self.lore_mode and kind == 'model':
+            from app.lore_tools import pack_lore
+            messages, self.delivered_lore = pack_lore(
+                messages, options.get('tools', []), self.limits.max_input_chars)
+            self.trace.emit('lore_delivery', 'selected', step_id=step_id,
+                            lore_refs=list(self.delivered_lore.values()))
         if self.limits.max_input_chars is not None:
             from app.memory import input_chars
             if self.context is not None and kind == "model":
@@ -121,14 +144,17 @@ class RunBudget:
         """operation 是创建新协程的函数；每个 attempt 才创建，避免泄漏未等待协程。"""
         logical_span = str(uuid4())
         is_model = kind in ("model", "narration")
+        is_external = is_model or kind == "embedding"
         timeout_s = (self.limits.model_attempt_timeout_s if is_model
                      else self.limits.query_attempt_timeout_s)
         for attempt in range(1, self.limits.max_attempts + 1):
             delay_s = self.limits.retry_delay_s
             self.check()
-            if is_model and self.model_requests >= self.limits.max_model_requests:
+            if is_external and self.model_requests >= self.limits.max_model_requests:
                 raise RunStopped("MODEL_REQUEST_LIMIT")
-            if is_model and self.shared is not None:
+            if kind == 'embedding' and self.embedding_requests >= self.max_embedding_requests:
+                raise RunStopped('EMBEDDING_REQUEST_LIMIT')
+            if is_external and self.shared is not None:
                 self.shared.check_capacity()
             started = monotonic()
             fields = dict(step_id=step_id, span_id=logical_span, parent_span_id=self.trace.run_id,
@@ -152,10 +178,18 @@ class RunBudget:
                             self.trace.emit(kind + "_request", "prepared", **fields,
                                             io_write_failed=not io_ok, model_requests=self.model_requests)
                         self.check()  # 本地写日志也计入原 deadline。
-                        if is_model:
+                        if is_external:
+                            if self.model_requests >= self.limits.max_model_requests:
+                                raise RunStopped('MODEL_REQUEST_LIMIT')
+                            if kind == 'embedding' and self.embedding_requests >= self.max_embedding_requests:
+                                raise RunStopped('EMBEDDING_REQUEST_LIMIT')
                             if self.shared is not None:
-                                self.shared.claim()
+                                self.shared.claim(kind)
                             self.model_requests += 1
+                            if kind == 'embedding':
+                                self.embedding_requests += 1
+                            else:
+                                self.chat_requests += 1
                         value = await operation()
                         # 在预算检查、协议校验及 JSON 解析前保留原文，包括格式不合法的回答。
                         if io_ref is not None:
@@ -201,7 +235,7 @@ class RunBudget:
                                 model_requests=self.model_requests,
                                 duration_ms=round((monotonic() - started) * 1000, 3))
             # 退避期间已释放名额；总 deadline 不会因重试而重置。
-            if is_model and self.model_requests >= self.limits.max_model_requests:
+            if is_external and self.model_requests >= self.limits.max_model_requests:
                 raise RunStopped("MODEL_REQUEST_LIMIT")
             self.check()
             if asyncio.get_running_loop().time() + delay_s >= self.deadline:

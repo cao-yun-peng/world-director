@@ -1,0 +1,192 @@
+{
+  "version": "a07-lore-v1",
+  "sources": [
+    {
+      "source_id": "L01",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "灯塔旧用途",
+      "audience": [
+        "archive_keeper",
+        "lin_yan",
+        "other_npc",
+        "player"
+      ],
+      "paragraphs": [
+        "岬角旧灯塔曾以海上导航为主要用途。"
+      ],
+      "origin": "本计划教学种子 + L01",
+      "content_hash": "060c7add79d7269998242f1a60e0282ae640246f760490be2cd30324d06dd815"
+    },
+    {
+      "source_id": "L02",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "值班室用途",
+      "audience": [
+        "archive_keeper",
+        "lin_yan",
+        "other_npc",
+        "player"
+      ],
+      "paragraphs": [
+        "值班室用于接待来访者和记录交接事项。"
+      ],
+      "origin": "本计划教学种子 + L02",
+      "content_hash": "7b382b9e5ca0b9886c3ef25c0ed5f068367f38c00d1dd7cd7bbc3cf4c6682631"
+    },
+    {
+      "source_id": "L03",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "储物间用途",
+      "audience": [
+        "archive_keeper",
+        "lin_yan",
+        "other_npc",
+        "player"
+      ],
+      "paragraphs": [
+        "储物间用于存放日常维护耗材；此背景不说明本局具体物品库存。"
+      ],
+      "origin": "本计划教学种子 + L03",
+      "content_hash": "0215edb0e454aa859dbc2261d9e9c6538111fd99e871d5ac25c808a027bce1a6"
+    },
+    {
+      "source_id": "L04",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "交接记录",
+      "audience": [
+        "archive_keeper",
+        "lin_yan",
+        "other_npc",
+        "player"
+      ],
+      "paragraphs": [
+        "交接记录通常包括交付人、接收人和交接对象。"
+      ],
+      "origin": "本计划教学种子 + L04",
+      "content_hash": "78b178d6625dc4d06c5bb6993a1acc125dbbd09a5c64de256d34012a7b8160fb"
+    },
+    {
+      "source_id": "L05",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "夜间问询",
+      "audience": [
+        "archive_keeper",
+        "lin_yan",
+        "other_npc",
+        "player"
+      ],
+      "paragraphs": [
+        "夜间访客可以先向值班人员说明来意。"
+      ],
+      "origin": "本计划教学种子 + L05",
+      "content_hash": "d2debbd32433057b98fff022c837410fbb4c177b3166c7f243f24af7dec64490"
+    },
+    {
+      "source_id": "L06",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "记录的性质",
+      "audience": [
+        "archive_keeper",
+        "lin_yan",
+        "other_npc",
+        "player"
+      ],
+      "paragraphs": [
+        "登记意见不等于实地观察；本局实际结果应核对事件记录。"
+      ],
+      "origin": "本计划教学种子 + L06",
+      "content_hash": "a5a27bb86b737e4629683f76c78ab6e0effc9e54ea2f4094f713f4f4840786e2"
+    },
+    {
+      "source_id": "L07",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "林砚便笺代号",
+      "audience": [
+        "lin_yan"
+      ],
+      "paragraphs": [
+        "林砚给自己的旧交接便笺起代号“青榆”。"
+      ],
+      "origin": "本计划教学种子 + L07",
+      "content_hash": "5f101fad6e1c1ea4386b41cdfcd951f97aa5b79910877d3f6b7556b9dff9471c"
+    },
+    {
+      "source_id": "L08",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "林砚标记习惯",
+      "audience": [
+        "lin_yan"
+      ],
+      "paragraphs": [
+        "林砚在自己的旧便笺中用三角符号表示还需要核对。"
+      ],
+      "origin": "本计划教学种子 + L08",
+      "content_hash": "68d18f6807965a95e9bfb2c1f28e055f8d78e44afc2e4d5f2343ba04a3665cbe"
+    },
+    {
+      "source_id": "L09",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "周澈标记习惯",
+      "audience": [
+        "other_npc"
+      ],
+      "paragraphs": [
+        "周澈用“双线”标记自己尚未核实的记录。"
+      ],
+      "origin": "本计划教学种子 + L09",
+      "content_hash": "324078132f99f51ac11177a5cddb322c8e5668f0e84d08569ae934d76a76ed5f"
+    },
+    {
+      "source_id": "L10",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "沈岚目录别名",
+      "audience": [
+        "archive_keeper"
+      ],
+      "paragraphs": [
+        "沈岚给自己的旧目录索引规则取名“潮序”。"
+      ],
+      "origin": "本计划教学种子 + L10",
+      "content_hash": "5f6cc521e017ee5071396077f997bfc0cc7a0dbec61d774203765d2affa91ced"
+    },
+    {
+      "source_id": "L11",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "沈岚整理习惯",
+      "audience": [
+        "archive_keeper"
+      ],
+      "paragraphs": [
+        "沈岚在自己的旧笔记中以圆圈标记待整理页。"
+      ],
+      "origin": "本计划教学种子 + L11",
+      "content_hash": "aa90e141945d95aa9e7ca69b1b550d48f642ecf0ff1bc34106345fd7e768ef3f"
+    },
+    {
+      "source_id": "L12",
+      "source_version": "a07-lore-v1",
+      "scenario_id": "handover-v1",
+      "title": "可分享的表格说明",
+      "audience": [
+        "lin_yan",
+        "player"
+      ],
+      "paragraphs": [
+        "公开交接表的栏目顺序为时间、双方、对象。"
+      ],
+      "origin": "本计划教学种子 + L12",
+      "content_hash": "e1d98399d2db924922542a3013d9ba818dbc1142831854bdd6c313f4541b11d7"
+    }
+  ]
+}

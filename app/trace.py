@@ -24,6 +24,7 @@ class RunTrace:
         "io_ref", "io_write_failed",
         "input_chars", "max_input_chars", "unit", "counted_fields", "selected_event_ids",
         "history_turn_indices", "summary_used", "summary_issues", "dropped",
+        "lore_refs", "lore_query", "retrieval_mode", "chat_requests", "embedding_requests",
     }
 
     def __init__(self, session_id: str, turn_id: str, *, mode: str, path: Path | None = None):

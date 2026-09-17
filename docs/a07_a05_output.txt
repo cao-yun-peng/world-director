@@ -1,0 +1,6 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -c "import asyncio; from pathlib import Path; from scripts.a05_demo import demo; e=asyncio.run(demo(Path('docs/a07_a05_regression.json'))); print([b['checks'] for b in e['branches']]); print(e['fault'])"
+STARTED_UTC: 2026-09-17T03:52:24.122230+00:00
+EXIT_CODE: 0
+
+[{'beta_has_secret': False, 'gamma_has_secret': False, 'extra_reached_beta_or_gamma': False}, {'beta_has_secret': True, 'gamma_has_secret': False, 'extra_reached_beta_or_gamma': False}]
+{'fault': 'test-local shared history', 'isolation_assertion_failed_as_expected': True, 'restored_independent_history_passed': True, 'production_code_mutated': False}

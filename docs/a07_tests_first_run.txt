@@ -1,0 +1,26 @@
+test_bad_response_never_cached_and_failed_build_not_published (test_a07_lore.CacheTests.test_bad_response_never_cached_and_failed_build_not_published) ... ok
+test_cache_space_text_purpose_and_preprocess_invalidation (test_a07_lore.CacheTests.test_cache_space_text_purpose_and_preprocess_invalidation) ... ok
+test_dedup_concurrency_and_defensive_copies (test_a07_lore.CacheTests.test_dedup_concurrency_and_defensive_copies) ... ok
+test_embedding_shared_limits_and_retry_charge (test_a07_lore.CacheTests.test_embedding_shared_limits_and_retry_charge) ... ok
+test_real_adapter_protocol_close_and_missing_config (test_a07_lore.CacheTests.test_real_adapter_protocol_close_and_missing_config) ... ok
+test_repeated_build_has_no_new_requests (test_a07_lore.CacheTests.test_repeated_build_has_no_new_requests) ... ok
+test_timeout_cancel_failure_not_cached_and_lock_released (test_a07_lore.CacheTests.test_timeout_cancel_failure_not_cached_and_lock_released) ... ok
+test_codepoint_offsets_newlines_and_no_permission_merging (test_a07_lore.LoreTests.test_codepoint_offsets_newlines_and_no_permission_merging) ... ok
+test_duplicates_hash_conflict_and_old_version (test_a07_lore.LoreTests.test_duplicates_hash_conflict_and_old_version) ... ok
+test_empty_docs_rejected_blank_paragraphs_skipped (test_a07_lore.LoreTests.test_empty_docs_rejected_blank_paragraphs_skipped) ... ok
+test_required_fields_and_fail_closed_acl (test_a07_lore.LoreTests.test_required_fields_and_fail_closed_acl) ... ok
+test_seed_integrity_and_immutability (test_a07_lore.LoreTests.test_seed_integrity_and_immutability) ... ok
+test_size_limit_and_strict_query (test_a07_lore.LoreTests.test_size_limit_and_strict_query) ... ok
+test_unknown_subject_and_scenario_filter (test_a07_lore.LoreTests.test_unknown_subject_and_scenario_filter) ... ok
+test_vector_validation_math (test_a07_lore.LoreTests.test_vector_validation_math) ... ok
+test_empty_and_private_metadata_absent (test_a07_lore.RetrievalTests.test_empty_and_private_metadata_absent) ... ok
+test_empty_authorized_pool_does_not_embed_query (test_a07_lore.RetrievalTests.test_empty_authorized_pool_does_not_embed_query) ... ok
+test_fixed_queries_both_backends (test_a07_lore.RetrievalTests.test_fixed_queries_both_backends) ... ok
+test_prefilter_before_top_one_and_secret_mirror (test_a07_lore.RetrievalTests.test_prefilter_before_top_one_and_secret_mirror) ... ok
+test_visibility_variant_new_snapshot_keeps_old_isolated (test_a07_lore.RetrievalTests.test_visibility_variant_new_snapshot_keeps_old_isolated) ... ok
+test_wrong_index_space_and_fake_real_confusion_rejected (test_a07_lore.RetrievalTests.test_wrong_index_space_and_fake_real_confusion_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 1.638s
+
+OK

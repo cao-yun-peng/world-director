@@ -1,0 +1,72 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m exercises.a07_sql
+STARTED_UTC: 2026-09-17T03:52:29.293597+00:00
+EXIT_CODE: 0
+
+{
+  "select": {
+    "sql": "SELECT source_id, version FROM lore WHERE visibility = 'public' ORDER BY source_id, version LIMIT 2",
+    "rows": [
+      [
+        "L01",
+        "v1"
+      ],
+      [
+        "L01",
+        "v2"
+      ]
+    ]
+  },
+  "is_null": {
+    "sql": "SELECT source_id, version FROM lore WHERE note IS NULL ORDER BY source_id, version",
+    "rows": [
+      [
+        "L01",
+        "v1"
+      ]
+    ]
+  },
+  "equals_null": {
+    "sql": "SELECT source_id, version FROM lore WHERE note = NULL ORDER BY source_id, version",
+    "rows": []
+  },
+  "empty_string": {
+    "sql": "SELECT source_id, version FROM lore WHERE note = '' ORDER BY source_id, version",
+    "rows": [
+      [
+        "L02",
+        "v1"
+      ]
+    ]
+  },
+  "group": {
+    "sql": "SELECT visibility, COUNT(*), COUNT(note) FROM lore GROUP BY visibility ORDER BY visibility",
+    "rows": [
+      [
+        "lin_yan",
+        1,
+        1
+      ],
+      [
+        "public",
+        3,
+        2
+      ]
+    ]
+  },
+  "query_plan": {
+    "sql": "EXPLAIN QUERY PLAN SELECT source_id FROM lore WHERE visibility = 'public' ORDER BY source_id",
+    "rows": [
+      [
+        3,
+        0,
+        55,
+        "SEARCH lore USING COVERING INDEX lore_visibility_source (visibility=?)"
+      ]
+    ]
+  },
+  "before_explicit_rollback_count": 6,
+  "after_rollback_count": 4,
+  "rollback_restored": true,
+  "learner_prediction": "尚未填写；本运行是 AI 参考",
+  "sqlite_version": "3.49.1"
+}

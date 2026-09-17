@@ -10,3 +10,6 @@ runs/a04_real_evidence.json
 
 # Full model messages and responses are local debug artifacts.
 runs/*_io/
+
+# A07 real probes remain local until reviewed.
+runs/a07_real_probe.json

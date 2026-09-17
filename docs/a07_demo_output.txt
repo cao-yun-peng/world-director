@@ -1,0 +1,9 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a07_demo
+STARTED_UTC: 2026-09-17T03:52:21.593613+00:00
+EXIT_CODE: 0
+
+{
+  "cases": 6,
+  "mode": "fake",
+  "evidence": "docs\\a07_retrieval_probe.json"
+}
