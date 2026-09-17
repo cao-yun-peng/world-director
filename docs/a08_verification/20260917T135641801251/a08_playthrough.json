@@ -1,0 +1,2433 @@
+{
+  "mode": "fake",
+  "rows": [
+    {
+      "round": 1,
+      "actor": "lin_yan",
+      "request": {
+        "text": "请介绍此刻信封的归属。",
+        "scene_turn_id": "T01",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T01",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "WAITED",
+            "reply": "先核对已有记录，不据声明改动归属。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 1,
+        "before_revision": 1,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 1,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 3,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 3
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0002",
+        "a08-main:E0003"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003"
+      ]
+    },
+    {
+      "round": 2,
+      "actor": "lin_yan",
+      "request": {
+        "text": "旧灯塔以前做什么？",
+        "scene_turn_id": "T02",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T02",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "TALK",
+            "reply": "岬角旧灯塔曾以海上导航为主要用途。 [L01@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L01",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-7c3d5a5b9d06f30cffdb45c2",
+                "paragraph": 0,
+                "start": 0,
+                "end": 17,
+                "text_hash": "e025cdd2426367be65b61f747e597ba74f9d61df596587c87c0301590e36f781"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 3,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 5,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 5
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0004",
+        "a08-main:E0005"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L01",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-7c3d5a5b9d06f30cffdb45c2",
+            "paragraph": 0,
+            "start": 0,
+            "end": 17,
+            "text_hash": "e025cdd2426367be65b61f747e597ba74f9d61df596587c87c0301590e36f781"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005"
+      ]
+    },
+    {
+      "round": 3,
+      "actor": "other_npc",
+      "request": {
+        "text": "值班室用于什么？",
+        "scene_turn_id": "T03",
+        "focus_actor": "other_npc"
+      },
+      "result": {
+        "scene_turn_id": "T03",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "other_npc",
+            "code": "TALK",
+            "reply": "值班室用于接待来访者和记录交接事项。 [L02@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L02",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "paragraph": 0,
+                "start": 0,
+                "end": 18,
+                "text_hash": "6d72c5aa4799a2bd82a5b4eaf12d9efec3dcb1247e9dee45a4b822f65657c036"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 5,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 7,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 7
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0006",
+        "a08-main:E0007"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L02",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+            "paragraph": 0,
+            "start": 0,
+            "end": 18,
+            "text_hash": "6d72c5aa4799a2bd82a5b4eaf12d9efec3dcb1247e9dee45a4b822f65657c036"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0006",
+        "a08-main:E0007"
+      ]
+    },
+    {
+      "round": 4,
+      "actor": "other_npc",
+      "request": {
+        "text": "来访者在哪里接待，交接事情在哪里记？",
+        "scene_turn_id": "T04",
+        "focus_actor": "other_npc"
+      },
+      "result": {
+        "scene_turn_id": "T04",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "other_npc",
+            "code": "TALK",
+            "reply": "值班室用于接待来访者和记录交接事项。 [L02@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L02",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "paragraph": 0,
+                "start": 0,
+                "end": 18,
+                "text_hash": "6d72c5aa4799a2bd82a5b4eaf12d9efec3dcb1247e9dee45a4b822f65657c036"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 7,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 9,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 9
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0008",
+        "a08-main:E0009"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L02",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+            "paragraph": 0,
+            "start": 0,
+            "end": 18,
+            "text_hash": "6d72c5aa4799a2bd82a5b4eaf12d9efec3dcb1247e9dee45a4b822f65657c036"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0006",
+        "a08-main:E0007",
+        "a08-main:E0008",
+        "a08-main:E0009"
+      ]
+    },
+    {
+      "round": 5,
+      "actor": "archive_keeper",
+      "request": {
+        "text": "维护材料通常放哪里？",
+        "scene_turn_id": "T05",
+        "focus_actor": "archive_keeper"
+      },
+      "result": {
+        "scene_turn_id": "T05",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "archive_keeper"
+        ],
+        "responses": [
+          {
+            "actor_id": "archive_keeper",
+            "code": "TALK",
+            "reply": "交接记录通常包括交付人、接收人和交接对象。 [L04@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L04",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "paragraph": 0,
+                "start": 0,
+                "end": 21,
+                "text_hash": "a3b8a92e30ad00213dc3a67861a0d4c28415b14d9fafe1ea0fe569e919392185"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NOT_COLOCATED"
+          },
+          {
+            "actor_id": "other_npc",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 9,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 11,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 11
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0010",
+        "a08-main:E0011"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L04",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-99eb46f73af3555d070c2d94",
+            "paragraph": 0,
+            "start": 0,
+            "end": 21,
+            "text_hash": "a3b8a92e30ad00213dc3a67861a0d4c28415b14d9fafe1ea0fe569e919392185"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0010",
+        "a08-main:E0011"
+      ]
+    },
+    {
+      "round": 6,
+      "actor": "archive_keeper",
+      "request": {
+        "text": "储物间此刻有多少耗材？",
+        "scene_turn_id": "T06",
+        "focus_actor": "archive_keeper"
+      },
+      "result": {
+        "scene_turn_id": "T06",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "archive_keeper"
+        ],
+        "responses": [
+          {
+            "actor_id": "archive_keeper",
+            "code": "WAITED",
+            "reply": "现有背景不足以确认该问题。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NOT_COLOCATED"
+          },
+          {
+            "actor_id": "other_npc",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 11,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 13,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 13
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0012",
+        "a08-main:E0013"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L03",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-8861f8967db62c743c576e9b",
+            "paragraph": 0,
+            "start": 0,
+            "end": 29,
+            "text_hash": "6a160e53df0600c6192fb52a7e8210e921c791d145b8e4a859ee1fcedac2d635"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0010",
+        "a08-main:E0011",
+        "a08-main:E0012",
+        "a08-main:E0013"
+      ]
+    },
+    {
+      "round": 7,
+      "actor": "lin_yan",
+      "request": {
+        "text": "交接记录包含哪些内容？",
+        "scene_turn_id": "T07",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T07",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "TALK",
+            "reply": "交接记录通常包括交付人、接收人和交接对象。 [L04@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L04",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "paragraph": 0,
+                "start": 0,
+                "end": 21,
+                "text_hash": "a3b8a92e30ad00213dc3a67861a0d4c28415b14d9fafe1ea0fe569e919392185"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 13,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 15,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 15
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0014",
+        "a08-main:E0015"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L04",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-99eb46f73af3555d070c2d94",
+            "paragraph": 0,
+            "start": 0,
+            "end": 21,
+            "text_hash": "a3b8a92e30ad00213dc3a67861a0d4c28415b14d9fafe1ea0fe569e919392185"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015"
+      ]
+    },
+    {
+      "round": 8,
+      "actor": "lin_yan",
+      "request": {
+        "text": "可分享表格的栏目顺序是什么？",
+        "scene_turn_id": "T08",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T08",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "TALK",
+            "reply": "公开交接表的栏目顺序为时间、双方、对象。 [L12@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L12",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-ed61eb4cccfbf85616c4b57b",
+                "paragraph": 0,
+                "start": 0,
+                "end": 20,
+                "text_hash": "f3f019eeac43a2b2e657cbe4f27013338c965cc7cf9b3dee9c4962c496d5651f"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 15,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 17,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 17
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0016",
+        "a08-main:E0017"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L12",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-ed61eb4cccfbf85616c4b57b",
+            "paragraph": 0,
+            "start": 0,
+            "end": 20,
+            "text_hash": "f3f019eeac43a2b2e657cbe4f27013338c965cc7cf9b3dee9c4962c496d5651f"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015",
+        "a08-main:E0016",
+        "a08-main:E0017"
+      ]
+    },
+    {
+      "round": 9,
+      "actor": "other_npc",
+      "request": {
+        "text": "可分享表格的栏目顺序是什么？",
+        "scene_turn_id": "T09",
+        "focus_actor": "other_npc"
+      },
+      "result": {
+        "scene_turn_id": "T09",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "other_npc",
+            "code": "WAITED",
+            "reply": "现有背景不足以确认该问题。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 17,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 19,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 19
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0018",
+        "a08-main:E0019"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0006",
+        "a08-main:E0007",
+        "a08-main:E0008",
+        "a08-main:E0009",
+        "a08-main:E0018",
+        "a08-main:E0019"
+      ]
+    },
+    {
+      "round": 10,
+      "actor": "lin_yan",
+      "request": {
+        "text": "私人便笺代号是什么？",
+        "scene_turn_id": "T10",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T10",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "WAITED",
+            "reply": "现有背景不足以确认该问题。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 19,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 21,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 21
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0020",
+        "a08-main:E0021"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015",
+        "a08-main:E0016",
+        "a08-main:E0017",
+        "a08-main:E0020",
+        "a08-main:E0021"
+      ]
+    },
+    {
+      "round": 11,
+      "actor": "other_npc",
+      "request": {
+        "text": "登记意见是否等于实地观察？",
+        "scene_turn_id": "T11",
+        "focus_actor": "other_npc"
+      },
+      "result": {
+        "scene_turn_id": "T11",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "other_npc",
+            "code": "TALK",
+            "reply": "登记意见不等于实地观察；本局实际结果应核对事件记录。 [L06@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L06",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+                "paragraph": 0,
+                "start": 0,
+                "end": 26,
+                "text_hash": "b61a8922cd834ddfb9c37a24218853a42af6b052a1c6ec55fbebd1b8ef9f3e7b"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 21,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 23,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 23
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0022",
+        "a08-main:E0023"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L06",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+            "paragraph": 0,
+            "start": 0,
+            "end": 26,
+            "text_hash": "b61a8922cd834ddfb9c37a24218853a42af6b052a1c6ec55fbebd1b8ef9f3e7b"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0006",
+        "a08-main:E0007",
+        "a08-main:E0008",
+        "a08-main:E0009",
+        "a08-main:E0018",
+        "a08-main:E0019",
+        "a08-main:E0022",
+        "a08-main:E0023"
+      ]
+    },
+    {
+      "round": 12,
+      "actor": "other_npc",
+      "request": {
+        "text": "夜间访客先做什么？",
+        "scene_turn_id": "T12",
+        "focus_actor": "other_npc"
+      },
+      "result": {
+        "scene_turn_id": "T12",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "other_npc",
+            "code": "TALK",
+            "reply": "夜间访客可以先向值班人员说明来意。 [L05@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L05",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-bfcf5d1b3e48fa12c00a757e",
+                "paragraph": 0,
+                "start": 0,
+                "end": 17,
+                "text_hash": "3ea3ecc6e698ae44f61ee8f53d3c255502ef8c1bcbdf370b6fd3868c61b0e0a2"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 23,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 25,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 25
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0024",
+        "a08-main:E0025"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L05",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-bfcf5d1b3e48fa12c00a757e",
+            "paragraph": 0,
+            "start": 0,
+            "end": 17,
+            "text_hash": "3ea3ecc6e698ae44f61ee8f53d3c255502ef8c1bcbdf370b6fd3868c61b0e0a2"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0006",
+        "a08-main:E0007",
+        "a08-main:E0008",
+        "a08-main:E0009",
+        "a08-main:E0018",
+        "a08-main:E0019",
+        "a08-main:E0022",
+        "a08-main:E0023",
+        "a08-main:E0024",
+        "a08-main:E0025"
+      ]
+    },
+    {
+      "round": 13,
+      "actor": "lin_yan",
+      "request": {
+        "text": "只对你说一个新线索：窗边有一张紫色纸签。",
+        "scene_turn_id": "T13",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T13",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "WAITED",
+            "reply": "先核对已有记录，不据声明改动归属。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 1,
+        "before_revision": 25,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 1,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 27,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 27
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0026",
+        "a08-main:E0027"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015",
+        "a08-main:E0016",
+        "a08-main:E0017",
+        "a08-main:E0020",
+        "a08-main:E0021",
+        "a08-main:E0026",
+        "a08-main:E0027"
+      ]
+    },
+    {
+      "round": 14,
+      "actor": "other_npc",
+      "request": {
+        "text": "你听到刚才的新线索了吗？",
+        "scene_turn_id": "T14",
+        "focus_actor": "other_npc"
+      },
+      "result": {
+        "scene_turn_id": "T14",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "other_npc",
+            "code": "WAITED",
+            "reply": "先核对已有记录，不据声明改动归属。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 1,
+        "before_revision": 27,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 1,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 29,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 29
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0028",
+        "a08-main:E0029"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0006",
+        "a08-main:E0007",
+        "a08-main:E0008",
+        "a08-main:E0009",
+        "a08-main:E0018",
+        "a08-main:E0019",
+        "a08-main:E0022",
+        "a08-main:E0023",
+        "a08-main:E0024",
+        "a08-main:E0025",
+        "a08-main:E0028",
+        "a08-main:E0029"
+      ]
+    },
+    {
+      "round": 15,
+      "actor": "archive_keeper",
+      "request": {
+        "text": "请据来源说明储物间用途。",
+        "scene_turn_id": "T15",
+        "focus_actor": "archive_keeper"
+      },
+      "result": {
+        "scene_turn_id": "T15",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "archive_keeper"
+        ],
+        "responses": [
+          {
+            "actor_id": "archive_keeper",
+            "code": "TALK",
+            "reply": "储物间用于存放日常维护耗材；此背景不说明本局具体物品库存。 [L03@a07-lore-v1]",
+            "lore_refs": [
+              {
+                "source_id": "L03",
+                "source_version": "a07-lore-v1",
+                "chunk_id": "lc-8861f8967db62c743c576e9b",
+                "paragraph": 0,
+                "start": 0,
+                "end": 29,
+                "text_hash": "6a160e53df0600c6192fb52a7e8210e921c791d145b8e4a859ee1fcedac2d635"
+              }
+            ]
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NOT_COLOCATED"
+          },
+          {
+            "actor_id": "other_npc",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 2,
+        "before_revision": 29,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 2,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 31,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 31
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0030",
+        "a08-main:E0031"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        [],
+        [
+          {
+            "source_id": "L03",
+            "source_version": "a07-lore-v1",
+            "chunk_id": "lc-8861f8967db62c743c576e9b",
+            "paragraph": 0,
+            "start": 0,
+            "end": 29,
+            "text_hash": "6a160e53df0600c6192fb52a7e8210e921c791d145b8e4a859ee1fcedac2d635"
+          }
+        ]
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0010",
+        "a08-main:E0011",
+        "a08-main:E0012",
+        "a08-main:E0013",
+        "a08-main:E0030",
+        "a08-main:E0031"
+      ]
+    },
+    {
+      "round": 16,
+      "actor": "lin_yan",
+      "request": {
+        "text": "只核对转移前提，先不提交选择。",
+        "scene_turn_id": "T16",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T16",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "WAITED",
+            "reply": "先核对已有记录，不据声明改动归属。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 1,
+        "before_revision": 31,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 1,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 33,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 33
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0032",
+        "a08-main:E0033"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015",
+        "a08-main:E0016",
+        "a08-main:E0017",
+        "a08-main:E0020",
+        "a08-main:E0021",
+        "a08-main:E0026",
+        "a08-main:E0027",
+        "a08-main:E0032",
+        "a08-main:E0033"
+      ]
+    },
+    {
+      "round": 17,
+      "actor": "other_npc",
+      "request": {
+        "text": "请核对当前持有者。",
+        "scene_turn_id": "T17",
+        "focus_actor": "other_npc"
+      },
+      "result": {
+        "scene_turn_id": "T17",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "other_npc",
+            "code": "WAITED",
+            "reply": "先核对已有记录，不据声明改动归属。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "lin_yan",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 1,
+        "before_revision": 33,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 1,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 35,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 35
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0034",
+        "a08-main:E0035"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0006",
+        "a08-main:E0007",
+        "a08-main:E0008",
+        "a08-main:E0009",
+        "a08-main:E0018",
+        "a08-main:E0019",
+        "a08-main:E0022",
+        "a08-main:E0023",
+        "a08-main:E0024",
+        "a08-main:E0025",
+        "a08-main:E0028",
+        "a08-main:E0029",
+        "a08-main:E0034",
+        "a08-main:E0035"
+      ]
+    },
+    {
+      "round": 18,
+      "actor": "lin_yan",
+      "request": {
+        "text": "我声称已经交接，你核对一下。",
+        "scene_turn_id": "T18",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T18",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "WAITED",
+            "reply": "先核对已有记录，不据声明改动归属。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 1,
+        "before_revision": 35,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 1,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 37,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 37
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0036",
+        "a08-main:E0037"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015",
+        "a08-main:E0016",
+        "a08-main:E0017",
+        "a08-main:E0020",
+        "a08-main:E0021",
+        "a08-main:E0026",
+        "a08-main:E0027",
+        "a08-main:E0032",
+        "a08-main:E0033",
+        "a08-main:E0036",
+        "a08-main:E0037"
+      ]
+    },
+    {
+      "round": 19,
+      "actor": "lin_yan",
+      "request": {
+        "text": "总结还有什么要核对。",
+        "scene_turn_id": "T19",
+        "focus_actor": "lin_yan"
+      },
+      "result": {
+        "scene_turn_id": "T19",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "WAITED",
+            "reply": "先核对已有记录，不据声明改动归属。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "other_npc",
+            "reason": "NO_AUTHORIZED_STIMULUS"
+          },
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 1,
+        "before_revision": 37,
+        "replans": 1,
+        "ending_text": null,
+        "ending_narration": "not_requested",
+        "counted_turn": true,
+        "chat_requests": 1,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 39,
+        "state": {
+          "choice": null,
+          "story_status": "active",
+          "ending": null,
+          "ending_ref": null,
+          "thread_status": "open",
+          "owner_status": "sender",
+          "transfer_ref": null,
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "open",
+              "next_opportunity": "核对交接意愿与同地条件",
+              "resolved_by_event_ids": [],
+              "updated_revision": 39
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0038",
+        "a08-main:E0039"
+      ],
+      "owner": "actor:lin_yan",
+      "delivered_lore": [
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015",
+        "a08-main:E0016",
+        "a08-main:E0017",
+        "a08-main:E0020",
+        "a08-main:E0021",
+        "a08-main:E0026",
+        "a08-main:E0027",
+        "a08-main:E0032",
+        "a08-main:E0033",
+        "a08-main:E0036",
+        "a08-main:E0037",
+        "a08-main:E0038",
+        "a08-main:E0039"
+      ]
+    },
+    {
+      "round": 20,
+      "actor": "lin_yan",
+      "request": {
+        "text": "现在明确推进交接，请周澈也回应。",
+        "scene_turn_id": "T20",
+        "focus_actor": "lin_yan",
+        "choice": "offer_handover",
+        "max_responders": 2
+      },
+      "result": {
+        "scene_turn_id": "T20",
+        "status": "completed",
+        "error_code": null,
+        "selected": [
+          "lin_yan",
+          "other_npc"
+        ],
+        "responses": [
+          {
+            "actor_id": "lin_yan",
+            "code": "GIVEN",
+            "reply": "已将信封交给 other_npc。\n本次行动以程序回执为准。",
+            "lore_refs": []
+          },
+          {
+            "actor_id": "other_npc",
+            "code": "WAITED",
+            "reply": "收到程序授权的交接记录。",
+            "lore_refs": []
+          }
+        ],
+        "skipped": [
+          {
+            "actor_id": "archive_keeper",
+            "reason": "NOT_COLOCATED"
+          }
+        ],
+        "replayed": false,
+        "model_requests": 3,
+        "before_revision": 39,
+        "replans": 1,
+        "ending_text": "信封已交给周澈，交接线已解决。",
+        "ending_narration": "deterministic",
+        "counted_turn": true,
+        "chat_requests": 3,
+        "embedding_requests": 0,
+        "rerank_requests": 0,
+        "after_revision": 45,
+        "state": {
+          "choice": "offer_handover",
+          "story_status": "ended",
+          "ending": "handed_over",
+          "ending_ref": "a08-main:E0045",
+          "thread_status": "resolved",
+          "owner_status": "recipient",
+          "transfer_ref": "a08-main:E0043",
+          "threads": [
+            {
+              "thread_id": "envelope_handover",
+              "topic": "信封交接",
+              "origin_ref": "a08-main:config:handover-v1",
+              "visibility_scope": [
+                "player",
+                "lin_yan",
+                "other_npc"
+              ],
+              "status": "resolved",
+              "next_opportunity": null,
+              "resolved_by_event_ids": [
+                "a08-main:E0043"
+              ],
+              "updated_revision": 45
+            }
+          ]
+        }
+      },
+      "event_ids": [
+        "a08-main:E0040",
+        "a08-main:E0041",
+        "a08-main:E0042",
+        "a08-main:E0043",
+        "a08-main:E0044",
+        "a08-main:E0045"
+      ],
+      "owner": "actor:other_npc",
+      "delivered_lore": [
+        [],
+        []
+      ],
+      "visible_memory_ids": [
+        "a08-main:E0001",
+        "a08-main:E0002",
+        "a08-main:E0003",
+        "a08-main:E0004",
+        "a08-main:E0005",
+        "a08-main:E0014",
+        "a08-main:E0015",
+        "a08-main:E0016",
+        "a08-main:E0017",
+        "a08-main:E0020",
+        "a08-main:E0021",
+        "a08-main:E0026",
+        "a08-main:E0027",
+        "a08-main:E0032",
+        "a08-main:E0033",
+        "a08-main:E0036",
+        "a08-main:E0037",
+        "a08-main:E0038",
+        "a08-main:E0039",
+        "a08-main:E0040",
+        "a08-main:E0041",
+        "a08-main:E0042",
+        "a08-main:E0043",
+        "a08-main:E0045"
+      ]
+    }
+  ],
+  "saved": {
+    "schema": "a08-scene-save-v1",
+    "app_version": "a08-runtime-v1",
+    "scene_receipts": [
+      {
+        "key": [
+          "a08-main",
+          "scene:start"
+        ],
+        "record": {
+          "request_digest": "f8874b5a39f72a5100cb9aa3214e2ca8d709d555413ca693e8056c7763bd3bc0",
+          "receipt": {
+            "ok": true,
+            "code": "SCENE_ACCEPTED",
+            "message": "本章目标是核对并完成信封交接。",
+            "data": {
+              "event_id": "a08-main:E0001"
+            }
+          },
+          "event_ids": [
+            "a08-main:E0001"
+          ],
+          "before_revision": 0,
+          "after_revision": 1
+        }
+      }
+    ],
+    "plans": [
+      {
+        "plan_id": "plan-1",
+        "based_on_revision": 1,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-2"
+      },
+      {
+        "plan_id": "plan-2",
+        "based_on_revision": 3,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-3"
+      },
+      {
+        "plan_id": "plan-3",
+        "based_on_revision": 5,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-4"
+      },
+      {
+        "plan_id": "plan-4",
+        "based_on_revision": 7,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-5"
+      },
+      {
+        "plan_id": "plan-5",
+        "based_on_revision": 9,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-6"
+      },
+      {
+        "plan_id": "plan-6",
+        "based_on_revision": 11,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-7"
+      },
+      {
+        "plan_id": "plan-7",
+        "based_on_revision": 13,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-8"
+      },
+      {
+        "plan_id": "plan-8",
+        "based_on_revision": 15,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-9"
+      },
+      {
+        "plan_id": "plan-9",
+        "based_on_revision": 17,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-10"
+      },
+      {
+        "plan_id": "plan-10",
+        "based_on_revision": 19,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "invalidated",
+        "invalidated_reason": "choice_or_world_revision_changed",
+        "superseded_by": "plan-11"
+      },
+      {
+        "plan_id": "plan-11",
+        "based_on_revision": 21,
+        "source_refs": [
+          "a08-main:config:handover-v1"
+        ],
+        "steps": [
+          "clarify_or_wait"
+        ],
+        "status": "active",
+        "invalidated_reason": null,
+        "superseded_by": null
+      }
+    ],
+    "lore": {
+      "version": "a07-lore-v1",
+      "manifest": "2332b993b687c0566cfde11864acca4287fa6eb6f2f668640b6d656f99bff782",
+      "mode": "keyword",
+      "space": null,
+      "min_score": 0.25,
+      "fallback_keyword": false,
+      "fallback_reason": null,
+      "reranker": null
+    },
+    "model_config": null,
+    "budget": {
+      "max_story_requests": 80,
+      "model_requests": 19,
+      "chat_requests": 19,
+      "embedding_requests": 0,
+      "rerank_requests": 0,
+      "max_story_turns": 20,
+      "turn_count": 10,
+      "turn_limits": {
+        "max_steps": 4,
+        "max_model_requests": 8,
+        "turn_timeout_s": 30.0,
+        "model_attempt_timeout_s": 10.0,
+        "query_attempt_timeout_s": 5.0,
+        "max_tool_calls_per_batch": 2,
+        "max_parallel_tools": 2,
+        "max_attempts": 2,
+        "retry_delay_s": 0.1,
+        "max_input_chars": 8000,
+        "max_embedding_requests": 2,
+        "max_rerank_requests": 2,
+        "rerank_timeout_s": 5.0
+      },
+      "batch": {
+        "max_requests": 180,
+        "used": 19
+      }
+    },
+    "cli": null
+  },
+  "cross_process": true,
+  "resume_replay": {
+    "after_revision": 21,
+    "before_revision": 19,
+    "chat_requests": 0,
+    "counted_turn": true,
+    "embedding_requests": 0,
+    "ending_narration": "not_requested",
+    "ending_text": null,
+    "error_code": null,
+    "model_requests": 0,
+    "replans": 1,
+    "replayed": true,
+    "rerank_requests": 0,
+    "responses": [
+      {
+        "actor_id": "lin_yan",
+        "code": "WAITED",
+        "lore_refs": [],
+        "reply": "现有背景不足以确认该问题。"
+      }
+    ],
+    "scene_turn_id": "T10",
+    "selected": [
+      "lin_yan"
+    ],
+    "skipped": [
+      {
+        "actor_id": "other_npc",
+        "reason": "NO_AUTHORIZED_STIMULUS"
+      },
+      {
+        "actor_id": "archive_keeper",
+        "reason": "NOT_COLOCATED"
+      }
+    ],
+    "state": {
+      "choice": null,
+      "ending": null,
+      "ending_ref": null,
+      "owner_status": "sender",
+      "story_status": "active",
+      "thread_status": "open",
+      "threads": [
+        {
+          "next_opportunity": "核对交接意愿与同地条件",
+          "origin_ref": "a08-main:config:handover-v1",
+          "resolved_by_event_ids": [],
+          "status": "open",
+          "thread_id": "envelope_handover",
+          "topic": "信封交接",
+          "updated_revision": 21,
+          "visibility_scope": [
+            "player",
+            "lin_yan",
+            "other_npc"
+          ]
+        }
+      ],
+      "transfer_ref": null
+    },
+    "status": "completed"
+  },
+  "main_final": {
+    "view": {
+      "choice": "offer_handover",
+      "story_status": "ended",
+      "ending": "handed_over",
+      "ending_ref": "a08-main:E0045",
+      "thread_status": "resolved",
+      "owner_status": "recipient",
+      "transfer_ref": "a08-main:E0043",
+      "threads": [
+        {
+          "thread_id": "envelope_handover",
+          "topic": "信封交接",
+          "origin_ref": "a08-main:config:handover-v1",
+          "visibility_scope": [
+            "player",
+            "lin_yan",
+            "other_npc"
+          ],
+          "status": "resolved",
+          "next_opportunity": null,
+          "resolved_by_event_ids": [
+            "a08-main:E0043"
+          ],
+          "updated_revision": 45
+        }
+      ]
+    },
+    "budget": {
+      "max_story_requests": 80,
+      "model_requests": 34,
+      "chat_requests": 34,
+      "embedding_requests": 0,
+      "rerank_requests": 0,
+      "max_story_turns": 20,
+      "turn_count": 20,
+      "turn_limits": {
+        "max_steps": 4,
+        "max_model_requests": 8,
+        "turn_timeout_s": 30.0,
+        "model_attempt_timeout_s": 10.0,
+        "query_attempt_timeout_s": 5.0,
+        "max_tool_calls_per_batch": 2,
+        "max_parallel_tools": 2,
+        "max_attempts": 2,
+        "retry_delay_s": 0.1,
+        "max_input_chars": 8000,
+        "max_embedding_requests": 2,
+        "max_rerank_requests": 2,
+        "rerank_timeout_s": 5.0
+      },
+      "batch": {
+        "max_requests": 180,
+        "used": 34
+      }
+    }
+  },
+  "opposite_branch": {
+    "scene_turn_id": "pause",
+    "status": "completed",
+    "error_code": null,
+    "selected": [
+      "lin_yan"
+    ],
+    "responses": [
+      {
+        "actor_id": "lin_yan",
+        "code": "WAITED",
+        "reply": "本次暂缓。",
+        "lore_refs": []
+      }
+    ],
+    "skipped": [
+      {
+        "actor_id": "archive_keeper",
+        "reason": "NOT_COLOCATED"
+      },
+      {
+        "actor_id": "other_npc",
+        "reason": "RESPONDER_LIMIT"
+      }
+    ],
+    "replayed": false,
+    "model_requests": 1,
+    "before_revision": 1,
+    "replans": 1,
+    "ending_text": "本章暂缓交接；信封仍归林砚，交接线尚未解决。",
+    "ending_narration": "deterministic",
+    "counted_turn": true,
+    "chat_requests": 1,
+    "embedding_requests": 0,
+    "rerank_requests": 0,
+    "after_revision": 6,
+    "state": {
+      "choice": "pause_handover",
+      "story_status": "ended",
+      "ending": "deferred",
+      "ending_ref": "a08-deferred:E0006",
+      "thread_status": "open",
+      "owner_status": "sender",
+      "transfer_ref": null,
+      "threads": [
+        {
+          "thread_id": "envelope_handover",
+          "topic": "信封交接",
+          "origin_ref": "a08-deferred:config:handover-v1",
+          "visibility_scope": [
+            "player",
+            "lin_yan",
+            "other_npc"
+          ],
+          "status": "open",
+          "next_opportunity": null,
+          "resolved_by_event_ids": [],
+          "updated_revision": 6
+        }
+      ]
+    }
+  },
+  "batch_used": 35
+}

@@ -151,7 +151,7 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
         raise ValueError('lore 生成必须使用当前快照与玩家接收范围。')
     if executor.max_parallel_tools > limits.max_parallel_tools:
         raise ValueError("执行器并发数超过本轮上限。")
-    trace.emit("run_started", "started", model_requests=0, runtime_version="a07-lore-v1" if lore is not None else "a06-scene-v1" if scene_mode else MEMORY_RUNTIME_VERSION if memory_mode else RUNTIME_VERSION,
+    trace.emit("run_started", "started", model_requests=0, runtime_version="a07-lore-v2" if lore is not None else "a06-scene-v1" if scene_mode else MEMORY_RUNTIME_VERSION if memory_mode else RUNTIME_VERSION,
                model_name=getattr(model, "model", None), provider_host=getattr(model, "provider_host", None),
                limits=asdict(limits), history_messages=len(session["history"]))
     reason, committed_revision, record = "INTERNAL_ERROR", None, None
@@ -163,6 +163,7 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
     def summary():
         return {"run_id": trace.run_id, "turn_id": turn_id, "mode": model.mode,
                 "model_requests": budget.model_requests, "termination_reason": reason,
+                "rerank_requests": budget.rerank_requests,
                 "chat_requests": budget.chat_requests, "embedding_requests": budget.embedding_requests,
                 "committed_revision": committed_revision, "replayed": replayed,
                 "trace_write_failed": trace.write_failed, "records": deepcopy(trace.records)}

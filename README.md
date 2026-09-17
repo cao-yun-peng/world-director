@@ -1,6 +1,30 @@
+# AI 互动世界导演 · A08
+
+已实现开发集与指标、权限前置混合检索、可选重排、20 轮教学预算和场景存档续玩。
+最终冻结验证：A08 33 项、全量 311 项通过；Fake 20 轮及跨进程恢复通过。
+真实 A08 效果和本人独立验收仍待完成，阶段 B 尚未通过。
+
+```powershell
+# 全部离线；verify 冻结源码并将每次证据放到新目录：
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a08_verify
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a08_eval
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a08_demo
+```
+
+- [当前结果、检索指标与下一步](docs/a08_results.md)
+- [20 轮试玩与真实入口](docs/a08_playthrough.md) · [保存与跨进程续玩](docs/a08_save_resume.md)
+- [本人预测（待填写）](docs/a08_prediction.md) · [源码参考](docs/a08_source_notes.md)
+
+关键词在本开发集已达到 Recall@3/MRR@3=1.0；Fake 混合/重排未显示进一步收益。
+lore 默认 off、重排 off 不变。场景新增 /save 槽位、/load 槽位、--load-slot。
+A08 profile 显式开启后为 20 轮/80 次故事额度/180 次批次额度；/new、/load 不补本进程额度。
+下方 A07 及更早章节是历史记录，其中“无场景存档”等描述仅适用于当时版本。
+
+---
+
 # AI 互动世界导演 · A07
 
-已完成版本化设定库、权限前置的关键词/向量检索、Embedding 适配与缓存、原生 search_lore、独立 lore_refs、共享调用预算及三条回答路径。离线工程通过：A07 48 项、全量 276 项；真实服务与学习者独立验收仍待完成。
+已完成版本化设定库、权限前置的关键词/向量检索、Embedding 适配与缓存、原生 search_lore、独立 lore_refs、共享调用预算及三条回答路径。阿里云 text-embedding-v4/1024 已真实接通，修复后全量 278 项通过；真实回答仍有一处措辞缺口，学习者独立验收待完成。
 
 ```powershell
 # 完全离线，三条路径 × 两种检索：
@@ -14,6 +38,13 @@
 .\.venv\Scripts\python.exe -X utf8 -m app.main --engine scene --lore-mode keyword --max-model-requests 24
 ```
 
+已配置真实向量检索，可直接运行：
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -m app.main --engine scene --lore-mode vector_real --build-lore-index --allow-lore-upload --lore-min-score 0.5 --max-model-requests 24
+```
+
+- [阿里云真实运行结果、失败修复与质量限制](docs/a07_real_results.md)
 - [实现、验证结果、真实配置和待验收项](docs/a07_results.md)
 - [A07 原计划](docs/a07_plan.md) · [实施契约](docs/a07_contract.md)
 - [学习者原预测（待填写）](docs/a07_prediction.md)

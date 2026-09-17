@@ -1,0 +1,15 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a08_demo
+STARTED_UTC: 2026-09-17T13:57:37.893081+00:00
+EXIT_CODE: 0
+DURATION_S: 8.859
+CWD: frozen source.zip extraction
+
+{
+  "mode": "fake",
+  "rounds": 20,
+  "cross_process": true,
+  "ending": "handed_over",
+  "other_ending": "deferred",
+  "batch_used": 35,
+  "output": "docs\\a08_playthrough.json"
+}

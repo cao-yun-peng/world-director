@@ -1,0 +1,207 @@
+{
+  "reviewer": "AI assistant, not learner independent review",
+  "reviewed_at": "2026-09-17T13:30:16.304163+00:00",
+  "embedding_model": {
+    "mode": "real",
+    "provider": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    "model": "text-embedding-v4",
+    "version": "provider-unpinned",
+    "dimensions": 1024,
+    "preprocessing": "raw-text-v1",
+    "query_prefix": "",
+    "document_prefix": ""
+  },
+  "chat_model": "qwen3.7-plus",
+  "min_score": 0.5,
+  "total_external_requests": 23,
+  "initial_requests": 18,
+  "retest_requests": 5,
+  "retrieval": [
+    {
+      "query": "值班室用于什么？",
+      "actor": "lin_yan",
+      "recipient": "player",
+      "status": "OK",
+      "hits": [
+        {
+          "source_id": "L02",
+          "score": 0.8403730261132636
+        },
+        {
+          "source_id": "L03",
+          "score": 0.5724972643513194
+        },
+        {
+          "source_id": "L05",
+          "score": 0.5069382754055567
+        }
+      ]
+    },
+    {
+      "query": "来客通常在哪里登记交接事情？",
+      "actor": "lin_yan",
+      "recipient": "player",
+      "status": "OK",
+      "hits": [
+        {
+          "source_id": "L02",
+          "score": 0.5794730002506822
+        },
+        {
+          "source_id": "L04",
+          "score": 0.5751421488099049
+        },
+        {
+          "source_id": "L05",
+          "score": 0.5645057046942463
+        }
+      ]
+    },
+    {
+      "query": "交接表的栏目顺序是什么？",
+      "actor": "lin_yan",
+      "recipient": "player",
+      "status": "OK",
+      "hits": [
+        {
+          "source_id": "L12",
+          "score": 0.7628714694446525
+        },
+        {
+          "source_id": "L04",
+          "score": 0.5302728670146872
+        }
+      ]
+    },
+    {
+      "query": "地下通道密码是什么？",
+      "actor": "lin_yan",
+      "recipient": "player",
+      "status": "NO_USABLE_EVIDENCE",
+      "hits": []
+    },
+    {
+      "query": "沈岚旧目录规则的别名是什么？",
+      "actor": "lin_yan",
+      "recipient": "player",
+      "status": "NO_USABLE_EVIDENCE",
+      "hits": []
+    },
+    {
+      "query": "沈岚旧目录规则的别名是什么？",
+      "actor": "archive_keeper",
+      "recipient": "archive_keeper",
+      "status": "OK",
+      "hits": [
+        {
+          "source_id": "L10",
+          "score": 0.8364955346201581
+        },
+        {
+          "source_id": "L11",
+          "score": 0.6056192145948405
+        }
+      ]
+    }
+  ],
+  "generation": [
+    {
+      "query": "值班室用于什么？",
+      "status": "completed",
+      "error_code": null,
+      "replies": [
+        "值班室用于接待来访者和记录交接事项。"
+      ]
+    },
+    {
+      "query": "地下通道密码是什么？",
+      "status": "stopped",
+      "error_code": "STEP_LIMIT",
+      "replies": []
+    },
+    {
+      "query": "沈岚旧目录规则的别名是什么？",
+      "status": "completed",
+      "error_code": null,
+      "replies": [
+        "我查阅了资料库，但没有找到关于“沈岚旧目录规则”别名的记录。这可能是一个未被收录的信息，或者名称有所偏差。你是否有更多线索？"
+      ]
+    },
+    {
+      "query": "地下通道密码是什么？",
+      "status": "completed",
+      "error_code": null,
+      "replies": [
+        "我不清楚地下通道的密码。这类信息通常不会记录在灯塔的日常管理资料中，或许你需要从其他渠道获取线索。"
+      ]
+    }
+  ],
+  "request_checks": [
+    {
+      "path": "runs\\a07_real_io\\a566fd10-315c-4144-a2cd-cee5e6e3f3dd\\438ca8e4-fc09-4f8f-87c2-08040627e30e-attempt-1.jsonl",
+      "input_chars": 5975,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_io\\a566fd10-315c-4144-a2cd-cee5e6e3f3dd\\a522cc7a-65c9-4123-ae5f-073873407ab3-attempt-1.jsonl",
+      "input_chars": 7506,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_io\\de39c1fe-f46b-4ae6-ab61-e1d2892b63cc\\3e71a592-c26c-4a23-b6c7-3e53b46eb9a9-attempt-1.jsonl",
+      "input_chars": 5979,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_io\\de39c1fe-f46b-4ae6-ab61-e1d2892b63cc\\7974dce2-ed71-422f-b3cf-d33c86cce6bf-attempt-1.jsonl",
+      "input_chars": 6834,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_io\\de39c1fe-f46b-4ae6-ab61-e1d2892b63cc\\9a1e3109-d475-4f17-994a-b043a8b70c14-attempt-1.jsonl",
+      "input_chars": 7395,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_io\\de39c1fe-f46b-4ae6-ab61-e1d2892b63cc\\22d27d20-330c-4089-8ac5-9c58d9b4cf0a-attempt-1.jsonl",
+      "input_chars": 7945,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_io\\5f5caf41-6808-422b-8357-e12434f9a811\\4b616c98-43fe-4bae-9fbf-2478e698abde-attempt-1.jsonl",
+      "input_chars": 5987,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_io\\5f5caf41-6808-422b-8357-e12434f9a811\\58bb4a8f-d0d2-4b05-acb7-bb8920f0722f-attempt-1.jsonl",
+      "input_chars": 6846,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_retest_io\\ac72a5ce-f86c-40c3-b9dc-3bd2857362f1\\830d18c0-4c3f-4091-88ea-87e57e09a0d2-attempt-1.jsonl",
+      "input_chars": 6108,
+      "no_private_lore": true
+    },
+    {
+      "path": "runs\\a07_real_retest_io\\ac72a5ce-f86c-40c3-b9dc-3bd2857362f1\\cd56c06d-eb6e-45ac-a4d5-21a6851cfa3b-attempt-1.jsonl",
+      "input_chars": 6963,
+      "no_private_lore": true
+    }
+  ],
+  "provider_request_ids": [
+    "fe1a4474-14d7-99fe-b3b6-3ffb6fbd48c0",
+    "9163de92-1461-944c-8263-89972793384a",
+    "bd53f045-f158-911c-90c2-9cf121ed01ec",
+    "43954909-ecb4-94d5-a15c-1ab35275b9ed",
+    "db9d531f-0e39-9b16-9b28-27e44c26d86d",
+    "0e1962a2-533e-9734-bc4f-04ebca7b924b",
+    "4220c43f-f0d1-9dc9-97f5-84b8ff17aea6",
+    "c014e450-899a-940c-848d-7c757497d804",
+    "47881079-e42e-9ed5-a187-a8614ca97010",
+    "bf46fd26-6fa0-9942-add2-46c1911872b9"
+  ],
+  "credential_scan_passed": true,
+  "known_quality_issue": "无依据复测没有编造密码，但附加“这类信息通常不会记录在灯塔的日常管理资料中”缺少依据；措辞质量待改进。",
+  "human_review": "pending",
+  "learner_independent": "pending"
+}

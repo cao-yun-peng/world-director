@@ -1,0 +1,11 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a07_demo
+STARTED_UTC: 2026-09-17T13:55:36.430850+00:00
+EXIT_CODE: 0
+DURATION_S: 2.906
+CWD: frozen source.zip extraction
+
+{
+  "cases": 6,
+  "mode": "fake",
+  "evidence": "docs\\a07_retrieval_probe.json"
+}

@@ -1,0 +1,3865 @@
+{
+  "dataset": "a08-dev-v1",
+  "dataset_sha256": "6a9127611d583d6e506fdf029dbeebaf597529e9adf141d22a941d040a572216",
+  "lore_version": "a07-lore-v1",
+  "chunk_version": "paragraph-codepoint-400-v1",
+  "mode": "fake",
+  "planned_cases": 20,
+  "positive_denominator": 10,
+  "candidate_k": 5,
+  "top_k": 3,
+  "budget_limit": 120,
+  "attempts": [
+    {
+      "name": "keyword",
+      "mode": "keyword",
+      "rerank_mode": "off",
+      "cases": [
+        {
+          "case_id": "A08-01",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "candidate_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "delivered_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-7c3d5a5b9d06f30cffdb45c2"
+            ],
+            "final_ids": [
+              "lc-7c3d5a5b9d06f30cffdb45c2"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "after": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-02",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-bfcf5d1b3e48fa12c00a757e",
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "candidate_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-bfcf5d1b3e48fa12c00a757e",
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "delivered_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-bfcf5d1b3e48fa12c00a757e",
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-bfcf5d1b3e48fa12c00a757e",
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "final_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-bfcf5d1b3e48fa12c00a757e",
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "after": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 15.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-03",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-04",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "candidate_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "delivered_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "final_ids": [
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "after": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-05",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-06",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-ed61eb4cccfbf85616c4b57b",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-ed61eb4cccfbf85616c4b57b",
+              "lc-272440c95ef1e66ae4cf8a9b"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-07",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "candidate_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "delivered_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "final_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "after": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-08",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "candidate_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-09",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "candidate_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "delivered_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "final_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "after": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-10",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-8861f8967db62c743c576e9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-8861f8967db62c743c576e9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": null,
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        }
+      ],
+      "build": {},
+      "error": null,
+      "metrics": {
+        "status": "complete",
+        "positive_queries": 10,
+        "executed_queries": 10,
+        "not_run": [],
+        "service_failures": [],
+        "Recall@3": 1.0,
+        "MRR@3": 1.0
+      },
+      "duration_ms": 15.0,
+      "latency": {
+        "raw_ms": [
+          0.0,
+          15.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "median_ms": 0.0,
+        "max_ms": 15.0
+      }
+    },
+    {
+      "name": "vector",
+      "mode": "vector_fake",
+      "rerank_mode": "off",
+      "cases": [
+        {
+          "case_id": "A08-01",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [],
+          "candidate_ids": [],
+          "delivered_ids": [],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [],
+            "final_ids": [],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [],
+              "after": [],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "final_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "delivered_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": -1.0,
+            "rr": -1.0
+          }
+        },
+        {
+          "case_id": "A08-02",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "candidate_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "delivered_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": [
+                "lc-272440c95ef1e66ae4cf8a9b"
+              ]
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b"
+            ],
+            "final_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-272440c95ef1e66ae4cf8a9b"
+              ],
+              "after": [
+                "lc-272440c95ef1e66ae4cf8a9b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-03",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [],
+          "candidate_ids": [],
+          "delivered_ids": [],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [],
+            "final_ids": [],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [],
+              "after": [],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "final_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "delivered_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": -1.0,
+            "rr": -1.0
+          }
+        },
+        {
+          "case_id": "A08-04",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [],
+          "candidate_ids": [],
+          "delivered_ids": [],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [],
+            "final_ids": [],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [],
+              "after": [],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "final_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "delivered_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": -1.0,
+            "rr": -1.0
+          }
+        },
+        {
+          "case_id": "A08-05",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": [
+                "lc-99eb46f73af3555d070c2d94"
+              ]
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 16.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-06",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": [
+                "lc-99eb46f73af3555d070c2d94"
+              ]
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 0.5,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 0.5,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 0.5,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": -0.5,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-07",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "candidate_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "delivered_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ]
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "final_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "after": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-08",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "candidate_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ]
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-09",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "candidate_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "delivered_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ]
+            },
+            "fusion": [],
+            "candidate_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "final_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "after": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-10",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [],
+          "candidate_ids": [],
+          "delivered_ids": [],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [],
+              "vector": []
+            },
+            "fusion": [],
+            "candidate_ids": [],
+            "final_ids": [],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [],
+              "after": [],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "final_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "delivered_metrics": {
+            "recall": 0.0,
+            "rr": 0.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": -1.0,
+            "rr": -1.0
+          }
+        }
+      ],
+      "build": {
+        "external_requests": 0,
+        "embedding_requests": 0
+      },
+      "error": null,
+      "metrics": {
+        "status": "complete",
+        "positive_queries": 10,
+        "executed_queries": 10,
+        "not_run": [],
+        "service_failures": [],
+        "Recall@3": 0.55,
+        "MRR@3": 0.6
+      },
+      "duration_ms": 16.0,
+      "latency": {
+        "raw_ms": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          16.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "median_ms": 0.0,
+        "max_ms": 16.0
+      }
+    },
+    {
+      "name": "rrf",
+      "mode": "hybrid_fake",
+      "rerank_mode": "off",
+      "cases": [
+        {
+          "case_id": "A08-01",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "candidate_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "delivered_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-7c3d5a5b9d06f30cffdb45c2",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-7c3d5a5b9d06f30cffdb45c2"
+            ],
+            "final_ids": [
+              "lc-7c3d5a5b9d06f30cffdb45c2"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "after": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 15.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-02",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-bfcf5d1b3e48fa12c00a757e",
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "candidate_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-bfcf5d1b3e48fa12c00a757e",
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "delivered_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-bfcf5d1b3e48fa12c00a757e",
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "vector": [
+                "lc-272440c95ef1e66ae4cf8a9b"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              },
+              {
+                "chunk_id": "lc-bfcf5d1b3e48fa12c00a757e",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              },
+              {
+                "chunk_id": "lc-8861f8967db62c743c576e9b",
+                "score": 0.015873015873015872,
+                "route_ranks": {
+                  "0": 3
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-bfcf5d1b3e48fa12c00a757e",
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "final_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-bfcf5d1b3e48fa12c00a757e",
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "after": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-03",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              },
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-04",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "candidate_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "delivered_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-8861f8967db62c743c576e9b",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "final_ids": [
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "after": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-05",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": [
+                "lc-99eb46f73af3555d070c2d94"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              },
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              },
+              {
+                "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+                "score": 0.015873015873015872,
+                "route_ranks": {
+                  "0": 3
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-06",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": [
+                "lc-99eb46f73af3555d070c2d94"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              },
+              {
+                "chunk_id": "lc-ed61eb4cccfbf85616c4b57b",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              },
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.015873015873015872,
+                "route_ranks": {
+                  "0": 3
+                }
+              },
+              {
+                "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+                "score": 0.015625,
+                "route_ranks": {
+                  "0": 4
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-ed61eb4cccfbf85616c4b57b",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-ed61eb4cccfbf85616c4b57b",
+              "lc-272440c95ef1e66ae4cf8a9b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-07",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "candidate_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "delivered_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "vector": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-bfcf5d1b3e48fa12c00a757e",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "final_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "after": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-08",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "candidate_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-09",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "candidate_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "delivered_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "vector": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-ed61eb4cccfbf85616c4b57b",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "final_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "after": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-10",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-8861f8967db62c743c576e9b",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              },
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-8861f8967db62c743c576e9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-8861f8967db62c743c576e9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "off",
+              "config_id": null,
+              "before": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "off",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        }
+      ],
+      "build": {
+        "external_requests": 0,
+        "embedding_requests": 0
+      },
+      "error": null,
+      "metrics": {
+        "status": "complete",
+        "positive_queries": 10,
+        "executed_queries": 10,
+        "not_run": [],
+        "service_failures": [],
+        "Recall@3": 1.0,
+        "MRR@3": 1.0
+      },
+      "duration_ms": 15.0,
+      "latency": {
+        "raw_ms": [
+          15.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "median_ms": 0.0,
+        "max_ms": 15.0
+      }
+    },
+    {
+      "name": "rrf_rerank",
+      "mode": "hybrid_fake",
+      "rerank_mode": "fake",
+      "cases": [
+        {
+          "case_id": "A08-01",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "candidate_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "delivered_ids": [
+            "lc-7c3d5a5b9d06f30cffdb45c2"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-7c3d5a5b9d06f30cffdb45c2",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-7c3d5a5b9d06f30cffdb45c2"
+            ],
+            "final_ids": [
+              "lc-7c3d5a5b9d06f30cffdb45c2"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "after": [
+                "lc-7c3d5a5b9d06f30cffdb45c2"
+              ],
+              "status": "skipped_small_pool",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-02",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-8861f8967db62c743c576e9b",
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "candidate_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-bfcf5d1b3e48fa12c00a757e",
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "delivered_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-8861f8967db62c743c576e9b",
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "vector": [
+                "lc-272440c95ef1e66ae4cf8a9b"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              },
+              {
+                "chunk_id": "lc-bfcf5d1b3e48fa12c00a757e",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              },
+              {
+                "chunk_id": "lc-8861f8967db62c743c576e9b",
+                "score": 0.015873015873015872,
+                "route_ranks": {
+                  "0": 3
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-bfcf5d1b3e48fa12c00a757e",
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "final_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-8861f8967db62c743c576e9b",
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-bfcf5d1b3e48fa12c00a757e",
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "after": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-8861f8967db62c743c576e9b",
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "status": "ok",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0.0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-03",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              },
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "ok",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0.0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-04",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "candidate_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "delivered_ids": [
+            "lc-8861f8967db62c743c576e9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-8861f8967db62c743c576e9b",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "final_ids": [
+              "lc-8861f8967db62c743c576e9b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "after": [
+                "lc-8861f8967db62c743c576e9b"
+              ],
+              "status": "skipped_small_pool",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-05",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": [
+                "lc-99eb46f73af3555d070c2d94"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              },
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              },
+              {
+                "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+                "score": 0.015873015873015872,
+                "route_ranks": {
+                  "0": 3
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "ok",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0.0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-06",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "candidate_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b",
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-99eb46f73af3555d070c2d94",
+            "lc-ed61eb4cccfbf85616c4b57b",
+            "lc-272440c95ef1e66ae4cf8a9b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": [
+                "lc-99eb46f73af3555d070c2d94"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              },
+              {
+                "chunk_id": "lc-ed61eb4cccfbf85616c4b57b",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              },
+              {
+                "chunk_id": "lc-272440c95ef1e66ae4cf8a9b",
+                "score": 0.015873015873015872,
+                "route_ranks": {
+                  "0": 3
+                }
+              },
+              {
+                "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+                "score": 0.015625,
+                "route_ranks": {
+                  "0": 4
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-ed61eb4cccfbf85616c4b57b",
+              "lc-272440c95ef1e66ae4cf8a9b",
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-99eb46f73af3555d070c2d94",
+              "lc-ed61eb4cccfbf85616c4b57b",
+              "lc-272440c95ef1e66ae4cf8a9b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-99eb46f73af3555d070c2d94",
+                "lc-ed61eb4cccfbf85616c4b57b",
+                "lc-272440c95ef1e66ae4cf8a9b",
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "ok",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0.0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-07",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "candidate_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "delivered_ids": [
+            "lc-bfcf5d1b3e48fa12c00a757e"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "vector": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-bfcf5d1b3e48fa12c00a757e",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "final_ids": [
+              "lc-bfcf5d1b3e48fa12c00a757e"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "after": [
+                "lc-bfcf5d1b3e48fa12c00a757e"
+              ],
+              "status": "skipped_small_pool",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-08",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "candidate_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "delivered_ids": [
+            "lc-c9374bac593d8cb1a8d0622f"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "vector": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-c9374bac593d8cb1a8d0622f",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "final_ids": [
+              "lc-c9374bac593d8cb1a8d0622f"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "after": [
+                "lc-c9374bac593d8cb1a8d0622f"
+              ],
+              "status": "skipped_small_pool",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 16.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-09",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "candidate_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "delivered_ids": [
+            "lc-ed61eb4cccfbf85616c4b57b"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "vector": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ]
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-ed61eb4cccfbf85616c4b57b",
+                "score": 0.03278688524590164,
+                "route_ranks": {
+                  "0": 1,
+                  "1": 1
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "final_ids": [
+              "lc-ed61eb4cccfbf85616c4b57b"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "after": [
+                "lc-ed61eb4cccfbf85616c4b57b"
+              ],
+              "status": "skipped_small_pool",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        },
+        {
+          "case_id": "A08-10",
+          "status": "ok",
+          "cache_start": "cold_per_backend_query",
+          "ranked_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "candidate_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "delivered_ids": [
+            "lc-8861f8967db62c743c576e9b",
+            "lc-99eb46f73af3555d070c2d94"
+          ],
+          "diagnostics": {
+            "candidate_k": 5,
+            "rrf_constant": 60,
+            "routes": {
+              "keyword": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "vector": []
+            },
+            "fusion": [
+              {
+                "chunk_id": "lc-8861f8967db62c743c576e9b",
+                "score": 0.01639344262295082,
+                "route_ranks": {
+                  "0": 1
+                }
+              },
+              {
+                "chunk_id": "lc-99eb46f73af3555d070c2d94",
+                "score": 0.016129032258064516,
+                "route_ranks": {
+                  "0": 2
+                }
+              }
+            ],
+            "candidate_ids": [
+              "lc-8861f8967db62c743c576e9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "final_ids": [
+              "lc-8861f8967db62c743c576e9b",
+              "lc-99eb46f73af3555d070c2d94"
+            ],
+            "embedding": {
+              "mode": "fake",
+              "provider": "local",
+              "model": "fake-bigram-v1",
+              "version": "1",
+              "dimensions": 256,
+              "preprocessing": "nfkc-bigram-v1",
+              "query_prefix": "",
+              "document_prefix": "",
+              "purpose": "query",
+              "cache_hits": 0
+            },
+            "rerank": {
+              "mode": "fake",
+              "config_id": "fake-query-coverage-v1",
+              "before": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "after": [
+                "lc-8861f8967db62c743c576e9b",
+                "lc-99eb46f73af3555d070c2d94"
+              ],
+              "status": "ok",
+              "requests": 0,
+              "fallback_reason": null,
+              "duration_ms": 0.0
+            }
+          },
+          "fallback_reason": null,
+          "candidate_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "final_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "delivered_metrics": {
+            "recall": 1.0,
+            "rr": 1.0
+          },
+          "duration_ms": 0.0,
+          "chat_requests": 0,
+          "embedding_requests": 0,
+          "rerank_requests": 0,
+          "model_requests": 0,
+          "delta_vs_keyword": {
+            "recall": 0.0,
+            "rr": 0.0
+          }
+        }
+      ],
+      "build": {
+        "external_requests": 0,
+        "embedding_requests": 0
+      },
+      "error": null,
+      "metrics": {
+        "status": "complete",
+        "positive_queries": 10,
+        "executed_queries": 10,
+        "not_run": [],
+        "service_failures": [],
+        "Recall@3": 1.0,
+        "MRR@3": 1.0
+      },
+      "duration_ms": 32.0,
+      "latency": {
+        "raw_ms": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          16.0,
+          0.0,
+          0.0
+        ],
+        "median_ms": 0.0,
+        "max_ms": 16.0
+      }
+    }
+  ],
+  "used_requests": 0,
+  "delivery_fixture": "minimal-generation-input-8000-v1; no chat generation",
+  "default_decision": "保持旧默认；Fake 不证明真实质量，真实开启需另评延迟与安全。",
+  "boundary_cases": [
+    {
+      "case_id": "A08-11",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "unauthorized_delivery",
+          "expected": true,
+          "actual": true
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-12",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "unauthorized_delivery",
+          "expected": true,
+          "actual": true
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-13",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "inventory_not_in_lore",
+          "expected": true,
+          "actual": true
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-14",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "reject_unprovided_reference",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "checkpoint": "read_only_owner",
+          "expected": "actor:lin_yan",
+          "actual": "actor:lin_yan"
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-15",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "claim_is_not_transfer",
+          "expected": "actor:lin_yan",
+          "actual": "actor:lin_yan"
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-16",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "precondition_rejected",
+          "expected": "NOT_OWNER",
+          "actual": "NOT_OWNER"
+        },
+        {
+          "checkpoint": "owner_unchanged",
+          "expected": "actor:lin_yan",
+          "actual": "actor:lin_yan"
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-17",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "precondition_rejected",
+          "expected": "NOT_COLOCATED",
+          "actual": "NOT_COLOCATED"
+        },
+        {
+          "checkpoint": "owner_unchanged",
+          "expected": "actor:lin_yan",
+          "actual": "actor:lin_yan"
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-18",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "before_relay_private",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "checkpoint": "relay_accepted",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "checkpoint": "after_relay_reported",
+          "expected": true,
+          "actual": true
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-19",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "replay_zero_requests",
+          "expected": 0,
+          "actual": 0
+        },
+        {
+          "checkpoint": "replay_no_new_events",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "checkpoint": "changed_request_conflict",
+          "expected": true,
+          "actual": true
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    },
+    {
+      "case_id": "A08-20",
+      "status": "passed",
+      "checks": [
+        {
+          "checkpoint": "no_future_event",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "checkpoint": "second_responder",
+          "expected": [
+            "lin_yan",
+            "other_npc"
+          ],
+          "actual": [
+            "lin_yan",
+            "other_npc"
+          ]
+        },
+        {
+          "checkpoint": "second_sees_committed_transfer",
+          "expected": true,
+          "actual": true
+        },
+        {
+          "checkpoint": "owner_after",
+          "expected": "actor:other_npc",
+          "actual": "actor:other_npc"
+        }
+      ],
+      "semantic_quality": "not_evaluated_fake_only"
+    }
+  ],
+  "boundary_failures": [],
+  "unscored_semantic_metrics": [
+    "unsupported_assertions",
+    "correct_refusal_or_clarification"
+  ],
+  "status": "complete"
+}

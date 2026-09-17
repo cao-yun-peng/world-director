@@ -1,0 +1,93 @@
+{
+  "task": "A07-REAL-20260917",
+  "revision": 2,
+  "baseline": "eca50dd4a0e1e026282af7a169d03891e016aff8",
+  "authorization": "用户选择阿里云并明确授权复用现有密钥；只发送虚构教学种子及固定问题。",
+  "commands": [
+    {
+      "command": ".venv/Scripts/python.exe -X utf8 -m scripts.a07_live_probe --real --allow-lore-upload --min-score 0.5 --generate",
+      "exit_code": 0,
+      "note": "首轮无依据场景 STEP_LIMIT；进程退出 0 不表示所有业务路径通过",
+      "external_requests": 18
+    },
+    {
+      "command": ".venv/Scripts/python.exe -X utf8 -m scripts.a07_live_retest --real",
+      "exit_code": 0,
+      "external_requests": 5,
+      "note": "无依据路径 completed；措辞缺口保留"
+    },
+    {
+      "command": ".venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -p test_a07_live_fixes.py -v",
+      "exit_code": 0,
+      "tests": 2,
+      "evidence": "docs/a07_real_fix_tests.txt"
+    },
+    {
+      "command": ".venv/Scripts/python.exe -X utf8 -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests": 278,
+      "evidence": "docs/a07_real_fix_all_tests.txt"
+    }
+  ],
+  "sha256_raw_bytes": {
+    "app/__init__.py": "0ebb5598684b70b536b3d05cab1dea1ece36d79614a32bfbb1e8d7091c1fd1f7",
+    "app/actions.py": "e88aedb6a28c2fdaac1907729c375ca52b14fa85b678d53f06c18dae6ba7a7f5",
+    "app/async_runtime.py": "faaf5ee11fecd7990facbd9ba951652d76a4cdd5743535c9c38efbadff73c7f5",
+    "app/character.py": "417eba643803d001022cae372c77aa0f400190680696719609b219d3cb6419cf",
+    "app/director.py": "e31f00c4ca688dbea2daf8feada1677c58041d3952255a7ea0b8d48e47219b19",
+    "app/embeddings.py": "de65fc01dfad181a3922656872953f7b0a2aefb954fc4c05b47698f40202a438",
+    "app/engine.py": "01c2400f59c975696b660570c5c95c0faa107297de3bdf7652d20d5d1a013454",
+    "app/execution.py": "36c160712b540534870f3a367adf1968ebd6453ac6048bba5e941bcac349dd14",
+    "app/loop_cli.py": "9c09ef5d8969c36bb1400176bf4295bbc210cc6a8bd3056da388f4685b113048",
+    "app/lore.py": "9b333d49cefc2828d516606a4fd0185e3ebdf02f6709c08dcfa57d32b6ae8488",
+    "app/lore_setup.py": "2ae1dfff73bc4c515855c696d3498409a0ea25051995383a22d2a2d6eb6eb98b",
+    "app/lore_tools.py": "64be64506ec25fcef24528fc2faae7ce536d7dc8902683f17679258f0ec7a18a",
+    "app/main.py": "06117a19281f748c03975ed5b5664166a232ba3a0480b641dd5e2930e989c9e6",
+    "app/memory.py": "d1a6264536e3bbce09579f8971e05ad8ab6533d1e5b7198ad303d7db504f61d4",
+    "app/memory_cli.py": "bc514ba2aeb84e37519a74936ec68427f7edc4879274588ecae6d54a4941e811",
+    "app/memory_runtime.py": "08c2af75ebea3dd1d30fec2f523cf0ab2af1b3d5e56859229853a59231417661",
+    "app/model.py": "825be5459df36ffd6190f618db30ba353d5b3d088adc071f4ab9a58f1af01ccc",
+    "app/query_executor.py": "4f958358968f1c88766aec089570abecc51278cc24b1316befa569d2b8a1e482",
+    "app/reranking.py": "445c9e0e186c298cc52cbc9448b697a47fa3bbfadc84c58e4c2d7d56c0b2ea67",
+    "app/retrieval.py": "c433c0c112e828e25c43820f11f6e4f91917515dc95e371d6a0a0159ebec73d7",
+    "app/runtime.py": "511971e061f8040dcee0823909b191380602e504738d4fad771a6018d2ce4696",
+    "app/scene_cli.py": "09dd4c172e1b0c06bb04b2f0f9194468eb2b478140fedde07b1a602f2d31a1ab",
+    "app/scene_data.py": "602f5a2f4443532bee5ae1d9ce457b318295b57fa6dff12311bbca9623aaf102",
+    "app/scene_runtime.py": "b582db7bd5b168b9c59241f5adc2c64e4242763a5769cb30b45f39e85a4fbdbc",
+    "app/scene_tools.py": "6236dd9ba2f8fcc3e40d056bd11b6acd86b87428725b35a1cf5f4feeac2cc271",
+    "app/session.py": "f565cf95396ac078b1c6ccce854587abab21c977a87fa8fd20b9bb6b5021b5d0",
+    "app/storage.py": "601e759b51fa1c3475666fc8aabfb10df01f560c978b39fb84e6154e8455f6a3",
+    "app/tools.py": "2a8bef83799b235006a353afbc2cdba6bb4c9926a4364986860f4fa18af73ff6",
+    "app/trace.py": "9befe0a7e53a45372109704acd91bad7d9b26b281835e96b904b9eeca40b55db",
+    "app/turn_tools.py": "2c4bb504a9ad9a281335f4b086dab68188df1f5e375c90c396ca3127efd84e89",
+    "app/view.py": "0b0525686a5d0159d63321bddbd5dbd17ad7d1d294315fda2dc04bc4b40d269c",
+    "app/world.py": "77a5531d790892cefaf9f26ceeb6a1bc394ad5098eecbd86065f68055787e778",
+    "app/world_runtime.py": "0adce55e42004eafd31e04429af404c2b2f8861b72f447a1f95c1b57adeb8e68",
+    "data/lore/handover.json": "4d057483e564da36066551a06de0a9f9c4dcb438ef7d26d56c5cfc09d063c8e0",
+    "tests/test_a07_boundaries.py": "1551bb8c21cace346f4e8e887d922e3aeca80f29e014b38527d4ffbee3fecc5b",
+    "tests/test_a07_live_fixes.py": "29d64e7a692ff4d8245cfe12824dad2942ef1d65e763a43f1cadf7364f4cb402",
+    "tests/test_a07_lore.py": "a83907b8aca2be85530a3630a0d6c04fdd5d7590826d5da129f960294858032a",
+    "tests/test_a07_runtime.py": "6ed53eddcbd773e7c494ab6ca2e85030c2bfb1aa8e5109c56b7acd2b9d31b478",
+    "scripts/a07_live_probe.py": "3def556bf9303827cc44945a8028ec5b14523e25eb22af3632396443ba2c25cc",
+    "scripts/a07_live_retest.py": "e34c6565462c2fee4fccf97850f1aadeb286c42808925e621a80ed72a68d2319"
+  },
+  "local_raw_evidence_sha256": {
+    "runs/a07_real_io/5f5caf41-6808-422b-8357-e12434f9a811/4b616c98-43fe-4bae-9fbf-2478e698abde-attempt-1.jsonl": "feb36e8a9fa2713b097576e0f066f8790bc5e3ca06fc48433d1acb704d845041",
+    "runs/a07_real_io/5f5caf41-6808-422b-8357-e12434f9a811/58bb4a8f-d0d2-4b05-acb7-bb8920f0722f-attempt-1.jsonl": "b2f2cb1eb9ae5a83735986bc8af25d654d8bd54922dbfe96a471198adebdc004",
+    "runs/a07_real_io/a566fd10-315c-4144-a2cd-cee5e6e3f3dd/438ca8e4-fc09-4f8f-87c2-08040627e30e-attempt-1.jsonl": "619463db63abb61c1f95b5843afb8ee7324eea417538bc84de6747220ec15dc1",
+    "runs/a07_real_io/a566fd10-315c-4144-a2cd-cee5e6e3f3dd/a522cc7a-65c9-4123-ae5f-073873407ab3-attempt-1.jsonl": "e76c3fa16bfb088e01f46ac5ee4be8488e432f8fb72ce56196795bd48cf14337",
+    "runs/a07_real_io/de39c1fe-f46b-4ae6-ab61-e1d2892b63cc/22d27d20-330c-4089-8ac5-9c58d9b4cf0a-attempt-1.jsonl": "591522195f948fa8bab1a94874377c788291cf7353e10b0eba0f4128e514df8c",
+    "runs/a07_real_io/de39c1fe-f46b-4ae6-ab61-e1d2892b63cc/3e71a592-c26c-4a23-b6c7-3e53b46eb9a9-attempt-1.jsonl": "c774679487049a3b9a7d8bbf38e0315a7d75fa36dae41ea9b9427d3276d84707",
+    "runs/a07_real_io/de39c1fe-f46b-4ae6-ab61-e1d2892b63cc/7974dce2-ed71-422f-b3cf-d33c86cce6bf-attempt-1.jsonl": "0b361d77675004f4aa0b0323a27ee028cb24f6deee1bc724abc4bd4aa06fabc5",
+    "runs/a07_real_io/de39c1fe-f46b-4ae6-ab61-e1d2892b63cc/9a1e3109-d475-4f17-994a-b043a8b70c14-attempt-1.jsonl": "3798ec2534c64078e03b37d3f538c4c3616d00cc21a24c1019eccc39c8b201b2",
+    "runs/a07_real_io/first-probe-20260917T132126.json": "bbee3ca33d98df7568f4631dcd654eda37965a0b5d5c7b34736f80ee9ed9968b",
+    "runs/a07_real_io/retest-20260917T132730.json": "12f484d230573f381668c8a41fb99b9c9a8c2e78077cb77fa10cbfa80888921d",
+    "runs/a07_real_retest_io/ac72a5ce-f86c-40c3-b9dc-3bd2857362f1/830d18c0-4c3f-4091-88ea-87e57e09a0d2-attempt-1.jsonl": "b88e9b7c18d1b92b7f2f4a9183ec1a0aeb00a910efc48368dc1380c89ac34611",
+    "runs/a07_real_retest_io/ac72a5ce-f86c-40c3-b9dc-3bd2857362f1/cd56c06d-eb6e-45ac-a4d5-21a6851cfa3b-attempt-1.jsonl": "202324fbe9818d93fed13b6bd720eb5e47afc188c914c1c510739cad4a004ee9"
+  },
+  "review": "docs/a07_real_review.json",
+  "config": "本机 .env，密钥通过 ${LLM_API_KEY} 引用；不含密钥或其哈希。",
+  "validity": "模型别名非固定版本；只证明已记录输入与当前代码的小样本运行，修改后重查。",
+  "concurrency_note": "收尾发现并行 A08 修改。上面的工作区哈希是在测试后采集，不能将其全部当作受测版本证明；原真实请求和测试日志仍保留。额外冻结快照通过与否见 a07_concurrent_snapshot.json。",
+  "additional_snapshot_evidence": "docs/a07_concurrent_snapshot.json"
+}

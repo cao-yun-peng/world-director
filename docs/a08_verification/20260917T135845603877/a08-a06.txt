@@ -1,0 +1,86 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a06_demo
+STARTED_UTC: 2026-09-17T13:59:53.938809+00:00
+EXIT_CODE: 0
+DURATION_S: 2.843
+CWD: frozen source.zip extraction
+
+{
+  "offer": {
+    "choice": "offer_handover",
+    "story_status": "ended",
+    "ending": "handed_over",
+    "ending_ref": "a06-offer_handover:E0006",
+    "thread_status": "resolved",
+    "owner_status": "recipient",
+    "transfer_ref": "a06-offer_handover:E0005",
+    "threads": [
+      {
+        "thread_id": "envelope_handover",
+        "topic": "信封交接",
+        "origin_ref": "a06-offer_handover:config:handover-v1",
+        "visibility_scope": [
+          "player",
+          "lin_yan",
+          "other_npc"
+        ],
+        "status": "resolved",
+        "next_opportunity": null,
+        "resolved_by_event_ids": [
+          "a06-offer_handover:E0005"
+        ],
+        "updated_revision": 6
+      }
+    ]
+  },
+  "pause": {
+    "choice": "pause_handover",
+    "story_status": "ended",
+    "ending": "deferred",
+    "ending_ref": "a06-pause_handover:E0006",
+    "thread_status": "open",
+    "owner_status": "sender",
+    "transfer_ref": null,
+    "threads": [
+      {
+        "thread_id": "envelope_handover",
+        "topic": "信封交接",
+        "origin_ref": "a06-pause_handover:config:handover-v1",
+        "visibility_scope": [
+          "player",
+          "lin_yan",
+          "other_npc"
+        ],
+        "status": "open",
+        "next_opportunity": null,
+        "resolved_by_event_ids": [],
+        "updated_revision": 6
+      }
+    ]
+  },
+  "replan": {
+    "choice": "pause_handover",
+    "story_status": "ended",
+    "ending": "deferred",
+    "ending_ref": "a06-player-changes-choice:E0010",
+    "thread_status": "open",
+    "owner_status": "sender",
+    "transfer_ref": null,
+    "threads": [
+      {
+        "thread_id": "envelope_handover",
+        "topic": "信封交接",
+        "origin_ref": "a06-player-changes-choice:config:handover-v1",
+        "visibility_scope": [
+          "player",
+          "lin_yan",
+          "other_npc"
+        ],
+        "status": "open",
+        "next_opportunity": null,
+        "resolved_by_event_ids": [],
+        "updated_revision": 10
+      }
+    ]
+  },
+  "evidence": "docs\\a06_branches.json"
+}

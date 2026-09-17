@@ -43,6 +43,8 @@ class RunLimits:
     retry_delay_s: float = 0.1
     max_input_chars: int | None = None
     max_embedding_requests: int = 2
+    max_rerank_requests: int = 2
+    rerank_timeout_s: float = 5.0
 
     def __post_init__(self):
         if self.max_input_chars is not None and (type(self.max_input_chars) is not int or self.max_input_chars < 1):
@@ -56,7 +58,9 @@ class RunLimits:
             raise ValueError('max_embedding_requests 必须是非负整数。')
         if self.max_tool_calls_per_batch > 2:
             raise ValueError("模型每批最多两个查询；执行器压力实验另走执行器接口。")
-        for name in ("turn_timeout_s", "model_attempt_timeout_s", "query_attempt_timeout_s", "retry_delay_s"):
+        if type(self.max_rerank_requests) is not int or self.max_rerank_requests < 0:
+            raise ValueError('max_rerank_requests 必须是非负整数。')
+        for name in ("rerank_timeout_s", "turn_timeout_s", "model_attempt_timeout_s", "query_attempt_timeout_s", "retry_delay_s"):
             value = getattr(self, name)
             if not math.isfinite(value) or value < 0 or (name != "retry_delay_s" and value == 0):
                 raise ValueError(f"{name} 必须是有限的有效时间。")
@@ -64,12 +68,15 @@ class RunLimits:
 
 class SharedBudget:
     """排队前创建的场景额度；每次模型尝试扣一次，角色之间不重置。"""
-    def __init__(self, limits: RunLimits):
+    def __init__(self, limits: RunLimits, *, batch=None):
+        self.batch = batch
         self.max_model_requests = limits.max_model_requests
         self.deadline = asyncio.get_running_loop().time() + limits.turn_timeout_s
         self.model_requests = 0
         self.chat_requests = 0
         self.embedding_requests = 0
+        self.rerank_requests = 0
+        self.max_rerank_requests = limits.max_rerank_requests
         self.max_embedding_requests = limits.max_embedding_requests
 
     def check(self):
@@ -78,16 +85,23 @@ class SharedBudget:
 
     def check_capacity(self):
         self.check()
-        if self.model_requests >= self.max_model_requests:
+        if (self.model_requests >= self.max_model_requests
+                or (self.batch is not None and self.batch.remaining <= 0)):
             raise RunStopped('MODEL_REQUEST_LIMIT')
 
     def claim(self, kind='model'):
         self.check_capacity()
         if kind == 'embedding' and self.embedding_requests >= self.max_embedding_requests:
             raise RunStopped('EMBEDDING_REQUEST_LIMIT')
+        if kind == 'rerank' and self.rerank_requests >= self.max_rerank_requests:
+            raise RunStopped('RERANK_REQUEST_LIMIT')
+        if self.batch is not None:
+            self.batch.used += 1
         self.model_requests += 1
         if kind == 'embedding':
             self.embedding_requests += 1
+        elif kind == 'rerank':
+            self.rerank_requests += 1
         else:
             self.chat_requests += 1
 
@@ -102,6 +116,8 @@ class RunBudget:
         self.model_requests = 0
         self.chat_requests = 0
         self.embedding_requests = 0
+        self.rerank_requests = 0
+        self.max_rerank_requests = limits.max_rerank_requests
         self.max_embedding_requests = limits.max_embedding_requests
         self.context = None
         self.lore_mode = False
@@ -144,16 +160,21 @@ class RunBudget:
         """operation 是创建新协程的函数；每个 attempt 才创建，避免泄漏未等待协程。"""
         logical_span = str(uuid4())
         is_model = kind in ("model", "narration")
-        is_external = is_model or kind == "embedding"
+        is_external = is_model or kind in ('embedding', 'rerank')
         timeout_s = (self.limits.model_attempt_timeout_s if is_model
                      else self.limits.query_attempt_timeout_s)
-        for attempt in range(1, self.limits.max_attempts + 1):
+        if kind in ('rerank', 'local_rerank'):
+            timeout_s = self.limits.rerank_timeout_s
+        attempts = 1 if kind in ('rerank', 'local_rerank') else self.limits.max_attempts
+        for attempt in range(1, attempts + 1):
             delay_s = self.limits.retry_delay_s
             self.check()
             if is_external and self.model_requests >= self.limits.max_model_requests:
                 raise RunStopped("MODEL_REQUEST_LIMIT")
             if kind == 'embedding' and self.embedding_requests >= self.max_embedding_requests:
                 raise RunStopped('EMBEDDING_REQUEST_LIMIT')
+            if kind == 'rerank' and self.rerank_requests >= self.max_rerank_requests:
+                raise RunStopped('RERANK_REQUEST_LIMIT')
             if is_external and self.shared is not None:
                 self.shared.check_capacity()
             started = monotonic()
@@ -183,11 +204,15 @@ class RunBudget:
                                 raise RunStopped('MODEL_REQUEST_LIMIT')
                             if kind == 'embedding' and self.embedding_requests >= self.max_embedding_requests:
                                 raise RunStopped('EMBEDDING_REQUEST_LIMIT')
+                            if kind == 'rerank' and self.rerank_requests >= self.max_rerank_requests:
+                                raise RunStopped('RERANK_REQUEST_LIMIT')
                             if self.shared is not None:
                                 self.shared.claim(kind)
                             self.model_requests += 1
                             if kind == 'embedding':
                                 self.embedding_requests += 1
+                            elif kind == 'rerank':
+                                self.rerank_requests += 1
                             else:
                                 self.chat_requests += 1
                         value = await operation()
@@ -216,7 +241,7 @@ class RunBudget:
                 if (turn_timeout is not None and turn_timeout.expired()) or asyncio.get_running_loop().time() >= self.deadline:
                     error_code = "TURN_TIMEOUT"
                     raise RunStopped(error_code) from None
-                if attempt == self.limits.max_attempts:
+                if attempt == attempts:
                     raise CallFailure(error_code) from None
             except RunStopped as error:
                 status, error_code = "error", error.code

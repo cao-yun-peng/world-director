@@ -72,6 +72,7 @@ class ReadonlyExecutor:
                     data = await self.lore.search(query, top_k, actor_id=actor_id,
                         recipient_id=self.recipient_id, scenario_id=self.scenario_id,
                         budget=budget, step_id=step_id)
+            data.pop('diagnostics', None)
             budget.trace.emit('lore_retrieval', data['status'], step_id=step_id,
                 retrieval_mode=data['mode'], lore_query=query, snapshot_revision=snapshot_revision,
                 lore_refs=[{k: v for k, v in hit.items() if k not in ('text', 'title')} for hit in data['hits']])

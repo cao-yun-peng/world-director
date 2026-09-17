@@ -24,6 +24,7 @@ class RunTrace:
         "io_ref", "io_write_failed",
         "input_chars", "max_input_chars", "unit", "counted_fields", "selected_event_ids",
         "history_turn_indices", "summary_used", "summary_issues", "dropped",
+        "rerank_requests", "retrieval_details",
         "lore_refs", "lore_query", "retrieval_mode", "chat_requests", "embedding_requests",
     }
 

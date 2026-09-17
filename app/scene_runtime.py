@@ -18,9 +18,16 @@ from app.trace import RunTrace
 
 
 class SceneStory:
-    def __init__(self, world=None, *, max_story_requests=24, lore=None):
+    def __init__(self, world=None, *, max_story_requests=24, lore=None, max_story_turns=None, batch=None):
         if type(max_story_requests) is not int or max_story_requests < 0:
             raise ValueError('故事总请求额度必须是非负整数。')
+        if max_story_turns is not None and (type(max_story_turns) is not int or max_story_turns < 1):
+            raise ValueError('故事轮数上限无效。')
+        self.max_story_turns = max_story_turns
+        self.turn_count = 0
+        self.turn_limits = RunLimits(max_input_chars=8000)
+        self.chat_requests = self.embedding_requests = self.rerank_requests = 0
+        self.batch = batch
         self.memory = MemoryStory(world)
         self.engine = self.memory.engine
         self.engine.submit_scene('start', {}, request_id='scene:start', scene_turn_id='scene:start')
@@ -68,13 +75,14 @@ class SceneStory:
         if (not all(isinstance(actor, str) for actor in candidates)
                 or not all(isinstance(actor, str) for actor in mentioned)):
             raise ValueError('候选与点名必须是角色 ID。')
-        digest = request_digest('scene_turn', {'text': text, 'choice': choice, 'focus_actor': focus_actor,
+        request = {'text': text, 'choice': choice, 'focus_actor': focus_actor,
             'private_to': private_to, 'candidate_ids': candidates, 'mentioned': list(mentioned),
-            'max_responders': max_responders, 'narrate_ending': narrate_ending})
-        limits = limits or RunLimits(max_input_chars=8000)
+            'max_responders': max_responders, 'narrate_ending': narrate_ending}
+        digest = request_digest('scene_turn', request)
+        limits = limits or self.turn_limits
         if limits.max_input_chars is None:
             limits = replace(limits, max_input_chars=8000)
-        shared = SharedBudget(limits)  # 等场景锁的时间也计入这一次 deadline。
+        shared = SharedBudget(limits, batch=self.batch)  # 等场景锁的时间也计入这一次 deadline。
         try:
             async with asyncio.timeout_at(shared.deadline):
                 await self._lock.acquire()
@@ -86,18 +94,22 @@ class SceneStory:
                 if previous['request_digest'] != digest:
                     raise TurnConflict('同一 scene_turn_id 已用于不同参数。')
                 return {**deepcopy(previous['result']), 'replayed': True, 'model_requests': 0,
-                        'chat_requests': 0, 'embedding_requests': 0}
+                        'chat_requests': 0, 'embedding_requests': 0, 'rerank_requests': 0}
+            self.turn_limits = limits
             before = self.engine.world
             if text.strip() and before.actor_locations[private_to] != before.actor_locations[focus_actor]:
                 raise ValueError('私语接收者不在本场景。')
             output = {'scene_turn_id': scene_turn_id, 'status': 'completed', 'error_code': None,
                       'selected': [], 'responses': [], 'skipped': [], 'replayed': False,
                       'model_requests': 0, 'before_revision': before.revision, 'replans': 0,
-                      'ending_text': None, 'ending_narration': 'not_requested'}
+                      'ending_text': None, 'ending_narration': 'not_requested', 'counted_turn': False}
             audit = {'selection_rounds': [], 'actors': [], 'plans_before': self.director.plans}
             self._audits[scene_turn_id] = audit
             shared.max_model_requests = min(shared.max_model_requests,
                                            self.max_story_requests - self.model_requests)
+
+            if self.batch is not None:
+                shared.max_model_requests = min(shared.max_model_requests, self.batch.remaining)
 
             def submit(operation, payload, phase):
                 return self.engine.submit_scene(operation, payload, request_id=f'{scene_turn_id}:{phase}',
@@ -108,7 +120,11 @@ class SceneStory:
                 if self.engine.story_ended:
                     output.update(status='stopped', error_code='STORY_ENDED')
                     return output
+                if self.max_story_turns is not None and self.turn_count >= self.max_story_turns:
+                    raise RunStopped('STORY_TURN_LIMIT')
                 shared.check_capacity()
+                self.turn_count += 1
+                output['counted_turn'] = True
                 if choice is not None:
                     submit('choice', {'choice': choice}, 'choice')
                 self.director.invalidate(director_view(self.engine.world))
@@ -164,8 +180,13 @@ class SceneStory:
                                                         'reply': record['reply']})
                         raise
                     audit['actors'].append({'actor_id': actor, 'trace': actor_result.trace})
-                    output['responses'].append({'actor_id': actor, 'code': actor_result.receipt['code'],
-                                                'reply': actor_result.reply})
+                    row = {'actor_id': actor, 'code': actor_result.receipt['code'], 'reply': actor_result.reply}
+                    if self.lore is not None:
+                        accepted = [event for event in actor_result.trace['records']
+                                    if event['kind'] == 'terminal_tool' and event['status'] == 'validated']
+                        row['lore_refs'] = (deepcopy(accepted[-1]['decision_summary']['lore_refs'])
+                                            if accepted and actor_result.receipt['ok'] else [])
+                    output['responses'].append(row)
                     responded.add(actor)
                     if not actor_result.receipt['ok']:
                         raise RunStopped('ACTION_REJECTED')
@@ -194,14 +215,18 @@ class SceneStory:
                 output['model_requests'] = shared.model_requests
                 output['chat_requests'] = shared.chat_requests
                 output['embedding_requests'] = shared.embedding_requests
+                output['rerank_requests'] = shared.rerank_requests
                 self.model_requests += shared.model_requests
+                self.chat_requests += shared.chat_requests
+                self.embedding_requests += shared.embedding_requests
+                self.rerank_requests += shared.rerank_requests
                 output['after_revision'] = self.engine.world.revision
                 output['state'] = self.view()
                 if output['error_code'] != 'STORY_ENDED':
                     output['replans'] = self.director.refresh(director_view(self.engine.world))
                 audit['plans_after'] = self.director.plans
                 # finally 中无 await，已提交事实和停止记录在下一次取消点前保存。
-                self._records[scene_turn_id] = {'request_digest': digest, 'result': deepcopy(output)}
+                self._records[scene_turn_id] = {'request_digest': digest, 'request': deepcopy(request), 'result': deepcopy(output)}
             return deepcopy(output)
         finally:
             self._lock.release()

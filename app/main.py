@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 from uuid import uuid4
 
@@ -58,13 +59,20 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-input-chars", type=int, default=8000, help="A05 messages 与 tools 的 Unicode 字符配额")
     parser.add_argument("--max-responders", type=int, choices=(1, 2), default=1, help="A06 每场景轮最多响应人数")
     parser.add_argument("--narrate-ending", action="store_true", help="A06 在共享预算内润色已确定的结局")
-    parser.add_argument('--lore-mode', choices=('off', 'keyword', 'vector_fake', 'vector_real'), default='off',
+    parser.add_argument('--lore-mode', choices=('off', 'keyword', 'vector_fake', 'vector_real', 'hybrid_fake', 'hybrid_real'), default='off',
                         help='A07 显式设定检索模式，仅 scene 使用')
     parser.add_argument('--build-lore-index', action='store_true', help='开局前执行独立、有预算的向量构建')
     parser.add_argument('--allow-lore-upload', action='store_true', help='允许向配置供应商发送虚构种子和查询')
     parser.add_argument('--lore-fallback-keyword', action='store_true', help='索引故障时显式切回关键词并报告原因')
     parser.add_argument('--lore-min-score', type=float, help='向量阈值；真实模式必须显式设置并另行校准')
-    args = parser.parse_args(argv)
+    parser.add_argument('--rerank-mode', choices=('off', 'fake', 'real'), default='off')
+    parser.add_argument('--scene-profile', choices=('default', 'a08'), default='default')
+    parser.add_argument('--load-slot', help='A08 场景槽位名，不是文件路径')
+    parser.add_argument('--enable-real', action='store_true', help='显式开启 A08 真实服务，接受显示的请求额度；费用由供应商决定')
+    raw_argv = sys.argv[1:] if argv is None else argv
+    args = parser.parse_args(raw_argv)
+    args.request_cap_explicit = any(arg == '--max-model-requests' or
+                                    arg.startswith('--max-model-requests=') for arg in raw_argv)
     if args.lore_mode != 'off' and args.engine != 'scene':
         parser.error('--lore-mode 仅支持 --engine scene')
     if args.engine == "scene":

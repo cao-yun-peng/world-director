@@ -1,0 +1,12 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a05_demo
+STARTED_UTC: 2026-09-17T13:59:56.789607+00:00
+EXIT_CODE: 0
+DURATION_S: 2.829
+CWD: frozen source.zip extraction
+
+keep {'beta_has_secret': False, 'gamma_has_secret': False, 'extra_reached_beta_or_gamma': False}
+relay {'beta_has_secret': True, 'gamma_has_secret': False, 'extra_reached_beta_or_gamma': False}
+预算（Unicode 字符，含 messages + tools）： [7954, 7859] / 8000
+同地变式： ['NOT_COLOCATED', 'STATEMENT_DELIVERED']
+受控造错： {'fault': 'test-local shared history', 'isolation_assertion_failed_as_expected': True, 'restored_independent_history_passed': True, 'production_code_mutated': False}
+真实模型：未运行；学习者独立变式：待验收。

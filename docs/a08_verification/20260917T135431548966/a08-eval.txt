@@ -1,0 +1,50 @@
+COMMAND: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a08_eval
+STARTED_UTC: 2026-09-17T13:55:25.052474+00:00
+EXIT_CODE: 0
+DURATION_S: 2.766
+CWD: frozen source.zip extraction
+
+{"real": false, "eval_request_limit": 120, "candidate_k": 5, "top_k": 3, "min_score": 0.25, "rerank_timeout_s": 5, "rerank_max_tokens": 512}
+{
+  "status": "complete",
+  "used_requests": 0,
+  "metrics": {
+    "keyword": {
+      "status": "complete",
+      "positive_queries": 10,
+      "executed_queries": 10,
+      "not_run": [],
+      "service_failures": [],
+      "Recall@3": 1.0,
+      "MRR@3": 1.0
+    },
+    "vector": {
+      "status": "complete",
+      "positive_queries": 10,
+      "executed_queries": 10,
+      "not_run": [],
+      "service_failures": [],
+      "Recall@3": 0.55,
+      "MRR@3": 0.6
+    },
+    "rrf": {
+      "status": "complete",
+      "positive_queries": 10,
+      "executed_queries": 10,
+      "not_run": [],
+      "service_failures": [],
+      "Recall@3": 1.0,
+      "MRR@3": 1.0
+    },
+    "rrf_rerank": {
+      "status": "complete",
+      "positive_queries": 10,
+      "executed_queries": 10,
+      "not_run": [],
+      "service_failures": [],
+      "Recall@3": 1.0,
+      "MRR@3": 1.0
+    }
+  },
+  "output": "docs\\a08_retrieval_report.json"
+}

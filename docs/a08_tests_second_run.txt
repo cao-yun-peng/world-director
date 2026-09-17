@@ -1,0 +1,36 @@
+test_all_ten_boundary_cases (test_a08_integration.IntegrationTests.test_all_ten_boundary_cases) ... ok
+test_cropped_first_hit_cannot_be_cited (test_a08_integration.IntegrationTests.test_cropped_first_hit_cannot_be_cited) ... ok
+test_invalid_gold_is_rejected_before_evaluation (test_a08_integration.IntegrationTests.test_invalid_gold_is_rejected_before_evaluation) ... ok
+test_invalid_startup_save_sends_no_embedding_or_chat_requests (test_a08_integration.IntegrationTests.test_invalid_startup_save_sends_no_embedding_or_chat_requests) ... ok
+test_real_reranker_protocol_has_no_tools_and_fixed_token_limit (test_a08_integration.IntegrationTests.test_real_reranker_protocol_has_no_tools_and_fixed_token_limit) ... ok
+test_same_scene_second_actor_has_different_lore_acl (test_a08_integration.IntegrationTests.test_same_scene_second_actor_has_different_lore_acl) ... ok
+test_save_limits_and_orphan_history_validation (test_a08_integration.IntegrationTests.test_save_limits_and_orphan_history_validation) ... ok
+test_teaching_profile_requires_explicit_real_enable (test_a08_integration.IntegrationTests.test_teaching_profile_requires_explicit_real_enable) ... ok
+test_dev_gold_is_exact_and_authorized (test_a08_retrieval.MetricTests.test_dev_gold_is_exact_and_authorized) ... ok
+test_empty_multiple_duplicate_and_large_k (test_a08_retrieval.MetricTests.test_empty_multiple_duplicate_and_large_k) ... ok
+test_hand_calculation (test_a08_retrieval.MetricTests.test_hand_calculation) ... ok
+test_no_positives_missing_and_service_failure (test_a08_retrieval.MetricTests.test_no_positives_missing_and_service_failure) ... ok
+test_rrf_deduplicates_each_route_and_stable_ties (test_a08_retrieval.MetricTests.test_rrf_deduplicates_each_route_and_stable_ties) ... ok
+test_exhausted_total_or_deadline_stops (test_a08_retrieval.RerankTests.test_exhausted_total_or_deadline_stops) ... ok
+test_invalid_and_timeout_fallback_one_attempt (test_a08_retrieval.RerankTests.test_invalid_and_timeout_fallback_one_attempt) ... ok
+test_off_single_zero_requests_and_bad_permutations (test_a08_retrieval.RerankTests.test_off_single_zero_requests_and_bad_permutations) ... ok
+test_rerank_specific_cap_falls_back_with_chat_capacity (test_a08_retrieval.RerankTests.test_rerank_specific_cap_falls_back_with_chat_capacity) ... ok
+test_shared_parallel_rerank_cap (test_a08_retrieval.RerankTests.test_shared_parallel_rerank_cap) ... ok
+test_candidate_window_and_authorization (test_a08_retrieval.RetrievalTests.test_candidate_window_and_authorization) ... ok
+test_empty_authorized_pool_no_services (test_a08_retrieval.RetrievalTests.test_empty_authorized_pool_no_services) ... ok
+test_hidden_document_mirror_candidates_and_generation (test_a08_retrieval.RetrievalTests.test_hidden_document_mirror_candidates_and_generation) ... ok
+test_vector_failure_requires_explicit_fallback (test_a08_retrieval.RetrievalTests.test_vector_failure_requires_explicit_fallback) ... ok
+test_twenty_rounds_cross_process_resume_and_both_endings (test_a08_save.ProcessTests.test_twenty_rounds_cross_process_resume_and_both_endings) ... ok
+test_cli_load_old_slot_cannot_refill_process_quota (test_a08_save.SaveTests.test_cli_load_old_slot_cannot_refill_process_quota) ... Executing <Task finished name='Task-95' coro=<SaveTests.test_cli_load_old_slot_cannot_refill_process_quota() done, defined at E:\project\self-agent\world-director\tests\test_a08_save.py:139> result=None created at C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py:100> took 0.187 seconds
+ok
+test_corrupt_unknown_schema_and_configuration_rejected (test_a08_save.SaveTests.test_corrupt_unknown_schema_and_configuration_rejected) ... ok
+test_ended_and_partial_stories_replay_without_requests (test_a08_save.SaveTests.test_ended_and_partial_stories_replay_without_requests) ... ok
+test_paths_inflight_and_atomic_failure_keep_old_file (test_a08_save.SaveTests.test_paths_inflight_and_atomic_failure_keep_old_file) ... ok
+test_roundtrip_replay_conflict_and_continue (test_a08_save.SaveTests.test_roundtrip_replay_conflict_and_continue) ... ok
+test_turn_limit_replay_and_batch_limit (test_a08_save.SaveTests.test_turn_limit_replay_and_batch_limit) ... ok
+test_world_event_budget_and_actor_corruption_rejected (test_a08_save.SaveTests.test_world_event_budget_and_actor_corruption_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 9.510s
+
+OK

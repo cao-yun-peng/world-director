@@ -1,0 +1,13 @@
+{
+  "task": "A08-IMPLEMENT-20260917",
+  "revision": 2,
+  "evidence_id": "A08-FROZEN-20260917T135845603877",
+  "frozen_manifest": "docs/a08_verification/20260917T135845603877/manifest.json",
+  "head": "eca50dd4a0e1e026282af7a169d03891e016aff8",
+  "source_changed_after_freeze": false,
+  "offline_gate": "passed",
+  "real_a08_gate": "pending",
+  "independent_gate": "pending",
+  "source_reading": "LangChain fixed source unavailable this run; Generative Agents read",
+  "concurrent_changes": "A07 real-fix files preserved, included in frozen regression; not authored by this task"
+}
