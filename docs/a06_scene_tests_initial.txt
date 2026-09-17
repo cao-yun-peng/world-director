@@ -1,0 +1,39 @@
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p test_a06*.py -v
+Exit code: 0
+test_wait_rejects_unexpected_or_invalid_arguments_at_both_entries (test_a06.WaitBoundaryTests.test_wait_rejects_unexpected_or_invalid_arguments_at_both_entries) ... ok
+test_action_type_not_reply_keyword_controls_wait (test_a06.WaitTests.test_action_type_not_reply_keyword_controls_wait) ... ok
+test_inspect_then_wait_keeps_only_actual_discovery (test_a06.WaitTests.test_inspect_then_wait_keeps_only_actual_discovery) ... ok
+test_invalid_wait_can_be_corrected_with_paired_tool_feedback (test_a06.WaitTests.test_invalid_wait_can_be_corrected_with_paired_tool_feedback) ... ok
+test_invalid_wait_uses_request_budget_without_commit (test_a06.WaitTests.test_invalid_wait_uses_request_budget_without_commit) ... ok
+test_wait_cannot_share_batch_with_query_or_give (test_a06.WaitTests.test_wait_cannot_share_batch_with_query_or_give) ... ok
+test_wait_replay_and_conflict_do_not_call_model (test_a06.WaitTests.test_wait_replay_and_conflict_do_not_call_model) ... ok
+test_illegal_opportunities_leave_world_unchanged (test_a06_scene.DirectorTests.test_illegal_opportunities_leave_world_unchanged) ... ok
+test_invalid_choice_and_ending_patch_are_rejected (test_a06_scene.DirectorTests.test_invalid_choice_and_ending_patch_are_rejected) ... ok
+test_opportunity_does_not_transfer_and_changed_id_cannot_duplicate (test_a06_scene.DirectorTests.test_opportunity_does_not_transfer_and_changed_id_cannot_duplicate) ... ok
+test_pause_cannot_be_overridden_by_a_give_proposal (test_a06_scene.DirectorTests.test_pause_cannot_be_overridden_by_a_give_proposal) ... ok
+test_preconditions_are_recomputed_and_same_round_has_one_opportunity (test_a06_scene.DirectorTests.test_preconditions_are_recomputed_and_same_round_has_one_opportunity) ... ok
+test_scene_subrequest_replay_and_conflict (test_a06_scene.DirectorTests.test_scene_subrequest_replay_and_conflict) ... ok
+test_selection_filters_candidates_before_ranking (test_a06_scene.DirectorTests.test_selection_filters_candidates_before_ranking) ... ok
+test_thread_metadata_and_reason_sources_are_authorized (test_a06_scene.DirectorTests.test_thread_metadata_and_reason_sources_are_authorized) ... ok
+test_threads_and_endings_need_real_transfer_and_current_owner (test_a06_scene.DirectorTests.test_threads_and_endings_need_real_transfer_and_current_owner) ... ok
+test_cancel_after_commit_preserves_transfer_and_replay (test_a06_scene.SceneTests.test_cancel_after_commit_preserves_transfer_and_replay) ... ok
+test_cancel_before_commit_saves_stop_and_releases_locks (test_a06_scene.SceneTests.test_cancel_before_commit_saves_stop_and_releases_locks) ... ok
+test_ending_failure_keeps_authoritative_result (test_a06_scene.SceneTests.test_ending_failure_keeps_authoritative_result) ... ok
+test_hidden_text_cannot_change_director_or_unauthorized_requests (test_a06_scene.SceneTests.test_hidden_text_cannot_change_director_or_unauthorized_requests) ... ok
+test_movement_invalidates_plan_without_teleport_or_forced_transfer (test_a06_scene.SceneTests.test_movement_invalidates_plan_without_teleport_or_forced_transfer) ... ok
+test_one_deadline_spans_both_actors (test_a06_scene.SceneTests.test_one_deadline_spans_both_actors) ... ok
+test_owner_change_rechecks_plan_and_cannot_report_false_success (test_a06_scene.SceneTests.test_owner_change_rechecks_plan_and_cannot_report_false_success) ... ok
+test_partial_failure_replays_without_repeating_first_action (test_a06_scene.SceneTests.test_partial_failure_replays_without_repeating_first_action) ... ok
+test_player_change_invalidates_previous_plan (test_a06_scene.SceneTests.test_player_change_invalidates_previous_plan) ... ok
+test_private_input_does_not_wake_other_actors_and_empty_is_allowed (test_a06_scene.SceneTests.test_private_input_does_not_wake_other_actors_and_empty_is_allowed) ... ok
+test_queue_time_is_in_deadline_and_lock_is_released (test_a06_scene.SceneTests.test_queue_time_is_in_deadline_and_lock_is_released) ... ok
+test_scene_replay_conflict_and_end_guard_do_not_call_models (test_a06_scene.SceneTests.test_scene_replay_conflict_and_end_guard_do_not_call_models) ... ok
+test_second_actor_reads_new_state_without_first_actors_private_input (test_a06_scene.SceneTests.test_second_actor_reads_new_state_without_first_actors_private_input) ... ok
+test_shared_budget_counts_retries_both_actors_and_ending (test_a06_scene.SceneTests.test_shared_budget_counts_retries_both_actors_and_ending) ... ok
+test_story_total_limit_and_necessary_input_overflow (test_a06_scene.SceneTests.test_story_total_limit_and_necessary_input_overflow) ... ok
+test_two_branches_same_initial_business_state_different_endings (test_a06_scene.SceneTests.test_two_branches_same_initial_business_state_different_endings) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 3.069s
+
+OK

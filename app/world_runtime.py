@@ -83,6 +83,8 @@ def run_world_turn(session: dict, user_text: str, model: ToolModelAdapter, *,
         trace.update(model_requests=0, replayed=True, turn_id=turn_id)
         return deepcopy(updated), previous["reply"], trace
 
+    if engine.story_ended:
+        raise AgentTurnError('STORY_ENDED', {'model_requests': 0, 'termination_reason': 'STORY_ENDED'})
     trace = {"runtime_prompt_version": "a03-v2", "turn_id": turn_id, "intent": None,
              "turn_index": len(session["history"]) // 2 + 1,
              "model_requests": 0, "completions": [], "tools": [], "replayed": False,
@@ -193,7 +195,7 @@ def run_world_turn(session: dict, user_text: str, model: ToolModelAdapter, *,
     engine.finish_turn(actor_id=expected_actor_id, turn_id=turn_id, session=updated,
                        reply=reply, trace=trace, status="deterministic")
     status = "deterministic"
-    if receipt["ok"] and proposal.kind not in ("talk", "clarify"):
+    if receipt["ok"] and proposal.kind not in ("talk", "clarify", "wait"):
         if wire is None:
             wire = visible_messages(session, user_text, actor_id=expected_actor_id, world=engine.world)
         wire[0]["content"] += NARRATION_INSTRUCTIONS

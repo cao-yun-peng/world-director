@@ -20,7 +20,7 @@ class RunTrace:
         "error_code", "termination_reason", "model_requests", "usage",
         "replayed", "cleanup_ms", "trace_write_failed",
         "runtime_version", "model_name", "provider_host", "limits", "history_messages",
-        "request_options", "response_details", "decision_kind",
+        "request_options", "response_details", "decision_kind", "decision_summary",
         "io_ref", "io_write_failed",
         "input_chars", "max_input_chars", "unit", "counted_fields", "selected_event_ids",
         "history_turn_indices", "summary_used", "summary_issues", "dropped",

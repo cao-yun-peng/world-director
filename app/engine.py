@@ -22,7 +22,7 @@ def request_digest(entry: str, value) -> str:
 
 class WorldEngine:
     def __init__(self, world: WorldState):
-        self._bundle = {"world": deepcopy(world), "turns": {}}
+        self._bundle = {"world": deepcopy(world), "turns": {}, "scene_receipts": {}}
         self.turn_lock = asyncio.Lock()
 
     @property
@@ -32,6 +32,39 @@ class WorldEngine:
     @property
     def turns(self) -> dict:
         return deepcopy(self._bundle["turns"])
+
+    @property
+    def story_ended(self) -> bool:
+        return any(event['kind'] == 'EndingEvent' for event in self._bundle['world'].events)
+
+    def submit_scene(self, operation, payload, *, request_id, scene_turn_id,
+                     expected_revision=None, before_accept=None):
+        """场景状态与事件一起接纳；不接受模型提供的任意状态补丁。"""
+        from app.director import adjudicate_scene
+        if not isinstance(request_id, str) or not request_id.strip() or not isinstance(scene_turn_id, str) or not scene_turn_id.strip():
+            raise ValueError('场景请求 ID 必须非空。')
+        digest = request_digest('scene_operation', {'operation': operation, 'payload': payload,
+                                                   'scene_turn_id': scene_turn_id,
+                                                   'expected_revision': expected_revision})
+        key = (self._bundle['world'].session_id, request_id)
+        previous = self._bundle['scene_receipts'].get(key)
+        if previous:
+            if previous['request_digest'] != digest:
+                raise TurnConflict('同一场景子请求 ID 已用于不同参数。')
+            return deepcopy(previous)
+        world = self.world
+        if expected_revision is not None and expected_revision != world.revision:
+            candidate, receipt, events = world, result(False, 'STALE_REVISION', '场景版本已变化。'), []
+        else:
+            candidate, receipt, events = adjudicate_scene(world, operation, payload, scene_turn_id=scene_turn_id)
+        record = {'request_digest': digest, 'receipt': receipt, 'event_ids': [e['event_id'] for e in events],
+                  'before_revision': world.revision, 'after_revision': candidate.revision}
+        receipts = deepcopy(self._bundle['scene_receipts'])
+        receipts[key] = record
+        if before_accept is not None:
+            before_accept()
+        self._bundle = {**self._bundle, 'world': candidate, 'scene_receipts': receipts}
+        return deepcopy(record)
 
     def lookup(self, *, actor_id: str, turn_id: str, digest: str) -> dict | None:
         world = self._bundle["world"]
@@ -59,11 +92,17 @@ class WorldEngine:
                     actor_id: str, turn_id: str, digest: str,
                     cause_event_id: str | None = None, feedback: list[dict] | None = None,
                     before_accept=None, expected_revision: int | None = None,
-                    player_text: str | None = None) -> dict:
+                    player_text: str | None = None, record_reply: bool = False) -> dict:
         """operations/feedback 来自可信运行时，绝不直接消费模型提供的成功标志。"""
         previous = self.lookup(actor_id=actor_id, turn_id=turn_id, digest=digest)
         if previous is not None:
             return previous
+        if self.story_ended:
+            return {"request_digest": digest, "proposal": asdict(proposal),
+                    "receipt": result(False, 'STORY_ENDED', '本章已结束。'),
+                    "results": [], "event_ids": [], "before_revision": self.world.revision,
+                    "after_revision": self.world.revision, "reply": '本章已结束。',
+                    "narration_status": 'deterministic', "session": None, "trace": None}
         if expected_revision is not None and self._bundle["world"].revision != expected_revision:
             raise TurnConflict("查询快照已过期。")
         candidate = self.world
@@ -100,7 +139,7 @@ class WorldEngine:
         if not receipt["ok"]:
             # 包括先发现、后行动被拒绝：不留下半份世界更新。
             candidate, events = self.world, []
-        if receipt["ok"] and player_text is not None and proposal.kind in ("talk", "clarify"):
+        if receipt["ok"] and (player_text is not None or record_reply) and proposal.kind in ("talk", "clarify", "wait"):
             candidate, _, emitted = append_statement(
                 candidate, speaker_id=actor_id, recipient_id="player", text=proposal.reply,
                 turn_id=turn_id, channel="player_dialogue")
@@ -117,7 +156,7 @@ class WorldEngine:
         if before_accept is not None:
             before_accept()
         # 本日仅顺序调用。这是完整候选包的单次接纳，不是并发/持久化事务。
-        self._bundle = {"world": candidate, "turns": turns}
+        self._bundle = {**self._bundle, "world": candidate, "turns": turns}
         return deepcopy(record)
 
     def finish_turn(self, *, actor_id: str, turn_id: str, session: dict, reply: str, trace: dict, status: str) -> None:

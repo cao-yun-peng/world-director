@@ -1,0 +1,16 @@
+Scope: D036 wait only
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p test_a06.py -v
+Exit code: 0
+
+test_wait_rejects_unexpected_or_invalid_arguments_at_both_entries (test_a06.WaitBoundaryTests.test_wait_rejects_unexpected_or_invalid_arguments_at_both_entries) ... ok
+test_action_type_not_reply_keyword_controls_wait (test_a06.WaitTests.test_action_type_not_reply_keyword_controls_wait) ... ok
+test_inspect_then_wait_keeps_only_actual_discovery (test_a06.WaitTests.test_inspect_then_wait_keeps_only_actual_discovery) ... ok
+test_invalid_wait_can_be_corrected_with_paired_tool_feedback (test_a06.WaitTests.test_invalid_wait_can_be_corrected_with_paired_tool_feedback) ... ok
+test_invalid_wait_uses_request_budget_without_commit (test_a06.WaitTests.test_invalid_wait_uses_request_budget_without_commit) ... ok
+test_wait_cannot_share_batch_with_query_or_give (test_a06.WaitTests.test_wait_cannot_share_batch_with_query_or_give) ... ok
+test_wait_replay_and_conflict_do_not_call_model (test_a06.WaitTests.test_wait_replay_and_conflict_do_not_call_model) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.779s
+
+OK

@@ -16,11 +16,13 @@ from app.tools import ModelProtocolError, TOOL_SCHEMAS, validate_batch
 from app.trace import RunTrace, call_reference
 from app.turn_tools import TERMINAL_TOOLS, TURN_TOOL_SCHEMAS, parse_terminal_call
 from app.world import append_statement, freeze_world
-from app.memory import build_actor_context
+from app.memory import build_actor_context, visible_records
+from app.scene_tools import SCENE_TOOL_SCHEMAS, SCENE_INSTRUCTIONS, parse_scene_terminal
 from app.turn_tools import MEMORY_TOOL_SCHEMAS, parse_memory_terminal
 from app.world_runtime import NARRATION_INSTRUCTIONS, visible_messages
 
 RUNTIME_VERSION = "a04-v6.1"
+MEMORY_RUNTIME_VERSION = "a06-wait-v1"
 
 LOOP_INSTRUCTIONS = """
 本轮所有决策都使用原生 Function Calling，包括最终回复。普通正文不会结束回合。
@@ -69,11 +71,11 @@ def validate_completion(completion: dict) -> dict:
 
 
 async def decide(wire: list[dict], model: AsyncToolModelAdapter, *, snapshot,
-                 actor_id: str, executor: ReadonlyExecutor, budget: RunBudget, memory_mode=False):
+                 actor_id: str, executor: ReadonlyExecutor, budget: RunBudget, memory_mode=False, scene_mode=False):
     discoveries = {}
     for step_id in range(1, budget.limits.max_steps + 1):
         completion = await budget.call_model(
-            model, wire, options={"tools": MEMORY_TOOL_SCHEMAS if memory_mode else TURN_TOOL_SCHEMAS, "tool_choice": "required"},
+            model, wire, options={"tools": SCENE_TOOL_SCHEMAS if scene_mode else MEMORY_TOOL_SCHEMAS if memory_mode else TURN_TOOL_SCHEMAS, "tool_choice": "required"},
             kind="model", step_id=step_id, snapshot_revision=snapshot.revision)
         message = validate_completion(completion)
         calls = message.get("tool_calls")
@@ -82,7 +84,7 @@ async def decide(wire: list[dict], model: AsyncToolModelAdapter, *, snapshot,
         validate_batch(calls)
         if len(calls) > budget.limits.max_tool_calls_per_batch:
             raise ModelProtocolError("工具数量超过本轮限制。")
-        terminal_names = set(TERMINAL_TOOLS) | ({"whisper"} if memory_mode else set())
+        terminal_names = set(TERMINAL_TOOLS) | ({"whisper", "wait"} if memory_mode else set())
         terminal = [call for call in calls if call["function"]["name"] in terminal_names]
         if terminal:
             # 在执行任何查询之前检查整批，避免一边结束一边仍在查询。
@@ -93,13 +95,19 @@ async def decide(wire: list[dict], model: AsyncToolModelAdapter, *, snapshot,
                             step_id=step_id, snapshot_revision=snapshot.revision,
                             span_id=f"terminal-{step_id}", parent_span_id=budget.trace.run_id)
             try:
-                proposal = parse_memory_terminal(call) if memory_mode else parse_terminal_call(call)
+                decision_summary = None
+                if scene_mode:
+                    allowed_refs = {record['event_id'] for record in visible_records(snapshot, actor_id)}
+                    proposal, decision_summary = parse_scene_terminal(call, allowed_refs)
+                else:
+                    proposal = parse_memory_terminal(call) if memory_mode else parse_terminal_call(call)
             except ValueError as error:
                 budget.trace.emit("terminal_tool", "rejected", error_code="INVALID_ARGUMENTS", **metadata)
                 items = [{"call_id": call["id"], "ok": False, "data": None,
                           "error": {"code": "INVALID_ARGUMENTS", "message": str(error)}}]
             else:
-                budget.trace.emit("terminal_tool", "validated", decision_kind=proposal.kind, **metadata)
+                budget.trace.emit("terminal_tool", "validated", decision_kind=proposal.kind,
+                                  decision_summary=decision_summary, **metadata)
                 return proposal, list(discoveries.values()), step_id
         else:
             items = await executor.execute_batch(calls, snapshot=snapshot, actor_id=actor_id,
@@ -119,7 +127,10 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
                          expected_actor_id: str, engine: WorldEngine, turn_id: str,
                          limits: RunLimits | None = None, executor: ReadonlyExecutor | None = None,
                          trace_path: Path | None = None, memory_mode: bool = False,
-                         memory_summary: dict | None = None) -> TurnResult:
+                         memory_summary: dict | None = None, shared_budget=None, scene_mode=False,
+                          record_player_input=True, player_text=None) -> TurnResult:
+    if scene_mode and not memory_mode:
+        raise ValueError('scene_mode 需要授权记忆模式。')
     validate_session(session, expected_actor_id=expected_actor_id)
     if not isinstance(user_text, str) or not user_text.strip():
         raise ValueError("请输入非空文字。")
@@ -129,11 +140,11 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
     if memory_mode and limits.max_input_chars is None:
         limits = replace(limits, max_input_chars=8000)
     trace = RunTrace(session["session_id"], turn_id, mode=model.mode, path=trace_path)
-    budget = RunBudget(limits, trace)
+    budget = RunBudget(limits, trace, shared=shared_budget)
     executor = executor or ReadonlyExecutor(limits.max_parallel_tools)
     if executor.max_parallel_tools > limits.max_parallel_tools:
         raise ValueError("执行器并发数超过本轮上限。")
-    trace.emit("run_started", "started", model_requests=0, runtime_version="a05-v1" if memory_mode else RUNTIME_VERSION,
+    trace.emit("run_started", "started", model_requests=0, runtime_version="a06-scene-v1" if scene_mode else MEMORY_RUNTIME_VERSION if memory_mode else RUNTIME_VERSION,
                model_name=getattr(model, "model", None), provider_host=getattr(model, "provider_host", None),
                limits=asdict(limits), history_messages=len(session["history"]))
     reason, committed_revision, record = "INTERNAL_ERROR", None, None
@@ -166,29 +177,38 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
             reply = record["reply"]
             trace.emit("replay", "completed", replayed=True, committed_revision=committed_revision)
         else:
-            if memory_mode:
+            if engine.story_ended:
+                raise RunStopped('STORY_ENDED')
+            if memory_mode and record_player_input:
                 # E1 只在临时候选上预览，提交前失败不会污染正式世界。
                 preview, incoming, _ = append_statement(
-                    engine.world, speaker_id="player", recipient_id=expected_actor_id, text=user_text,
+                    engine.world, speaker_id="player", recipient_id=expected_actor_id, text=user_text if player_text is None else player_text,
                     turn_id=turn_id, channel="player_dialogue")
                 budget.context = build_actor_context(preview, session, expected_actor_id, user_text,
                                                      summary=memory_summary)
                 wire = deepcopy(budget.context.wire)
                 wire[0]["content"] += "\n本轮玩家私语候选来源：" + incoming["data"]["event_id"]
+            elif memory_mode:
+                budget.context = build_actor_context(engine.world, session, expected_actor_id, user_text,
+                                                     summary=memory_summary)
+                wire = deepcopy(budget.context.wire)
             else:
                 wire = visible_messages(session, user_text, actor_id=expected_actor_id,
                                         world=snapshot, include_objects=False)
             wire[0]["content"] += LOOP_INSTRUCTIONS
+            if scene_mode:
+                wire[0]["content"] += SCENE_INSTRUCTIONS
             proposal, discoveries, step_id = await decide(
                 wire, model, snapshot=snapshot, actor_id=expected_actor_id, executor=executor, budget=budget,
-                memory_mode=memory_mode)
+                memory_mode=memory_mode, scene_mode=scene_mode)
             budget.check()
             operations = discoveries + [proposal]
             trace.emit("adjudication", "started", step_id=step_id, snapshot_revision=snapshot.revision)
             record = engine.commit_turn(proposal, operations, actor_id=expected_actor_id, turn_id=turn_id,
                                         digest=digest,
                                         expected_revision=snapshot.revision, before_accept=budget.check,
-                                        player_text=user_text if memory_mode else None)
+                                        player_text=(user_text if player_text is None else player_text)
+                                             if memory_mode and record_player_input else None, record_reply=scene_mode)
             committed_revision = record["after_revision"]
             receipt = record["receipt"]
             reason = "completed" if receipt["ok"] else "rejected"
@@ -202,7 +222,7 @@ async def run_agent_turn(session: dict, user_text: str, model: AsyncToolModelAda
             # 在下一个 await 前把确定性结果与完整历史放进幂等缓存。
             engine.finish_turn(actor_id=expected_actor_id, turn_id=turn_id, session=updated,
                                reply=reply, trace=summary(), status=narration_status)
-            if receipt["ok"] and proposal.kind not in ("talk", "clarify", "statement"):
+            if receipt["ok"] and proposal.kind not in ("talk", "clarify", "statement", "wait"):
                 # 叙述只看程序回执；不携带未裁定的候选工具上下文。
                 narration_messages = [
                     {"role": "system", "content": NARRATION_INSTRUCTIONS},

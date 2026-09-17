@@ -57,17 +57,26 @@ WHISPER_TOOL = {"type": "function", "function": {
         "reply": {"type": "string", "minLength": 1},
         "cause_event_id": {"type": ["string", "null"], "description": "转述所据的可见事件 ID；原创发言用 null。"}},
         "required": ["recipient_id", "reply", "cause_event_id"], "additionalProperties": False}}}
-MEMORY_TOOL_SCHEMAS = TURN_TOOL_SCHEMAS + [WHISPER_TOOL]
+# A06 的等待动作先接入 memory 模式，A04 工具集合保持原样。
+WAIT_TOOL = {"type": "function", "function": {
+    "name": "wait", "description": "明确选择暂不行动并结束本轮。只回复玩家，不移动、给物或唤醒其他角色；必须单独调用。",
+    "parameters": {"type": "object", "properties": {
+        "reply": {"type": "string", "minLength": 1, "description": "给玩家的简短等待说明。"}},
+        "required": ["reply"], "additionalProperties": False}}}
+MEMORY_TOOL_SCHEMAS = TURN_TOOL_SCHEMAS + [WHISPER_TOOL, WAIT_TOOL]
 
 
 def parse_memory_terminal(call):
-    if call["function"]["name"] != "whisper":
+    name = call["function"]["name"]
+    if name not in ("whisper", "wait"):
         return parse_terminal_call(call)
     from app.actions import parse_action
     try:
         arguments = json.loads(call["function"]["arguments"])
     except json.JSONDecodeError:
-        raise ValueError("私语参数必须是 JSON 对象。") from None
-    if not isinstance(arguments, dict) or set(arguments) != {"recipient_id", "reply", "cause_event_id"}:
-        raise ValueError("私语必须且只能提供接收者、正文和来源。")
-    return parse_action(json.dumps({"kind": "statement", **arguments}, ensure_ascii=False))
+        raise ValueError("工具参数必须是 JSON 对象。") from None
+    fields = {"recipient_id", "reply", "cause_event_id"} if name == "whisper" else {"reply"}
+    if not isinstance(arguments, dict) or set(arguments) != fields:
+        raise ValueError("必须且只能提供工具定义中的字段。")
+    kind = "statement" if name == "whisper" else "wait"
+    return parse_action(json.dumps({"kind": kind, **arguments}, ensure_ascii=False))

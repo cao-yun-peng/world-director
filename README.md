@@ -1,3 +1,31 @@
+# AI 互动世界导演 · A06
+
+已实现人物策略摘要、受众隔离的顺序场景调度、规则导演机会、交接主线、计划失效和两种程序判定结局。离线工程已验证；真实模型与学习者独立验收待完成。
+
+```powershell
+# 离线两分支与改选演示，不读取密钥：
+.\.venv\Scripts\python.exe -X utf8 -m scripts.a06_demo
+.\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p "test_a06*.py" -v
+# 独立变式：先预测，再改 MOVE_RECIPIENT：
+.\.venv\Scripts\python.exe -X utf8 -m exercises.a06_replan
+# 已配置真实模型后，显式运行（本次未执行）：
+.\.venv\Scripts\python.exe -X utf8 -m app.main --engine scene --max-model-requests 24
+```
+
+- [A06 分步教学 D036—D042](docs/a06_practice.md)
+- [首轮预测与修订反馈](docs/a06_prediction.md)
+- [工程验收、能力边界与待完成项](docs/a06_results.md)
+- [两分支、实际提议、请求、事件和计划证据](docs/a06_branches.json)
+- [源码对照参考](docs/a06_source_notes.md)
+
+scene 模式：/offer 推进、/pause 暂缓、/focus 角色、/responders 1|2、/retry、/status、/new、/exit。默认每场景轮共用 8 次模型请求、30 秒、每次 8000 Unicode 字符；最多 2 个角色顺序响应。默认确定性结尾，--narrate-ending 可在同一预算内润色。
+
+世界仍在内存中；/new 显式另开新局，不恢复旧世界，也不重置本进程请求额度。已结束故事的新行动不调用模型。旧课程入口保持可用。最初的等待小步可运行 python -m scripts.a06_wait_demo。
+
+以下保留前序课程的历史记录。
+
+---
+
 # AI 互动世界导演 · A05
 
 新增三角色独立历史、私语事件与听闻来源、授权记忆摘录、每次请求的字符预算。复用 A04 有界异步循环与唯一提交入口。

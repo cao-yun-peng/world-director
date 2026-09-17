@@ -59,10 +59,34 @@ class RunLimits:
                 raise ValueError(f"{name} 必须是有限的有效时间。")
 
 
+class SharedBudget:
+    """排队前创建的场景额度；每次模型尝试扣一次，角色之间不重置。"""
+    def __init__(self, limits: RunLimits):
+        self.max_model_requests = limits.max_model_requests
+        self.deadline = asyncio.get_running_loop().time() + limits.turn_timeout_s
+        self.model_requests = 0
+
+    def check(self):
+        if asyncio.get_running_loop().time() >= self.deadline:
+            raise RunStopped('TURN_TIMEOUT')
+
+    def check_capacity(self):
+        self.check()
+        if self.model_requests >= self.max_model_requests:
+            raise RunStopped('MODEL_REQUEST_LIMIT')
+
+    def claim(self):
+        self.check_capacity()
+        self.model_requests += 1
+
+
 class RunBudget:
-    def __init__(self, limits: RunLimits, trace: RunTrace):
+    def __init__(self, limits: RunLimits, trace: RunTrace, *, shared: SharedBudget | None = None):
         self.limits, self.trace = limits, trace
         self.deadline = asyncio.get_running_loop().time() + limits.turn_timeout_s
+        self.shared = shared
+        if shared is not None:
+            self.deadline = min(self.deadline, shared.deadline)
         self.model_requests = 0
         self.context = None
 
@@ -104,16 +128,19 @@ class RunBudget:
             self.check()
             if is_model and self.model_requests >= self.limits.max_model_requests:
                 raise RunStopped("MODEL_REQUEST_LIMIT")
+            if is_model and self.shared is not None:
+                self.shared.check_capacity()
             started = monotonic()
             fields = dict(step_id=step_id, span_id=logical_span, parent_span_id=self.trace.run_id,
                           attempt=attempt, started_at=datetime.now(timezone.utc).isoformat(), **metadata)
             status, error_code, usage = "ok", None, None
             acquired = False
+            turn_timeout = None
             io_ref = self.trace.io_reference(logical_span, attempt) if is_model and model_input is not None else None
             io_ok = True
             try:
                 # 排队受整轮 deadline 限制，单次调用计时从拿到名额后开始。
-                async with asyncio.timeout_at(self.deadline):
+                async with asyncio.timeout_at(self.deadline) as turn_timeout:
                     if semaphore is not None:
                         await semaphore.acquire()
                         acquired = True
@@ -126,6 +153,8 @@ class RunBudget:
                                             io_write_failed=not io_ok, model_requests=self.model_requests)
                         self.check()  # 本地写日志也计入原 deadline。
                         if is_model:
+                            if self.shared is not None:
+                                self.shared.claim()
                             self.model_requests += 1
                         value = await operation()
                         # 在预算检查、协议校验及 JSON 解析前保留原文，包括格式不合法的回答。
@@ -149,7 +178,8 @@ class RunBudget:
                     delay_s = max(delay_s, error.retry_after_s)
                 error_code = "ATTEMPT_TIMEOUT" if isinstance(error, TimeoutError) else "TRANSIENT_FAILURE"
                 status = "error"
-                if asyncio.get_running_loop().time() >= self.deadline:
+                # 事件循环可按时钟精度略提前触发定时器；以 timeout 的实际状态为准。
+                if (turn_timeout is not None and turn_timeout.expired()) or asyncio.get_running_loop().time() >= self.deadline:
                     error_code = "TURN_TIMEOUT"
                     raise RunStopped(error_code) from None
                 if attempt == self.limits.max_attempts:

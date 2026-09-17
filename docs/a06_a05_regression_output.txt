@@ -1,0 +1,3 @@
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -c "import asyncio; from pathlib import Path; from scripts.a05_demo import demo; asyncio.run(demo(Path('docs/a06_a05_regression.json'))); print('A05 regression demo passed')"
+Exit code: 0
+A05 regression demo passed

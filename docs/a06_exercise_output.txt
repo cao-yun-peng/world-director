@@ -1,0 +1,97 @@
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m exercises.a06_replan
+Exit code: 0
+{
+  "mode": "fake",
+  "move_recipient": false,
+  "old_plan": {
+    "plan_id": "plan-2",
+    "based_on_revision": 5,
+    "source_refs": [
+      "a06-replan-exercise:E0002"
+    ],
+    "steps": [
+      "offer_handover",
+      "verify_transfer_receipt"
+    ],
+    "status": "active",
+    "invalidated_reason": null,
+    "superseded_by": null
+  },
+  "old_plan_after": {
+    "plan_id": "plan-2",
+    "based_on_revision": 5,
+    "source_refs": [
+      "a06-replan-exercise:E0002"
+    ],
+    "steps": [
+      "offer_handover",
+      "verify_transfer_receipt"
+    ],
+    "status": "invalidated",
+    "invalidated_reason": "choice_or_world_revision_changed",
+    "superseded_by": "plan-3"
+  },
+  "result": {
+    "scene_turn_id": "attempt",
+    "status": "completed",
+    "error_code": null,
+    "selected": [
+      "lin_yan"
+    ],
+    "responses": [
+      {
+        "actor_id": "lin_yan",
+        "code": "GIVEN",
+        "reply": "已将信封交给 other_npc。\n交接完成。"
+      }
+    ],
+    "skipped": [
+      {
+        "actor_id": "other_npc",
+        "reason": "NO_AUTHORIZED_STIMULUS"
+      },
+      {
+        "actor_id": "archive_keeper",
+        "reason": "NOT_COLOCATED"
+      }
+    ],
+    "replayed": false,
+    "model_requests": 2,
+    "before_revision": 5,
+    "replans": 1,
+    "ending_text": "信封已交给周澈，交接线已解决。",
+    "ending_narration": "deterministic",
+    "after_revision": 8,
+    "state": {
+      "choice": "offer_handover",
+      "story_status": "ended",
+      "ending": "handed_over",
+      "ending_ref": "a06-replan-exercise:E0008",
+      "thread_status": "resolved",
+      "owner_status": "recipient",
+      "transfer_ref": "a06-replan-exercise:E0007",
+      "threads": [
+        {
+          "thread_id": "envelope_handover",
+          "topic": "信封交接",
+          "origin_ref": "a06-replan-exercise:config:handover-v1",
+          "visibility_scope": [
+            "player",
+            "lin_yan",
+            "other_npc"
+          ],
+          "status": "resolved",
+          "next_opportunity": null,
+          "resolved_by_event_ids": [
+            "a06-replan-exercise:E0007"
+          ],
+          "updated_revision": 8
+        }
+      ]
+    }
+  },
+  "owner_before": "actor:lin_yan",
+  "owner_after": "actor:other_npc",
+  "receiver_location": "duty_room",
+  "world_unchanged_by_attempt": false
+}

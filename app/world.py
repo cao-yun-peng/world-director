@@ -112,8 +112,10 @@ def adjudicate(state: WorldState, proposal: ActionProposal, *, actor_id: str, tu
         return append_statement(state, speaker_id=actor_id, recipient_id=proposal.recipient_id,
                                 text=proposal.reply, turn_id=turn_id,
                                 cause_event_id=proposal.cause_event_id, channel="whisper")
-    if kind in ("talk", "clarify"):
-        return deepcopy(state), result(True, kind.upper(), proposal.reply), []
+    if kind in ("talk", "clarify", "wait"):
+        # 等待由动作类型识别；正文中的“等”字不参与裁定，也不推进全局时间。
+        code = "WAITED" if kind == "wait" else kind.upper()
+        return deepcopy(state), result(True, code, proposal.reply), []
 
     if kind == "move":
         destination = proposal.destination_id
@@ -125,6 +127,11 @@ def adjudicate(state: WorldState, proposal: ActionProposal, *, actor_id: str, tu
 
     elif kind == "give":
         object_id, recipient = proposal.object_id, proposal.recipient_id
+        from app.director import scene_state
+        scene = scene_state(state)
+        if (scene['enabled'] and object_id == 'envelope_01' and actor_id == 'lin_yan'
+                and scene['choice'] != 'offer_handover'):
+            return reject('PLAYER_CHOICE_REQUIRED', '尚无有效的推进交接选择。')
         # 隐藏、未知、异地对象先统一屏蔽；不借归属检查暴露隐藏对象。
         try:
             inspect_object(object_id, actor_id=actor_id, world=state)

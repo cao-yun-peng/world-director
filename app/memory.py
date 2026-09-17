@@ -56,6 +56,9 @@ def visible_records(world, actor_id: str) -> list[dict]:
             continue
         records.append({"event_id": event["event_id"], "event_revision": event["after_revision"],
                         "source_event_ids": [event["event_id"]], **payload})
+    from app.director import scene_records
+    records.extend(scene_records(world, actor_id))
+    records.sort(key=lambda item: item['event_revision'])
     return records
 
 
@@ -210,6 +213,7 @@ MEMORY_RULES = """
 当前地点和自己的持有物以授权场景为准，旧观察不可冒充当前事实。
 如要转述，单独调用 whisper，明确接收者、实际文本和自己可见的来源事件 ID。
 end_turn 只回复玩家，不向其他角色传播。whisper 投递的就是 reply 原文。
+决定暂不行动时单独调用 wait(reply)，明确结束本轮；不靠回复中的“等”字表示动作，不自动推进其他角色。
 不得依据 cause_event_id 获取隐藏父事件；没有依据时承认未知或提出核对。
 """
 

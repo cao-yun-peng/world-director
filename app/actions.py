@@ -31,11 +31,12 @@ def parse_action(text: str) -> ActionProposal:
                     (not isinstance(data["cause_event_id"], str) or not data["cause_event_id"].strip()))):
             raise ValueError("私语字段不合法。")
         return ActionProposal(**data)
-    if kind in ("move", "give"):
-        fields = {"destination_id"} if kind == "move" else {"object_id", "recipient_id"}
+    if kind in ("move", "give", "wait"):
+        fields = {"move": {"destination_id"}, "give": {"object_id", "recipient_id"},
+                  "wait": {"reply"}}[kind]
         if set(data) != fields | {"kind"} or any(
                 not isinstance(data[key], str) or not data[key].strip() for key in fields):
-            raise ValueError("移动或给物字段不合法。")
+            raise ValueError("移动、给物或等待字段不合法。")
         return ActionProposal(kind=kind, **{key: data[key].strip() for key in fields})
     if set(data) != {"kind", "target_text", "reply"}:
         raise ValueError("行动提议必须且只能包含 kind、target_text、reply。")
@@ -58,6 +59,7 @@ def normalize_action(proposal: ActionProposal) -> ActionProposal:
     fields = {
         "move": {"kind", "destination_id"},
         "give": {"kind", "object_id", "recipient_id"},
+        "wait": {"kind", "reply"},
         "statement": {"kind", "reply", "recipient_id", "cause_event_id"},
     }.get(proposal.kind, {"kind", "target_text", "reply"})
     data = asdict(proposal)
@@ -75,10 +77,11 @@ def action_error_details(text: str) -> dict:
     if not isinstance(data, dict):
         return {"shape": "not_object"}
     kind = data.get("kind")
-    if kind not in ("talk", "clarify", "inspect", "move", "give"):
+    if kind not in ("talk", "clarify", "inspect", "move", "give", "wait"):
         return {"shape": "unknown_kind"}
     required = ({"kind", "destination_id"} if kind == "move" else
                 {"kind", "object_id", "recipient_id"} if kind == "give" else
+                {"kind", "reply"} if kind == "wait" else
                 {"kind", "target_text", "reply"})
     return {"shape": "action", "kind": kind, "missing_fields": sorted(required - set(data)),
             "unexpected_field_count": len(set(data) - required),

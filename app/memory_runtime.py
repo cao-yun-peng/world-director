@@ -33,6 +33,9 @@ class MemoryStory:
         limits = options.pop("limits", None) or RunLimits()
         loop = asyncio.get_running_loop()
         deadline = loop.time() + limits.turn_timeout_s
+        shared = options.get('shared_budget')
+        if shared is not None:
+            deadline = min(deadline, shared.deadline)
         try:
             async with asyncio.timeout_at(deadline):
                 await self._lock.acquire()

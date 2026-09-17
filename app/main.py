@@ -49,14 +49,19 @@ def write_agent_trace(session: dict, trace: dict, model_name: str) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="林砚的会话：/save 路径 保存，/exit 退出")
     parser.add_argument("--load", type=Path, help="加载JSON会话")
-    parser.add_argument("--engine", choices=("dialogue", "tools", "world", "loop", "memory"), default="dialogue")
+    parser.add_argument("--engine", choices=("dialogue", "tools", "world", "loop", "memory", "scene"), default="dialogue")
     parser.add_argument("--max-model-requests", type=int, default=12,
                         help="工具模式本进程的模型请求上限（默认 12，失败请求也计数）")
     parser.add_argument("--max-steps", type=int, default=4, help="A04 每轮逻辑决策上限")
     parser.add_argument("--turn-timeout", type=float, default=30, help="A04 整轮共享秒数")
     parser.add_argument("--max-parallel-tools", type=int, default=2, help="A04 查询执行名额")
     parser.add_argument("--max-input-chars", type=int, default=8000, help="A05 messages 与 tools 的 Unicode 字符配额")
+    parser.add_argument("--max-responders", type=int, choices=(1, 2), default=1, help="A06 每场景轮最多响应人数")
+    parser.add_argument("--narrate-ending", action="store_true", help="A06 在共享预算内润色已确定的结局")
     args = parser.parse_args(argv)
+    if args.engine == "scene":
+        from app.scene_cli import main as scene_main
+        return scene_main(args)
     if args.engine == "memory":
         from app.memory_cli import main as memory_main
         return memory_main(args)

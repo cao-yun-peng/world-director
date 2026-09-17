@@ -1,0 +1,48 @@
+Scope: D036 wait only
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m scripts.a06_wait_demo
+Exit code: 0
+
+[
+  {
+    "case": "文字含等，但动作是回复",
+    "mode": "fake",
+    "session_id": "a06-wait-demo-talk",
+    "proposal_kind": "talk",
+    "receipt_code": "TALK",
+    "reply": "别等了，现在就交接。",
+    "envelope_owner": "actor:lin_yan",
+    "event_kinds": [
+      "StatementEvent",
+      "StatementEvent"
+    ],
+    "model_requests": 1
+  },
+  {
+    "case": "文字不含等，但动作是等待",
+    "mode": "fake",
+    "session_id": "a06-wait-demo-wait",
+    "proposal_kind": "wait",
+    "receipt_code": "WAITED",
+    "reply": "先留在这里。",
+    "envelope_owner": "actor:lin_yan",
+    "event_kinds": [
+      "StatementEvent",
+      "StatementEvent"
+    ],
+    "model_requests": 1
+  },
+  {
+    "case": "明确提议给物，由程序裁定",
+    "mode": "fake",
+    "session_id": "a06-wait-demo-give",
+    "proposal_kind": "give",
+    "receipt_code": "GIVEN",
+    "reply": "已将信封交给 other_npc。\n信封已经交给周澈。",
+    "envelope_owner": "actor:other_npc",
+    "event_kinds": [
+      "StatementEvent",
+      "TransferEvent"
+    ],
+    "model_requests": 2
+  }
+]

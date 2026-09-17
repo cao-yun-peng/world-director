@@ -1,0 +1,70 @@
+Scope: D036 wait only
+Command: E:\project\self-agent\world-director\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests -p test_a06.py -v
+Exit code: 1
+
+test_wait_rejects_unexpected_or_invalid_arguments_at_both_entries (test_a06.WaitBoundaryTests.test_wait_rejects_unexpected_or_invalid_arguments_at_both_entries) ... ok
+test_action_type_not_reply_keyword_controls_wait (test_a06.WaitTests.test_action_type_not_reply_keyword_controls_wait) ... 
+  test_action_type_not_reply_keyword_controls_wait (test_a06.WaitTests.test_action_type_not_reply_keyword_controls_wait) (name='end_turn') ... FAIL
+  test_action_type_not_reply_keyword_controls_wait (test_a06.WaitTests.test_action_type_not_reply_keyword_controls_wait) (name='wait') ... FAIL
+test_inspect_then_wait_keeps_only_actual_discovery (test_a06.WaitTests.test_inspect_then_wait_keeps_only_actual_discovery) ... FAIL
+test_invalid_wait_can_be_corrected_with_paired_tool_feedback (test_a06.WaitTests.test_invalid_wait_can_be_corrected_with_paired_tool_feedback) ... ok
+test_invalid_wait_uses_request_budget_without_commit (test_a06.WaitTests.test_invalid_wait_uses_request_budget_without_commit) ... ok
+test_wait_cannot_share_batch_with_query_or_give (test_a06.WaitTests.test_wait_cannot_share_batch_with_query_or_give) ... ok
+test_wait_replay_and_conflict_do_not_call_model (test_a06.WaitTests.test_wait_replay_and_conflict_do_not_call_model) ... ok
+
+======================================================================
+FAIL: test_action_type_not_reply_keyword_controls_wait (test_a06.WaitTests.test_action_type_not_reply_keyword_controls_wait) (name='end_turn')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\project\self-agent\world-director\tests\test_a06.py", line 46, in test_action_type_not_reply_keyword_controls_wait
+    self.assertEqual(after.knowledge, before.knowledge)
+AssertionError: {'lin_yan': [{'event_id': 'a06-wait-test:E0001', 'evid[217 chars]: []} != {'lin_yan': [], 'other_npc': [], 'archive_keeper': []}
++ {'archive_keeper': [], 'lin_yan': [], 'other_npc': []}
+- {'archive_keeper': [],
+-  'lin_yan': [{'event_id': 'a06-wait-test:E0001',
+-               'evidence_type': 'reported',
+-               'facts': ['请决定下一步。'],
+-               'speaker_id': 'player'},
+-              {'event_id': 'a06-wait-test:E0002',
+-               'evidence_type': 'said',
+-               'facts': ['别等了，现在就交接。'],
+-               'speaker_id': 'lin_yan'}],
+-  'other_npc': []}
+
+======================================================================
+FAIL: test_action_type_not_reply_keyword_controls_wait (test_a06.WaitTests.test_action_type_not_reply_keyword_controls_wait) (name='wait')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\project\self-agent\world-director\tests\test_a06.py", line 46, in test_action_type_not_reply_keyword_controls_wait
+    self.assertEqual(after.knowledge, before.knowledge)
+AssertionError: {'lin_yan': [{'event_id': 'a06-wait-test:E0001', 'evid[213 chars]: []} != {'lin_yan': [], 'other_npc': [], 'archive_keeper': []}
++ {'archive_keeper': [], 'lin_yan': [], 'other_npc': []}
+- {'archive_keeper': [],
+-  'lin_yan': [{'event_id': 'a06-wait-test:E0001',
+-               'evidence_type': 'reported',
+-               'facts': ['请决定下一步。'],
+-               'speaker_id': 'player'},
+-              {'event_id': 'a06-wait-test:E0002',
+-               'evidence_type': 'said',
+-               'facts': ['先留在这里。'],
+-               'speaker_id': 'lin_yan'}],
+-  'other_npc': []}
+
+======================================================================
+FAIL: test_inspect_then_wait_keeps_only_actual_discovery (test_a06.WaitTests.test_inspect_then_wait_keeps_only_actual_discovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\86135\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "E:\project\self-agent\world-director\tests\test_a06.py", line 121, in test_inspect_then_wait_keeps_only_actual_discovery
+    self.assertEqual(len(world.knowledge['lin_yan']), 1)
+AssertionError: 3 != 1
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.861s
+
+FAILED (failures=3)

@@ -1,0 +1,245 @@
+{
+  "task_id": "A06-IMPLEMENT-20260917",
+  "created_at_utc": "2026-09-17T02:22:01.959050+00:00",
+  "base_head": "54cf4842c3114eceb49b541c8592b9269a61c593",
+  "effective_version": "base HEAD plus listed working-tree artifacts; no Git commit created",
+  "phase": "offline engineering complete; real-model and independent learning verification pending",
+  "mode": "fake",
+  "project_to_act": "unconfigured; existing docs/a06_results.md remains canonical",
+  "hash_method": "SHA-256 of raw file bytes, preserving LF/CRLF; manifest excludes itself",
+  "context_method": "SHA-256 of UTF-8 sorted path + NUL + raw-byte hash entries, joined with LF",
+  "context_sha256": "2f5eeed92b2150a27f25c1a080435e9dddfa8d1682ac362d51f6140f18c7ded9",
+  "validity": "Verification refers to these artifacts; reassess after implementation changes.",
+  "current_evidence": [
+    "docs/a06_tests.txt",
+    "docs/a06_all_tests.txt",
+    "docs/a06_demo_output.txt",
+    "docs/a06_branches.json",
+    "docs/a06_exercise_output.txt",
+    "docs/a06_exercise_away_output.txt",
+    "docs/a06_a05_regression_output.txt",
+    "docs/a06_a05_regression.json",
+    "docs/a06_source_notes.md",
+    "docs/a06_final_checks.txt"
+  ],
+  "historical_evidence": [
+    "docs/a06_all_tests_first_run.txt",
+    "docs/a06_scene_tests_initial.txt",
+    "docs/a06_wait_tests.txt",
+    "docs/a06_wait_tests_first_run.txt",
+    "docs/a06_wait_all_tests.txt",
+    "docs/a06_wait_demo_output.txt"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "bfc6aad7c3d4520e4840dbbef53e9de2cf8a2392af9d29eddfa256b3b1aa5405",
+      "bytes": 13637
+    },
+    {
+      "path": "app/actions.py",
+      "sha256": "e88aedb6a28c2fdaac1907729c375ca52b14fa85b678d53f06c18dae6ba7a7f5",
+      "bytes": 4337
+    },
+    {
+      "path": "app/async_runtime.py",
+      "sha256": "cfea28d7407f7f3f215f4bcc9ffccb55fdf4b04330be475b44d73fed36af59e0",
+      "bytes": 17381
+    },
+    {
+      "path": "app/director.py",
+      "sha256": "e31f00c4ca688dbea2daf8feada1677c58041d3952255a7ea0b8d48e47219b19",
+      "bytes": 13503
+    },
+    {
+      "path": "app/engine.py",
+      "sha256": "01c2400f59c975696b660570c5c95c0faa107297de3bdf7652d20d5d1a013454",
+      "bytes": 9142
+    },
+    {
+      "path": "app/execution.py",
+      "sha256": "16792679a5b0c2f7821c62ea6dcb0bdeaba062f4bca36264891fae41e66801a4",
+      "bytes": 11488
+    },
+    {
+      "path": "app/main.py",
+      "sha256": "c8f0ffa63de5f00d2958ba5681dca1236e7317610eba4f407a5ca462672df7d0",
+      "bytes": 10280
+    },
+    {
+      "path": "app/memory.py",
+      "sha256": "d1a6264536e3bbce09579f8971e05ad8ab6533d1e5b7198ad303d7db504f61d4",
+      "bytes": 16561
+    },
+    {
+      "path": "app/memory_runtime.py",
+      "sha256": "08c2af75ebea3dd1d30fec2f523cf0ab2af1b3d5e56859229853a59231417661",
+      "bytes": 3104
+    },
+    {
+      "path": "app/scene_cli.py",
+      "sha256": "01d27aa64526824c49c4fdd0d808e87400404a54e2f407b17f8afde06de42067",
+      "bytes": 5135
+    },
+    {
+      "path": "app/scene_runtime.py",
+      "sha256": "72c23f72f0c98272fb8f5e167354b933399b082f990ee91ff7de6a81c3592e95",
+      "bytes": 13258
+    },
+    {
+      "path": "app/scene_tools.py",
+      "sha256": "6236dd9ba2f8fcc3e40d056bd11b6acd86b87428725b35a1cf5f4feeac2cc271",
+      "bytes": 2658
+    },
+    {
+      "path": "app/trace.py",
+      "sha256": "eb98165c74fa5eeadda46f8fa600054ab144f2c353bb0cb61f5fff0546061621",
+      "bytes": 5722
+    },
+    {
+      "path": "app/turn_tools.py",
+      "sha256": "2c4bb504a9ad9a281335f4b086dab68188df1f5e375c90c396ca3127efd84e89",
+      "bytes": 4606
+    },
+    {
+      "path": "app/world.py",
+      "sha256": "77a5531d790892cefaf9f26ceeb6a1bc394ad5098eecbd86065f68055787e778",
+      "bytes": 12174
+    },
+    {
+      "path": "app/world_runtime.py",
+      "sha256": "0adce55e42004eafd31e04429af404c2b2f8861b72f447a1f95c1b57adeb8e68",
+      "bytes": 12300
+    },
+    {
+      "path": "docs/a06_a05_regression.json",
+      "sha256": "a8b419e8c9822356e037e3b32ded39318c8163600323df8168493d1a8994847b",
+      "bytes": 473034
+    },
+    {
+      "path": "docs/a06_a05_regression_output.txt",
+      "sha256": "540d7198152023efb20db559d8dbdeca672f6bf36a446a4c4fe75c75a70000f8",
+      "bytes": 297
+    },
+    {
+      "path": "docs/a06_all_tests.txt",
+      "sha256": "8b740c4de861328a7b5a33215aabda50cc18a0af40bf42add6fca5162b9e70ec",
+      "bytes": 36032
+    },
+    {
+      "path": "docs/a06_all_tests_first_run.txt",
+      "sha256": "0d769fc41ab67c7ddfdddb2aa265f6d64a40f98a3b804a27533da4ef18446ef0",
+      "bytes": 33124
+    },
+    {
+      "path": "docs/a06_branches.json",
+      "sha256": "1a311084081285320848cc69fce02bba56179d950e6c982c897ef71a95adecbf",
+      "bytes": 83146
+    },
+    {
+      "path": "docs/a06_contract.md",
+      "sha256": "e58f7dca2e8949c2ea743e6a3c9f3c02fd1792efa5bad1ce40e60707880cf527",
+      "bytes": 3918
+    },
+    {
+      "path": "docs/a06_demo_output.txt",
+      "sha256": "2eb08191988025608b38fcad9fdcc5728475da9a518534381c7cd5b115e5d3cb",
+      "bytes": 2272
+    },
+    {
+      "path": "docs/a06_exercise_away_output.txt",
+      "sha256": "42613a41598279676cce54e42f27d936a4dc474d544e7c74392b16451fe3a58b",
+      "bytes": 2562
+    },
+    {
+      "path": "docs/a06_exercise_output.txt",
+      "sha256": "0f0580e89ae5ce30b48a41910a999110c7670090c792d157afec780fef4def24",
+      "bytes": 2567
+    },
+    {
+      "path": "docs/a06_final_checks.txt",
+      "sha256": "62bf97e66dac139ddbc89b9b23c12dc704867191f99e2409e76a335d6b818a76",
+      "bytes": 592
+    },
+    {
+      "path": "docs/a06_practice.md",
+      "sha256": "07248ba65d5c948f111e8a1898d7b6f6f214d16bc7d4bdfb416df80412c5df8e",
+      "bytes": 11340
+    },
+    {
+      "path": "docs/a06_prediction.md",
+      "sha256": "f52af24a0334730cf3b91277624c26651ebca1145f21ac15d4ab2d2378809322",
+      "bytes": 3964
+    },
+    {
+      "path": "docs/a06_results.md",
+      "sha256": "bfb9fb7c96c0a45969623c14b444e299b4d04d447c0231f34fcb66abe9b8d2d2",
+      "bytes": 10794
+    },
+    {
+      "path": "docs/a06_scene_tests_initial.txt",
+      "sha256": "22065e1c56ded3e24a803864e47daa45585280003433cdd901c1bd2544e7caf9",
+      "bytes": 4957
+    },
+    {
+      "path": "docs/a06_source_notes.md",
+      "sha256": "694c1d40db1379115c626e2b8217d7b9c65d57076f9806ebf2d357ab6cbe99fe",
+      "bytes": 2666
+    },
+    {
+      "path": "docs/a06_tests.txt",
+      "sha256": "712e2152256cd59f37609127ab333a4d5e7117f7b6ca0b0704d09b454682d3db",
+      "bytes": 6075
+    },
+    {
+      "path": "docs/a06_wait_all_tests.txt",
+      "sha256": "a829a8a0f682b0297f81031fe17c9f21275c90e8a4130fffaec82369228cc906",
+      "bytes": 27373
+    },
+    {
+      "path": "docs/a06_wait_demo_output.txt",
+      "sha256": "371fb714c89dea8d29ba3d250ef92185c49a5389e273cf2adf8837965f094d67",
+      "bytes": 1299
+    },
+    {
+      "path": "docs/a06_wait_tests.txt",
+      "sha256": "a756e52898c7f6a84a1d47e3a10dcf8bc670624d37c3e7e6fbba3c61a2be9955",
+      "bytes": 1233
+    },
+    {
+      "path": "docs/a06_wait_tests_first_run.txt",
+      "sha256": "c1590e7f1d4ed0695126074ef3d0f1866f4ebba2e0cc74ba47076a1ee15f9e92",
+      "bytes": 4743
+    },
+    {
+      "path": "exercises/a06_replan.py",
+      "sha256": "02a0b922e1431d878a63a59aa230c56893facfbc87fa756973b55bb5e0c2052b",
+      "bytes": 1757
+    },
+    {
+      "path": "scripts/a06_demo.py",
+      "sha256": "8ecf40ebccd38d64241cac50033a6c47b75bef02a720675493d8141eca930a2f",
+      "bytes": 3878
+    },
+    {
+      "path": "scripts/a06_wait_demo.py",
+      "sha256": "4ab44618ba4cda31d1387d7bfc00c5e3dd7057fa1d95f6fae21345694fbb4607",
+      "bytes": 1761
+    },
+    {
+      "path": "tests/test_a06.py",
+      "sha256": "fe72f16b71086a15e6bbc27854a9666e989b2e87a46d7f5474884cf02ef9a140",
+      "bytes": 8676
+    },
+    {
+      "path": "tests/test_a06_cli.py",
+      "sha256": "71dbc5d292ef5e55addbc2c019e81cd4d87f7bf6cecb56ff3be371693dbb0a77",
+      "bytes": 2625
+    },
+    {
+      "path": "tests/test_a06_scene.py",
+      "sha256": "136c3502c2f43419b0635d1380c7c69a2587ec26c45d9c8f678923f89094ca84",
+      "bytes": 23901
+    }
+  ]
+}
